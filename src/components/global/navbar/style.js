@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { BiSearch } from "react-icons/bi";
-import { Dropdown } from "react-bootstrap";
 import { CgProfile } from "react-icons/cg";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { NavLink } from "react-router-dom";
@@ -87,61 +86,6 @@ export const AvatarIcon = styled(CgProfile)`
     font-size: 24px;
     &:hover {
         color: var(--g-color-blue);
-    }
-`;
-
-export const CustomDropdown = styled(Dropdown)`
-    button {
-        background-color: var(--g-color-blue);
-        width: 36px;
-    }
-
-    .btn-success {
-        background-color: var(--g-color-blue);
-        border-color: var(--g-color-blue);
-    }
-    .btn-success:hover {
-        background-color: var(--g-color-blue);
-    }
-    #dropdown-menu-align-end {
-        width: 100%;
-        padding: 0;
-        background-color: transparent;
-        border: none;
-        color: var(--g-olor-blue);
-    }
-    .dropdown-menu {
-        min-width: 120px;
-        background-color: white;
-    }
-    .dropdown-item {
-        color: black;
-        display: flex;
-        justify-content: center;
-        font-family: "Helvetica";
-        font-weight: 600;
-        &:hover {
-            background-color: var(--g-color-blue);
-        }
-    }
-    .dropdown-toggle::after {
-        display: none;
-    }
-    .btn-check:focus + &,
-    &:focus {
-        background-color: transparent;
-        box-shadow: none;
-    }
-    .btn-check:focus + .btn-primary,
-    .btn-primary:focus {
-        box-shadow: none;
-    }
-    .btn-check:checked + .btn-primary:focus,
-    .btn-check:active + .btn-primary:focus,
-    .btn-primary:active:focus,
-    .btn-primary.active:focus,
-    .show > .btn-primary.dropdown-toggle:focus {
-        box-shadow: none;
     }
 `;
 

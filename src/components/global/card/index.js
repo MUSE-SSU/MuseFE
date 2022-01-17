@@ -27,6 +27,7 @@ import {
     InfoContainer,
     EyeIcon,
     PostStatusContainer,
+    PostStatusContainerRect,
     WriterContainer,
     CustomSpan,
     ImageContainer,
@@ -721,12 +722,12 @@ function DetailPostPreview(props) {
                             </BadgePreview>
                         )}
                     </WriterContainer>
-                    <PostStatusContainer>
+                    <PostStatusContainerRect>
                         <LikesIcon />
                         <CustomSpan>{props.likes}</CustomSpan>
                         <EyeIcon />
                         <CustomSpan>{props.views}</CustomSpan>
-                    </PostStatusContainer>
+                    </PostStatusContainerRect>
                 </InfoContainer>
             </CardContainer>
             {shouldShow && (

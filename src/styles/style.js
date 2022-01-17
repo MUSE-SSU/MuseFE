@@ -79,6 +79,7 @@ export const GlobalStyle = createGlobalStyle`
         font-family: Helvetica;
         margin: 0;
         padding: 0;
+        font-size: 16px;
     }
     p{
         font-family: apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;

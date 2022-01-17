@@ -11,13 +11,29 @@ export const CardContainer = styled(motion.div)`
     background-color: ${(props) => props.color};
     cursor: pointer;
     margin: 0;
-    @media (max-width: 320px) {
-        width: 300px;
-        max-height: 600px;
-    }
     display: flex;
     flex-direction: column;
     align-items: center;
+    @media (max-width: 320px) {
+        width: 72px;
+        height: 112px;
+    }
+    @media (max-width: 375px) and (min-width: 321px) {
+        width: 86px;
+        height: 126px;
+    }
+    @media (max-width: 425px) and (min-width: 376px) {
+        width: 98px;
+        height: 138px;
+    }
+    @media (max-width: 768px) and (min-width: 426px) {
+        width: 178px;
+        height: 218px;
+    }
+    @media (max-width: 1024px) and (min-width: 769px) {
+        width: 240px;
+        height: 280px;
+    }
 `;
 export const ImageContainer = styled.div`
     width: 300px;
@@ -31,6 +47,30 @@ export const ImageContainerRect = styled.div`
     height: 300px;
     border-radius: 16px;
     overflow: hidden;
+    @media (max-width: 320px) {
+        width: 72px;
+        height: 112px;
+        border-radius: 6px;
+    }
+    @media (max-width: 375px) and (min-width: 321px) {
+        border-radius: 8px;
+        width: 86px;
+        height: 126px;
+    }
+    @media (max-width: 425px) and (min-width: 376px) {
+        border-radius: 8px;
+        width: 98px;
+        height: 138px;
+    }
+    @media (max-width: 768px) and (min-width: 426px) {
+        border-radius: 12px;
+        width: 178px;
+        height: 218px;
+    }
+    @media (max-width: 1024px) and (min-width: 769px) {
+        width: 240px;
+        height: 280px;
+    }
 `;
 
 export const Image = styled(motion.img)`
@@ -59,6 +99,16 @@ export const PostStatusContainer = styled.div`
     align-items: center;
 `;
 
+export const PostStatusContainerRect = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    @media (max-width: 768px) and (min-width: 426px) {
+        display: none;
+    }
+`;
+
 export const PostWriter = styled.h1`
     font-size: 16px;
     font-weight: 500;
@@ -83,6 +133,9 @@ export const WriterContainer = styled.div`
     display: flex;
     align-items: center;
     flex-direction: row;
+    @media (max-width: 425px) {
+        display: none;
+    }
 `;
 
 export const Avatar = styled.img`

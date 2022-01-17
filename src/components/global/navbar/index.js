@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory, NavLink } from "react-router-dom";
 import * as actionType from "../../../constants/actionTypes";
 import { userInfo } from "../../../actions/userInfo";
@@ -31,7 +31,7 @@ function Navbar() {
     const getUserNickname = useSelector((state) => state.userInfo.nickname);
     //반응형 대응
     const isDesktop = MediaQuery({
-        query: "(min-width: 1024px",
+        query: "(min-width: 1024px) and (max-width: 2560px)",
     });
     const isTablet = MediaQuery({
         query: "(min-width: 768px) and (max-width: 1023px)",
@@ -43,6 +43,18 @@ function Navbar() {
     const history = useHistory();
     const handleHistoryMyPage = () => {
         window.location.href = `/my-page/${getUserNickname}`;
+    };
+
+    const handleHistoryReference = () => {
+        window.location.href = "/reference";
+    };
+
+    const handleHistoryContest = () => {
+        window.location.href = "/contest";
+    };
+
+    const handleHistoryMuse = () => {
+        window.location.href = "/muse";
     };
     const dispatch = useDispatch();
     const logOutBtn = () => {
@@ -58,6 +70,12 @@ function Navbar() {
     const [selected, setSelected] = React.useState(null);
     const anchorRef = React.useRef(null);
     const DROPDOWN_ZINDEX = new FixedZIndex(10);
+
+    //드롭다운 모바잃 state
+    const [openMobileLeft, setOpenMobileLeft] = useState(false);
+    const [selectedMobileLeft, setSelectedMobileLeft] = useState(null);
+    const anchorRefMobileLeft = useRef(null);
+
     return (
         <div>
             {isDesktop && (
@@ -158,70 +176,108 @@ function Navbar() {
 
             {isTablet && (
                 <Container>
-                    <NavContainerTablet>
+                    <NavContainerMobile>
                         <NavContainerLeft>
-                            <CustomDropdown className="shadow-none">
-                                <CustomDropdown.Toggle id="dropdown-menu-align-end">
-                                    <BurgerIcon />
-                                </CustomDropdown.Toggle>
-                                <CustomDropdown.Menu>
-                                    <CustomDropdown.Item>
-                                        <Link to="/Muse">
-                                            <DropdownMenu>MUSE</DropdownMenu>
-                                        </Link>
-                                    </CustomDropdown.Item>
-                                    <CustomDropdown.Item>
-                                        <Link to="/reference">
-                                            <DropdownMenu>
-                                                Reference
-                                            </DropdownMenu>
-                                        </Link>
-                                    </CustomDropdown.Item>
-                                    <CustomDropdown.Item>
-                                        <Link to="/reference">
-                                            <DropdownMenu>
-                                                reference
-                                            </DropdownMenu>
-                                        </Link>
-                                    </CustomDropdown.Item>
-                                </CustomDropdown.Menu>
-                            </CustomDropdown>
+                            <IconButton
+                                icon="menu"
+                                ref={anchorRefMobileLeft}
+                                onClick={() =>
+                                    setOpenMobileLeft((prevVal) => !prevVal)
+                                }
+                            />
+                            {openMobileLeft && (
+                                <Dropdown
+                                    zIndex={DROPDOWN_ZINDEX}
+                                    anchor={anchorRefMobileLeft.current}
+                                    id="action-variant-dropdown-example"
+                                    onDismiss={() => setOpenMobileLeft(false)}
+                                >
+                                    <Dropdown.Item
+                                        onSelect={handleHistoryMuse}
+                                        option={{
+                                            label: "Muse",
+                                        }}
+                                        selected={selectedMobileLeft}
+                                    />
+                                    <Dropdown.Item
+                                        onSelect={handleHistoryReference}
+                                        option={{
+                                            label: "Reference",
+                                        }}
+                                        selected={selectedMobileLeft}
+                                    />
+                                    <Dropdown.Item
+                                        onSelect={handleHistoryContest}
+                                        option={{
+                                            label: "Contest",
+                                        }}
+                                        selected={selectedMobileLeft}
+                                    />
+                                </Dropdown>
+                            )}
                         </NavContainerLeft>
                         <Link to="/">
                             <Logo>MUSE</Logo>
                         </Link>
                         <NavContainerRight>
-                            <SearchIcon size={24} />
-
-                            {isLogged == false || null ? (
-                                <NavItem>
-                                    <Link to="auth">로그인</Link>
-                                </NavItem>
+                            {isLogged == false || isLogged == null ? (
+                                <LoginModal />
                             ) : (
-                                <CustomDropdown className="shadow-none">
-                                    <CustomDropdown.Toggle id="dropdown-menu-align-end">
-                                        <AvatarIcon />
-                                    </CustomDropdown.Toggle>
-
-                                    <CustomDropdown.Menu>
-                                        <CustomDropdown.Item>
-                                            <DropdownMenu>
-                                                마이페이지
-                                            </DropdownMenu>
-                                        </CustomDropdown.Item>
-                                        <CustomDropdown.Item
-                                            href="#/action-1"
-                                            onClick={logOutBtn}
+                                <Flex
+                                    justifyContent="center"
+                                    alignItems="center"
+                                >
+                                    <Box marginEnd={4}>
+                                        <Link to="/search">
+                                            <IconButton
+                                                icon="search"
+                                                iconColor="black"
+                                            />
+                                        </Link>
+                                    </Box>
+                                    <Avatar
+                                        src={getUserAvatar}
+                                        ref={anchorRef}
+                                        onClick={() =>
+                                            setOpen((prevVal) => !prevVal)
+                                        }
+                                    />
+                                    {open && (
+                                        <Dropdown
+                                            zIndex={DROPDOWN_ZINDEX}
+                                            anchor={anchorRef.current}
+                                            id="action-variant-dropdown-example"
+                                            onDismiss={() => setOpen(false)}
                                         >
-                                            <DropdownMenu>
-                                                로그아웃
-                                            </DropdownMenu>
-                                        </CustomDropdown.Item>
-                                    </CustomDropdown.Menu>
-                                </CustomDropdown>
+                                            <Dropdown.Item
+                                                onSelect={handleHistoryMuse}
+                                                option={{
+                                                    label: "Muse",
+                                                }}
+                                                selected={selectedMobileLeft}
+                                            />
+                                            <Dropdown.Item
+                                                onSelect={handleHistoryMyPage}
+                                                option={{
+                                                    value: "조회수순",
+                                                    label: "마이페이지",
+                                                }}
+                                                selected={selected}
+                                            />
+                                            <Dropdown.Item
+                                                onSelect={logOutBtn}
+                                                option={{
+                                                    value: "최신순",
+                                                    label: "로그아웃",
+                                                }}
+                                                selected={selected}
+                                            />
+                                        </Dropdown>
+                                    )}
+                                </Flex>
                             )}
                         </NavContainerRight>
-                    </NavContainerTablet>
+                    </NavContainerMobile>
                 </Container>
             )}
 
@@ -229,67 +285,96 @@ function Navbar() {
                 <Container>
                     <NavContainerMobile>
                         <NavContainerLeft>
-                            <CustomDropdown className="shadow-none">
-                                <CustomDropdown.Toggle id="dropdown-menu-align-end">
-                                    <BurgerIcon />
-                                </CustomDropdown.Toggle>
-
-                                <CustomDropdown.Menu>
-                                    <CustomDropdown.Item>
-                                        <DropdownMenu>
-                                            <Link
-                                                to="/Muse"
-                                                activeClassName="active"
-                                            >
-                                                MUSE
-                                            </Link>
-                                        </DropdownMenu>
-                                    </CustomDropdown.Item>
-                                    <CustomDropdown.Item>
-                                        <DropdownMenu>
-                                            <Link to="/reference">
-                                                Reference
-                                            </Link>
-                                        </DropdownMenu>
-                                    </CustomDropdown.Item>
-                                    <CustomDropdown.Item>
-                                        <DropdownMenu>
-                                            <Link to="/Contest">CONTEST</Link>
-                                        </DropdownMenu>
-                                    </CustomDropdown.Item>
-                                </CustomDropdown.Menu>
-                            </CustomDropdown>
+                            <IconButton
+                                icon="menu"
+                                ref={anchorRefMobileLeft}
+                                onClick={() =>
+                                    setOpenMobileLeft((prevVal) => !prevVal)
+                                }
+                            />
+                            {openMobileLeft && (
+                                <Dropdown
+                                    zIndex={DROPDOWN_ZINDEX}
+                                    anchor={anchorRefMobileLeft.current}
+                                    id="action-variant-dropdown-example"
+                                    onDismiss={() => setOpenMobileLeft(false)}
+                                >
+                                    <Dropdown.Item
+                                        onSelect={handleHistoryReference}
+                                        option={{
+                                            label: "Reference",
+                                        }}
+                                        selected={selectedMobileLeft}
+                                    />
+                                    <Dropdown.Item
+                                        onSelect={handleHistoryContest}
+                                        option={{
+                                            label: "Contest",
+                                        }}
+                                        selected={selectedMobileLeft}
+                                    />
+                                    <Dropdown.Item
+                                        onSelect={handleHistoryContest}
+                                        option={{
+                                            label: "Contest",
+                                        }}
+                                        selected={selectedMobileLeft}
+                                    />
+                                </Dropdown>
+                            )}
                         </NavContainerLeft>
                         <Link to="/">
                             <Logo>MUSE</Logo>
                         </Link>
                         <NavContainerRight>
-                            {isLogged == false || null ? (
-                                <NavItem>
-                                    <Link to="auth">로그인</Link>
-                                </NavItem>
+                            {isLogged == false || isLogged == null ? (
+                                <LoginModal />
                             ) : (
-                                <CustomDropdown className="shadow-none">
-                                    <CustomDropdown.Toggle id="dropdown-menu-align-end">
-                                        <AvatarIcon />
-                                    </CustomDropdown.Toggle>
-
-                                    <CustomDropdown.Menu>
-                                        <CustomDropdown.Item>
-                                            <DropdownMenu>
-                                                마이페이지
-                                            </DropdownMenu>
-                                        </CustomDropdown.Item>
-                                        <CustomDropdown.Item
-                                            href="#/action-1"
-                                            onClick={logOutBtn}
+                                <Flex
+                                    justifyContent="center"
+                                    alignItems="center"
+                                >
+                                    <Box marginEnd={4}>
+                                        <Link to="/search">
+                                            <IconButton
+                                                icon="search"
+                                                iconColor="black"
+                                            />
+                                        </Link>
+                                    </Box>
+                                    <Avatar
+                                        src={getUserAvatar}
+                                        ref={anchorRef}
+                                        onClick={() =>
+                                            setOpen((prevVal) => !prevVal)
+                                        }
+                                    />
+                                    {open && (
+                                        <Dropdown
+                                            zIndex={DROPDOWN_ZINDEX}
+                                            anchor={anchorRef.current}
+                                            id="action-variant-dropdown-example"
+                                            onDismiss={() => setOpen(false)}
                                         >
-                                            <DropdownMenu>
-                                                로그아웃
-                                            </DropdownMenu>
-                                        </CustomDropdown.Item>
-                                    </CustomDropdown.Menu>
-                                </CustomDropdown>
+                                            <Dropdown.Item
+                                                onSelect={handleHistoryMyPage}
+                                                option={{
+                                                    value: "조회수순",
+                                                    label: "마이페이지",
+                                                }}
+                                                selected={selected}
+                                            />
+                                            <Dropdown.Item
+                                                onSelect={logOutBtn}
+                                                option={{
+                                                    value: "최신순",
+                                                    label: "로그아웃",
+                                                }}
+                                                selected={selected}
+                                            />
+                                        </Dropdown>
+                                    )}
+                                </Flex>
                             )}
                         </NavContainerRight>
                     </NavContainerMobile>

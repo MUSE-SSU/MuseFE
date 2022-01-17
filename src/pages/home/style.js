@@ -6,4 +6,5 @@ import { motion } from "framer";
 
 export const HomeContainer = styled.div`
     width: 100vw;
+    overflow-x: hidden;
 `;
