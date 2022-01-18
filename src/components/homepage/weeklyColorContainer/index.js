@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ColorCard } from "../../../components";
 import { useHistory, Link } from "react-router-dom";
-import { MainContainer, ColorContainerName, ColorContainer } from "./style";
+import {
+    MainContainer,
+    ColorContainerName,
+    ColorContainer,
+    NameContainer,
+} from "./style";
 import { framer } from "framer";
 
 function WeeklyColorContainer() {
@@ -24,7 +29,9 @@ function WeeklyColorContainer() {
     }, []);
     return (
         <MainContainer>
-            <ColorContainerName>Weekly Colour</ColorContainerName>
+            <NameContainer>
+                <ColorContainerName>Weekly Colour</ColorContainerName>
+            </NameContainer>
             <ColorContainer>
                 {weeklyColors.map((weeklyColor, idx) => (
                     <Link to={`/search/?q=${weeklyColors[idx]}`}>

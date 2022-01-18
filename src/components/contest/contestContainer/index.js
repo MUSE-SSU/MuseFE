@@ -204,7 +204,6 @@ function MainContainer(props) {
                         {posts.length - 1 === idx ? (
                             <ListItem ref={ref}>
                                 <Card
-                                    rect="rect"
                                     image={post.image}
                                     title={post.title}
                                     idx={post.idx}

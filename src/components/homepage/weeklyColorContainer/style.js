@@ -3,7 +3,7 @@ import { motion } from "framer";
 
 export const MainContainer = styled.div`
     max-width: 1440px;
-    padding: 36px;
+    padding: 48px;
     @media (max-width: 479px) {
         padding: 12px;
     }
@@ -13,11 +13,22 @@ export const MainContainer = styled.div`
     @media (max-width: 1023px) and (min-width: 768px) {
         padding: 24px;
     }
-    @media (max-width: 1439px) and (min-width: 1024px) {
-        padding: 30px;
+    @media (max-width: 2561px) and (min-width: 1024px) {
+        padding: 48px;
     }
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    align-items: center;
+    flex-direction: column;
 `;
 
+export const NameContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+`;
 export const ColorContainerName = styled.h1`
     font-family: R-FLEX-BLACK;
     font-size: 2.5em;
@@ -28,6 +39,7 @@ export const ColorContainerName = styled.h1`
 
 export const ColorContainer = styled.div`
     margin-top: 12px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
 `;

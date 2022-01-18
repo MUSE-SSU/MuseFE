@@ -8,6 +8,7 @@ import { motion } from "framer";
 
 export const MainContainer = styled.div`
     padding: 24px;
+    max-width: 1440px;
     @media (max-width: 375px) {
         padding: 12px;
     }

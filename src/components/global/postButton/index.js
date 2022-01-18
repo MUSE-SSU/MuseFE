@@ -237,7 +237,7 @@ function Input() {
 
 function PostButton() {
     const [shouldShow, setShouldShow] = React.useState(false);
-    const HEADER_ZINDEX = new FixedZIndex(999);
+    const HEADER_ZINDEX = new FixedZIndex(998);
     const modalZIndex = new CompositeZIndex([HEADER_ZINDEX]);
 
     useEffect(() => {

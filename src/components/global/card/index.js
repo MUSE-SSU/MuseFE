@@ -19,6 +19,7 @@ import {
 import moment from "moment";
 import {
     CardContainer,
+    CardContainerRect,
     DropdownContainer,
     Image,
     ImageContainerRect,
@@ -241,7 +242,6 @@ function DetailPost(props) {
                     setTimeout(() => {
                         setLoading(false);
                         setShowSpinner(false);
-                        window.scrollTo(0, 0);
                     }, 500);
                 });
         }
@@ -767,7 +767,7 @@ function DetailPostPreview(props) {
     const handleShouldShow = (out) => {
         setShouldShow(out);
     };
-    const HEADER_ZINDEX = new FixedZIndex(10);
+    const HEADER_ZINDEX = new FixedZIndex(999);
     const modalZIndex = new CompositeZIndex([HEADER_ZINDEX]);
     const ModalWithHeading = ({ onDismiss }) => {
         return (
@@ -795,8 +795,8 @@ function DetailPostPreview(props) {
 
     return (
         <React.Fragment>
-            <CardContainer color="transparent">
-                {props.rect === "rect" ? (
+            {props.rect === "rect" ? (
+                <CardContainerRect color="transparent">
                     <ImageContainerRect onClick={() => setShouldShow(true)}>
                         <Image
                             src={`${props.image}`}
@@ -804,7 +804,32 @@ function DetailPostPreview(props) {
                             whileTap={{ scale: 0.98 }}
                         />
                     </ImageContainerRect>
-                ) : (
+                    <InfoContainer>
+                        <WriterContainer>
+                            <Avatar src={props.avatar} alt="" />
+                            <PostWriter
+                                onClick={() => {
+                                    window.location.href = `/my-page/${props.writer}`;
+                                }}
+                            >
+                                {props.writer}
+                            </PostWriter>
+                            {props.badge !== 0 && (
+                                <BadgePreview badge={props.badge}>
+                                    MUSE
+                                </BadgePreview>
+                            )}
+                        </WriterContainer>
+                        <PostStatusContainerRect>
+                            <LikesIcon />
+                            <CustomSpan>{props.likes}</CustomSpan>
+                            <EyeIcon />
+                            <CustomSpan>{props.views}</CustomSpan>
+                        </PostStatusContainerRect>
+                    </InfoContainer>
+                </CardContainerRect>
+            ) : (
+                <CardContainer color="transparent">
                     <ImageContainer onClick={() => setShouldShow(true)}>
                         <Image
                             src={`${props.image}`}
@@ -812,31 +837,32 @@ function DetailPostPreview(props) {
                             whileTap={{ scale: 0.98 }}
                         />
                     </ImageContainer>
-                )}
-                <InfoContainer>
-                    <WriterContainer>
-                        <Avatar src={props.avatar} alt="" />
-                        <PostWriter
-                            onClick={() => {
-                                window.location.href = `/my-page/${props.writer}`;
-                            }}
-                        >
-                            {props.writer}
-                        </PostWriter>
-                        {props.badge !== 0 && (
-                            <BadgePreview badge={props.badge}>
-                                MUSE
-                            </BadgePreview>
-                        )}
-                    </WriterContainer>
-                    <PostStatusContainerRect>
-                        <LikesIcon />
-                        <CustomSpan>{props.likes}</CustomSpan>
-                        <EyeIcon />
-                        <CustomSpan>{props.views}</CustomSpan>
-                    </PostStatusContainerRect>
-                </InfoContainer>
-            </CardContainer>
+                    <InfoContainer>
+                        <WriterContainer>
+                            <Avatar src={props.avatar} alt="" />
+                            <PostWriter
+                                onClick={() => {
+                                    window.location.href = `/my-page/${props.writer}`;
+                                }}
+                            >
+                                {props.writer}
+                            </PostWriter>
+                            {props.badge !== 0 && (
+                                <BadgePreview badge={props.badge}>
+                                    MUSE
+                                </BadgePreview>
+                            )}
+                        </WriterContainer>
+                        <PostStatusContainerRect>
+                            <LikesIcon />
+                            <CustomSpan>{props.likes}</CustomSpan>
+                            <EyeIcon />
+                            <CustomSpan>{props.views}</CustomSpan>
+                        </PostStatusContainerRect>
+                    </InfoContainer>
+                </CardContainer>
+            )}
+
             {shouldShow && (
                 <Layer zIndex={modalZIndex}>
                     <ModalWithHeading onDismiss={() => setShouldShow(false)} />

@@ -6,24 +6,6 @@ export const Logo = styled.h1`
     font-family: R-FLEX-BLACK;
     text-decoration: none !important;
     @media (max-width: 479px) {
-        font-size: var(--fs-100);
-    }
-    @media (max-width: 767px) and (min-width: 480px) {
-        font-size: var(--fs-150);
-    }
-    @media (max-width: 1023px) and (min-width: 768px) {
-        font-size: var(--fs-200);
-    }
-    @media (min-width: 1024px) {
-        font-size: var(--fs-250);
-    }
-`;
-
-export const ColorName = styled.h1`
-    font-family: R-FLEX-BLACK;
-    font-size: var(--fs-200);
-    text-decoration: none !important;
-    @media (max-width: 479px) {
         font-size: var(--fs-70);
     }
     @media (max-width: 767px) and (min-width: 480px) {
@@ -37,6 +19,28 @@ export const ColorName = styled.h1`
     }
 `;
 
+export const ColorName = styled.h1`
+    width: 18vw;
+    font-family: R-FLEX-BLACK;
+    font-size: var(--fs-200);
+    text-decoration: none !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    @media (max-width: 479px) {
+        font-size: var(--fs-70);
+    }
+    @media (max-width: 767px) and (min-width: 480px) {
+        font-size: var(--fs-70);
+    }
+    @media (max-width: 1024px) and (min-width: 768px) {
+        font-size: var(--fs-150);
+    }
+    @media (min-width: 1025px) {
+        font-size: var(--fs-200);
+    }
+`;
+
 export const ColorHexa = styled.h1`
     font-family: R-FLEX-BLACK;
     font-size: 20px;
@@ -45,13 +49,13 @@ export const ColorHexa = styled.h1`
         display: none;
     }
     @media (max-width: 767px) and (min-width: 480px) {
-        font-size: var(--fs-100);
+        font-size: 0.5em;
     }
     @media (max-width: 1023px) and (min-width: 768px) {
-        font-size: var(--fs-150);
+        font-size: var(--fs-70);
     }
     @media (min-width: 1024px) {
-        font-size: var(--fs-200);
+        font-size: var(--fs-100);
     }
 `;
 
@@ -59,8 +63,8 @@ export const MainContainer = styled(motion.div)`
     cursor: pointer;
     width: 18vw;
     max-width: 260px;
-    height: 24vh;
-    max-height: 360px;
+    height: 20vh;
+    max-height: 280px;
     overflow: hidden;
     border: 3px solid black;
     display: flex;

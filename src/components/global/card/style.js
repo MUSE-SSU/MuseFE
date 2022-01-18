@@ -6,8 +6,8 @@ import { Modal } from "gestalt";
 import "./style.css";
 export const CardContainer = styled(motion.div)`
     width: 300px;
-    z-index: -1;
     max-height: 600px;
+
     background-color: ${(props) => props.color};
     cursor: pointer;
     margin: 0;
@@ -20,6 +20,39 @@ export const ImageContainer = styled.div`
     max-height: 600px;
     border-radius: 16px;
     overflow: hidden;
+`;
+
+export const CardContainerRect = styled(CardContainer)`
+    width: 300px;
+    height: 300px;
+    @media (max-width: 320px) {
+        width: 72px;
+        height: 112px;
+        border-radius: 6px;
+    }
+    @media (max-width: 375px) and (min-width: 321px) {
+        border-radius: 8px;
+        width: 86px;
+        height: 126px;
+    }
+    @media (max-width: 425px) and (min-width: 376px) {
+        border-radius: 8px;
+        width: 98px;
+        height: 138px;
+    }
+    @media (max-width: 768px) and (min-width: 426px) {
+        border-radius: 12px;
+        width: 178px;
+        height: 218px;
+    }
+    @media (max-width: 1024px) and (min-width: 769px) {
+        width: 228px;
+        height: 268px;
+    }
+    @media (min-width: 1440px) {
+        width: 316px;
+        height: 356px;
+    }
 `;
 
 export const ImageContainerRect = styled.div`
@@ -48,12 +81,12 @@ export const ImageContainerRect = styled.div`
         height: 218px;
     }
     @media (max-width: 1024px) and (min-width: 769px) {
-        width: 240px;
-        height: 280px;
+        width: 228px;
+        height: 268px;
     }
     @media (min-width: 1440px) {
-        width: 336px;
-        height: 376px;
+        width: 316px;
+        height: 356px;
     }
 `;
 
@@ -165,6 +198,7 @@ export const ModalWriterInfoContainer = styled.div`
 export const CancelContainer = styled.div`
     width: 100%;
     display: flex;
+    margin-right: 12px;
     flex-direction: row;
     justify-content: flex-end;
 `;

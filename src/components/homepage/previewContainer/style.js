@@ -3,7 +3,7 @@ import { Dropdown } from "react-bootstrap";
 import { motion } from "framer";
 
 export const MainContainer = styled.div`
-    padding: 36px;
+    padding: 48px;
     @media (max-width: 479px) {
         padding: 12px;
     }
@@ -14,7 +14,7 @@ export const MainContainer = styled.div`
         padding: 24px;
     }
     @media (max-width: 2561px) and (min-width: 1024px) {
-        padding: 30px;
+        padding: 48px;
     }
 `;
 export const DropDownContainer = styled.div`
@@ -28,7 +28,10 @@ export const GridContainer = styled.div`
     margin-top: 12px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 `;
-export const ListItem = styled.div``;
+export const ListItem = styled.div`
+    display: flex;
+    justify-content: center;
+`;
 export const CustomDropdown = styled(Dropdown)`
     position: relative;
     margin: 12px 0 12px 0;
