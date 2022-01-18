@@ -250,13 +250,6 @@ function Navbar() {
                                             onDismiss={() => setOpen(false)}
                                         >
                                             <Dropdown.Item
-                                                onSelect={handleHistoryMuse}
-                                                option={{
-                                                    label: "Muse",
-                                                }}
-                                                selected={selectedMobileLeft}
-                                            />
-                                            <Dropdown.Item
                                                 onSelect={handleHistoryMyPage}
                                                 option={{
                                                     value: "조회수순",
@@ -300,16 +293,16 @@ function Navbar() {
                                     onDismiss={() => setOpenMobileLeft(false)}
                                 >
                                     <Dropdown.Item
-                                        onSelect={handleHistoryReference}
+                                        onSelect={handleHistoryMuse}
                                         option={{
-                                            label: "Reference",
+                                            label: "Muse",
                                         }}
                                         selected={selectedMobileLeft}
                                     />
                                     <Dropdown.Item
-                                        onSelect={handleHistoryContest}
+                                        onSelect={handleHistoryReference}
                                         option={{
-                                            label: "Contest",
+                                            label: "Reference",
                                         }}
                                         selected={selectedMobileLeft}
                                     />
