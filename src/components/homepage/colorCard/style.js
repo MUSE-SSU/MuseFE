@@ -2,29 +2,38 @@ import styled from "styled-components";
 import { motion } from "framer";
 
 export const Logo = styled.h1`
-    font-size: var(--g-text-font-size-7);
+    font-size: var(--fs-250);
     font-family: R-FLEX-BLACK;
     text-decoration: none !important;
-    @media (max-width: 767px) {
-        display: none;
+    @media (max-width: 479px) {
+        font-size: var(--fs-100);
     }
-    @media (max-width: 768px) and (min-width: 426px) {
-        font-size: 24px;
+    @media (max-width: 767px) and (min-width: 480px) {
+        font-size: var(--fs-150);
+    }
+    @media (max-width: 1023px) and (min-width: 768px) {
+        font-size: var(--fs-200);
+    }
+    @media (min-width: 1024px) {
+        font-size: var(--fs-250);
     }
 `;
 
 export const ColorName = styled.h1`
     font-family: R-FLEX-BLACK;
-    font-size: 24px;
+    font-size: var(--fs-200);
     text-decoration: none !important;
-    @media (max-width: 375px) {
-        font-size: 4px;
+    @media (max-width: 479px) {
+        font-size: var(--fs-70);
     }
-    @media (max-width: 425px) and (min-width: 376px) {
-        font-size: 8px;
+    @media (max-width: 767px) and (min-width: 480px) {
+        font-size: var(--fs-100);
     }
-    @media (max-width: 768px) and (min-width: 426px) {
-        font-size: 18px;
+    @media (max-width: 1023px) and (min-width: 768px) {
+        font-size: var(--fs-150);
+    }
+    @media (min-width: 1024px) {
+        font-size: var(--fs-200);
     }
 `;
 
@@ -32,24 +41,24 @@ export const ColorHexa = styled.h1`
     font-family: R-FLEX-BLACK;
     font-size: 20px;
     text-decoration: none !important;
-    @media (max-width: 320px) {
-        font-size: 4px;
+    @media (max-width: 479px) {
+        display: none;
     }
-    @media (max-width: 375px) and (min-width: 320px) {
-        font-size: 6px;
+    @media (max-width: 767px) and (min-width: 480px) {
+        font-size: var(--fs-100);
     }
-    @media (max-width: 425px) and (min-width: 376px) {
-        font-size: 8px;
+    @media (max-width: 1023px) and (min-width: 768px) {
+        font-size: var(--fs-150);
     }
-    @media (max-width: 768px) and (min-width: 426px) {
-        font-size: 14px;
+    @media (min-width: 1024px) {
+        font-size: var(--fs-200);
     }
 `;
 
 export const MainContainer = styled(motion.div)`
     cursor: pointer;
-    width: 17vw;
-    height: 300px;
+    width: 18vw;
+    height: 24vh;
     overflow: hidden;
     border: 3px solid black;
     display: flex;
@@ -65,67 +74,36 @@ export const MainContainer = styled(motion.div)`
     &:hover ${Logo} {
         color: ${(props) => `${props.color}`};
     }
+    //모바일
+    @media (max-width: 479px) {
+        height: 20vh;
+    }
 
-    @media (max-width: 320px) {
-        width: 56px;
-        height: 80px;
-        border: 2px solid black;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    //태블릿
+    @media (max-width: 767px) and (min-width: 480px) {
     }
-    @media (max-width: 375px) and (min-width: 321px) {
-        width: 68px;
-        height: 80px;
-        border: 2px solid black;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+
+    //노트북
+    @media (max-width: 1023px) and (min-width: 768px) {
     }
-    @media (max-width: 425px) and (min-width: 376px) {
-        width: 78px;
-        height: 88px;
-        border: 2px solid black;
+
+    //데스크탑 & 대형노트북
+    @media (min-width: 1024px) {
+        width: 18vw;
+        height: 30vh;
+        overflow: hidden;
+        border: 3px solid black;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    @media (max-width: 768px) and (min-width: 426px) {
-        width: 148px;
-        height: 188px;
-        border: 2px solid black;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    @media (max-width: 1163px) and (min-width: 769px) {
-        width: 194px;
-        height: 220px;
-        border: 2px solid black;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    @media (max-width: 1314px) and (min-width: 1162px) {
-        width: 196px;
-        height: 280px;
-        border: 2px solid black;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
     }
 `;
 
 export const Test = styled.div`
     border-radius: 50% 50% 0 0;
-    width: 280px;
-    height: 170px;
+    width: 30vw;
+    height: 30vh;
     background-color: ${(props) => props.color};
     @media (max-width: 320px) {
         margin-left: 2px;
@@ -152,25 +130,20 @@ export const InfoContainer = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    margin-left: 12px;
     @media (max-width: 320px) {
         margin-left: 2px;
         justify-content: flex-start;
-        height: 80px;
     }
     @media (max-width: 375px) and (min-width: 321px) {
         margin-left: 2px;
         justify-content: center;
-        height: 80px;
     }
     @media (max-width: 425px) and (min-width: 376px) {
         margin-left: 2px;
         justify-content: center;
-        height: 80px;
     }
     @media (max-width: 768px) and (min-width: 426px) {
         margin-left: 2px;
         justify-content: center;
-        height: 80px;
     }
 `;

@@ -34,6 +34,20 @@ export const GlobalStyle = createGlobalStyle`
     --g-text-font-size-8: 60px;
     --g-text-font-size-9: 72px;
 
+
+    --fs-70: 0.7rem;
+    --fs-100:: 1rem;
+    --fs-150: 1.5rem;
+    --fs-200: 2rem;
+    --fs-250: 2.5rem;
+    --fs-300: 3rem;
+    --fs-350: 3.5rem;
+    --fs-400: 4rem;
+
+    @media(min-widht: 768px){
+
+    }
+
     .html{
         width: 100%;
         height: 100%;
