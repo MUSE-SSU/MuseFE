@@ -18,21 +18,25 @@ export const CardContainer = styled(motion.div)`
         width: 72px;
         height: 112px;
     }
-    @media (max-width: 375px) and (min-width: 321px) {
+    @media (max-width: 374px) and (min-width: 321px) {
         width: 86px;
         height: 126px;
     }
-    @media (max-width: 425px) and (min-width: 376px) {
+    @media (max-width: 424px) and (min-width: 375px) {
         width: 98px;
         height: 138px;
     }
-    @media (max-width: 768px) and (min-width: 426px) {
+    @media (max-width: 767px) and (min-width: 425px) {
         width: 178px;
         height: 218px;
     }
-    @media (max-width: 1024px) and (min-width: 769px) {
+    @media (max-width: 1024px) and (min-width: 768px) {
         width: 240px;
         height: 280px;
+    }
+    @media (min-width: 1440px) {
+        width: 336px;
+        height: 376px;
     }
 `;
 export const ImageContainer = styled.div`
@@ -70,6 +74,10 @@ export const ImageContainerRect = styled.div`
     @media (max-width: 1024px) and (min-width: 769px) {
         width: 240px;
         height: 280px;
+    }
+    @media (min-width: 1440px) {
+        width: 336px;
+        height: 376px;
     }
 `;
 

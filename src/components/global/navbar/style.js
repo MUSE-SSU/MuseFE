@@ -17,6 +17,7 @@ export const NavContainerDesktop = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 92vw;
+    max-width: 1440px;
     height: 6vh;
     background-color: #fff;
 `;

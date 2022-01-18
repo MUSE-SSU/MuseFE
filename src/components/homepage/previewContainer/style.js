@@ -13,7 +13,7 @@ export const MainContainer = styled.div`
     @media (max-width: 1023px) and (min-width: 768px) {
         padding: 24px;
     }
-    @media (max-width: 1439px) and (min-width: 1024px) {
+    @media (max-width: 2561px) and (min-width: 1024px) {
         padding: 30px;
     }
 `;

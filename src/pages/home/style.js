@@ -6,5 +6,14 @@ import { motion } from "framer";
 
 export const HomeContainer = styled.div`
     width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     overflow-x: hidden;
+    background-color: #fcfcff;
+`;
+
+export const HomeInfoContainer = styled.div`
+    background-color: white;
+    max-width: 1440px;
 `;

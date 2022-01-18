@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { motion } from "framer";
 
 export const MainContainer = styled.div`
+    max-width: 1440px;
     padding: 36px;
     @media (max-width: 479px) {
         padding: 12px;

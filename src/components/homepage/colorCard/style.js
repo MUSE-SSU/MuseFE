@@ -58,7 +58,9 @@ export const ColorHexa = styled.h1`
 export const MainContainer = styled(motion.div)`
     cursor: pointer;
     width: 18vw;
+    max-width: 260px;
     height: 24vh;
+    max-height: 360px;
     overflow: hidden;
     border: 3px solid black;
     display: flex;
@@ -104,6 +106,8 @@ export const Test = styled.div`
     border-radius: 50% 50% 0 0;
     width: 30vw;
     height: 30vh;
+    max-width: 480px;
+    max-height: 480px;
     background-color: ${(props) => props.color};
     @media (max-width: 320px) {
         margin-left: 2px;
@@ -125,25 +129,25 @@ export const Test = styled.div`
 `;
 
 export const InfoContainer = styled.div`
-    width: 100%;
+    width: 94%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     @media (max-width: 320px) {
-        margin-left: 2px;
+        margin-left: 4px;
         justify-content: flex-start;
     }
     @media (max-width: 375px) and (min-width: 321px) {
-        margin-left: 2px;
+        margin-left: 4px;
         justify-content: center;
     }
     @media (max-width: 425px) and (min-width: 376px) {
-        margin-left: 2px;
+        margin-left: 4px;
         justify-content: center;
     }
     @media (max-width: 768px) and (min-width: 426px) {
-        margin-left: 2px;
+        margin-left: 4px;
         justify-content: center;
     }
 `;

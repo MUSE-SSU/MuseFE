@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { motion } from "framer";
 export const Banner = styled.div`
     width: 100vw;
+    max-width: 1440px;
     height: 480px;
     background-color: var(--g-color-blue-overlay);
     display: flex;
