@@ -14,30 +14,6 @@ export const CardContainer = styled(motion.div)`
     display: flex;
     flex-direction: column;
     align-items: center;
-    @media (max-width: 320px) {
-        width: 72px;
-        height: 112px;
-    }
-    @media (max-width: 374px) and (min-width: 321px) {
-        width: 86px;
-        height: 126px;
-    }
-    @media (max-width: 424px) and (min-width: 375px) {
-        width: 98px;
-        height: 138px;
-    }
-    @media (max-width: 767px) and (min-width: 425px) {
-        width: 178px;
-        height: 218px;
-    }
-    @media (max-width: 1024px) and (min-width: 768px) {
-        width: 240px;
-        height: 280px;
-    }
-    @media (min-width: 1440px) {
-        width: 336px;
-        height: 376px;
-    }
 `;
 export const ImageContainer = styled.div`
     width: 300px;
@@ -179,10 +155,25 @@ export const ModalWriterInfoContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
-    padding: 0 48px 0 48px;
+    padding: 0 48px 48px 48px;
+    margin: 0;
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
+`;
+
+export const CancelContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+`;
+
+export const ModalWriterInfoContainerMobile = styled(ModalWriterInfoContainer)`
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
+    padding: 12px 0 12px 0;
 `;
 
 export const ModalMainContainer = styled.div``;
@@ -195,11 +186,17 @@ export const ModalImageContainer = styled.div`
     margin-bottom: 32px;
     background-color: black;
 `;
-export const ModalImage = styled.img``;
+export const ModalImage = styled.img`
+    max-width: 100vw;
+    overflow-x: hidden;
+`;
 
 export const Writer = styled.h1`
     font-size: var(--g-text-font-size-5);
     font-weight: 600;
+    @media (max-width: 375px) {
+        font-size: var(--g-text-font-size-4);
+    }
 `;
 
 export const Title = styled.h1`
@@ -219,6 +216,10 @@ export const ModalAvatar = styled.img`
     height: 48px;
     border-radius: 50%;
     margin-right: 8px;
+    @media (max-width: 375px) {
+        width: 36px;
+        height: 36px;
+    }
 `;
 
 export const ReactModal = styled(Modal)`

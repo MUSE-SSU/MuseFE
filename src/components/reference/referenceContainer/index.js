@@ -4,13 +4,16 @@ import { Card } from "../../../components";
 import axios from "axios";
 import { Button, Flex, Dropdown, FixedZIndex } from "gestalt";
 import "gestalt/dist/gestalt.css";
+import { useMediaQuery as MediaQuery } from "react-responsive";
 import StackGrid from "react-stack-grid";
 import {
     CustomDropdown,
     DropdownContainer,
     ListItem,
+    ListAlign,
     ToggleH1,
     MainContainer,
+    StackGridContainer,
 } from "./style";
 import { motion } from "framer";
 
@@ -86,6 +89,13 @@ function ReferenceContainer(props) {
             setPage((state) => state + 1);
         }
     }, [inView, loading]);
+    const isMobile = MediaQuery({
+        query: "(max-width: 425px)",
+    });
+    const notMobile = MediaQuery({
+        query: "(min-width: 426px)",
+    });
+
     return (
         <MainContainer>
             <DropdownContainer>
@@ -110,7 +120,10 @@ function ReferenceContainer(props) {
                         >
                             <Dropdown.Item
                                 onSelect={likesOrder}
-                                option={{ value: "인기순", label: "인기순" }}
+                                option={{
+                                    value: "인기순",
+                                    label: "인기순",
+                                }}
                                 selected={selected}
                             />
                             <Dropdown.Item
@@ -123,14 +136,16 @@ function ReferenceContainer(props) {
                             />
                             <Dropdown.Item
                                 onSelect={recentOrder}
-                                option={{ value: "최신순", label: "최신순" }}
+                                option={{
+                                    value: "최신순",
+                                    label: "최신순",
+                                }}
                                 selected={selected}
                             />
                         </Dropdown>
                     )}
                 </Flex>
             </DropdownContainer>
-
             <StackGrid
                 columnWidth={300}
                 gutterWidth={4}
@@ -143,6 +158,7 @@ function ReferenceContainer(props) {
                         {posts.length - 1 === idx ? (
                             <ListItem ref={ref}>
                                 <Card
+                                    rect="rect"
                                     image={post.image}
                                     title={post.title}
                                     idx={post.idx}

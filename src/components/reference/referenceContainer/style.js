@@ -7,10 +7,16 @@ import { Modal } from "react-bootstrap";
 import { motion } from "framer";
 
 export const MainContainer = styled.div`
-    padding: 0 72px 36px 72px;
-    @media (max-width: 320px) {
-        padding: 10px;
+    padding: 24px;
+    @media (max-width: 375px) {
+        padding: 12px;
     }
+`;
+
+export const StackGridContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
 `;
 export const DropdownContainer = styled.div`
     display: flex;
@@ -22,59 +28,9 @@ export const DropdownContainer = styled.div`
 `;
 export const GridContainer = styled.div``;
 export const ListItem = styled.div``;
-export const CustomDropdown = styled(Dropdown)`
-    position: relative;
-    margin: 12px 0 12px 0;
-    .btn {
-        border-radius: 24px;
-    }
-    .btn-primary {
-        background-color: var(--g-color-blue);
-        border-color: var(--g-color-blue);
-    }
-    .btn-success {
-        background-color: var(--g-color-blue);
-        border-color: var(--g-color-blue);
-    }
-    .btn-success:hover {
-        background-color: var(--g-color-blue);
-    }
-    #dropdown-menu-align-end {
-        width: 100%;
-        padding: 0;
-        background-color: transparent;
-        border: none;
-        color: var(--g-olor-blue);
-    }
-    .dropdown-menu {
-        min-width: auto;
-        background-color: white;
-    }
-    .dropdown-item {
-        display: flex;
-        justify-content: center;
-        font-weight: 600;
-        &:hover {
-            background-color: var(--g-color-blue);
-        }
-    }
-
-    .btn-check:focus + &,
-    &:focus {
-        background-color: transparent;
-        box-shadow: none;
-    }
-    .btn-check:focus + .btn-primary,
-    .btn-primary:focus {
-        box-shadow: none;
-    }
-    .btn-check:checked + .btn-primary:focus,
-    .btn-check:active + .btn-primary:focus,
-    .btn-primary:active:focus,
-    .btn-primary.active:focus,
-    .show > .btn-primary.dropdown-toggle:focus {
-        box-shadow: none;
-    }
+export const ListAlign = styled.div`
+    display: flex;
+    justify-content: center;
 `;
 
 export const GestaltDropdown = styled(GDropdown)`
@@ -87,9 +43,9 @@ export const CardContainer = styled(motion.div)`
     max-height: 600px;
     cursor: pointer;
     margin: 0;
-    @media (max-width: 320px) {
-        width: 300px;
-        max-height: 600px;
+    @media (max-width: 375px) {
+        width: 200px;
+        max-height: 500px;
     }
 `;
 export const FourSquareCardContainer = styled(motion.div)`
@@ -108,6 +64,10 @@ export const ImageContainerDiv = styled.div`
     max-height: 600px;
     border-radius: 16px;
     overflow: hidden;
+    @media (max-width: 375px) {
+        width: 200px;
+        max-height: 500px;
+    }
 `;
 
 export const ImageContainer = styled(motion.img)`

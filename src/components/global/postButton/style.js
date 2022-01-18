@@ -179,7 +179,7 @@ export const InfoContainerSection1 = styled.div``;
 export const InfoContainerSection2 = styled.div``;
 
 export const IconContainer = styled.div`
-    margin: 24px 24px 24px 24px;
+    margin: 24px;
     display: block;
     z-index: 100;
     position: fixed;
