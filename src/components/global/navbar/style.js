@@ -67,40 +67,9 @@ export const Logo = styled(motion.div)`
     color: var(--g-color-blue);
 `;
 
-export const SearchIcon = styled(BiSearch)`
-    margin-right: 24px;
-    font-size: 24px;
-    &:hover {
-        color: var(--g-color-blue);
-    }
-    @media (max-width: 767px) {
-        margin-right: 12px;
-    }
-`;
-export const BurgerIcon = styled(GiHamburgerMenu)`
-    font-size: 24px;
-    &:hover {
-        color: var(--color-blue);
-    }
-`;
-export const AvatarIcon = styled(CgProfile)`
-    font-size: 24px;
-    &:hover {
-        color: var(--g-color-blue);
-    }
-`;
-
-export const DropdownMenu = styled.p`
-    font-weight: 600;
-    margin: 0;
-    font-size: 1em;
-`;
-
 export const Avatar = styled.img`
     width: 28px;
     height: 28px;
     border-radius: 50%;
     cursor: pointer;
 `;
-
-export const AgreeModal = styled(Modal)``;

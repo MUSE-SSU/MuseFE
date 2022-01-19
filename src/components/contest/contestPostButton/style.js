@@ -16,60 +16,6 @@ import {
     Modal,
 } from "gestalt";
 
-export const PostButton = styled(motion.div)`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 56px;
-    height: 56px;
-    margin: 0;
-    border: none;
-    padding: 0;
-    border: none;
-    border-radius: 50%;
-    background-color: var(--g-color-blue);
-    margin-bottom: 12px;
-    cursor: pointer;
-    z-index: 100;
-`;
-
-export const PlusButton = styled(FiPlus)`
-    width: 36px;
-    height: 36px;
-    margin: 0;
-    color: var(--g-color-white);
-    padding: 0;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    stroke-width: 3;
-`;
-
-export const QaButton = styled(BsFillQuestionCircleFill)`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 56px;
-    height: 56px;
-    margin: 0;
-    border: none;
-    padding: 0;
-    border: none;
-    cursor: pointer;
-    border-radius: 50%;
-    background-color: var(--g-color-white);
-    color: var(--g-color-blue);
-`;
-export const CustomModal = styled(Modal)`
-    overflow: visible;
-    .modal-body {
-    }
-    .modal-content {
-        border: none;
-        border-radius: 16px;
-    }
-`;
-
 export const CustomInput = styled.input`
     background-color: var(--g-color-gray100);
     padding: 16px;
@@ -88,8 +34,6 @@ export const CustomInputFile = styled.input`
     overflow: hidden;
     border: 0;
 `;
-
-const FileButton = styled.button``;
 
 export const CustomButton = styled.button`
     width: 84px;
@@ -189,22 +133,6 @@ export const IconContainer = styled.div`
 export const RadioInput = styled.input`
     width: auto;
     height: auto;
-`;
-
-export const RadioInputContainer = styled.div`
-    padding: 16px;
-    border: none;
-    width: 80%;
-    margin: 12px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: 12px;
-`;
-
-export const Hashtag = styled.h1`
-    color: tomato;
 `;
 
 export const ReactHashTags = styled(ReactTags)``;

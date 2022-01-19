@@ -2,7 +2,21 @@ import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUploadPost } from "../../../actions/post";
-import * as style from "./style";
+import {
+    CustomForm,
+    InfoContainer,
+    InfoContainerSection1,
+    InfoContainerSection2,
+    CustomButton,
+    Pre,
+    CustomInput,
+    CustomInputFile,
+    ImgPreview,
+    ImgPreviewContainer,
+    ImgPreviewSkeleton,
+    ImgPreviewSkeletonPlusButton,
+    CustomTextarea,
+} from "./style";
 import Swal from "sweetalert2";
 import { WithContext as ReactHashTags } from "react-tag-input";
 import "./style.css";
@@ -120,35 +134,32 @@ function Input() {
                         direction="row"
                         gap="6"
                     >
-                        <style.CustomForm
+                        <CustomForm
                             onSubmit={handleSubmit}
                             encType="multipart/form-data"
                         >
                             {imagePreview != null ? (
-                                <style.ImgPreviewContainer>
-                                    <style.ImgPreview
-                                        src={imagePreview}
-                                        alt=""
-                                    />
-                                </style.ImgPreviewContainer>
+                                <ImgPreviewContainer>
+                                    <ImgPreview src={imagePreview} alt="" />
+                                </ImgPreviewContainer>
                             ) : (
-                                <style.ImgPreviewSkeleton
+                                <ImgPreviewSkeleton
                                     onClick={handleHiddenInputFile}
                                     onChange={onChangeImage}
                                 >
-                                    <style.ImgPreviewSkeletonPlusButton />
-                                </style.ImgPreviewSkeleton>
+                                    <ImgPreviewSkeletonPlusButton />
+                                </ImgPreviewSkeleton>
                             )}
-                            <style.InfoContainer>
-                                <style.InfoContainerSection1>
-                                    <style.CustomInput
+                            <InfoContainer>
+                                <InfoContainerSection1>
+                                    <CustomInput
                                         type="text"
                                         name="title"
                                         onChange={onChangeTitle}
                                         placeholder="제목"
                                         autocomplete="off"
                                     />
-                                    <style.CustomInputFile
+                                    <CustomInputFile
                                         type="file"
                                         name="images"
                                         onChange={onChangeImage}
@@ -162,8 +173,8 @@ function Input() {
                                         inline={false}
                                         placeholder="해시태그 입력 후 enter키를 눌러주세요"
                                     />
-                                    <style.Pre>
-                                        <style.CustomTextarea
+                                    <Pre>
+                                        <CustomTextarea
                                             name="Text1"
                                             cols="90"
                                             Rows="4"
@@ -172,18 +183,18 @@ function Input() {
                                             placeholder="내용"
                                             autocomplete="off"
                                         />
-                                    </style.Pre>
-                                </style.InfoContainerSection1>
-                                <style.InfoContainerSection2>
-                                    <style.CustomButton
+                                    </Pre>
+                                </InfoContainerSection1>
+                                <InfoContainerSection2>
+                                    <CustomButton
                                         type="button"
                                         onClick={handleSubmit}
                                     >
                                         제출
-                                    </style.CustomButton>
-                                </style.InfoContainerSection2>
-                            </style.InfoContainer>
-                        </style.CustomForm>
+                                    </CustomButton>
+                                </InfoContainerSection2>
+                            </InfoContainer>
+                        </CustomForm>
                     </Flex>
                 </Box>
             </Box>

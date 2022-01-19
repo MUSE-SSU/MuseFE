@@ -4,7 +4,7 @@ import * as actionType from "../../../constants/actionTypes";
 import { userInfo } from "../../../actions/userInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery as MediaQuery } from "react-responsive";
-import { RulesModal, LoginModal } from "../../../components";
+import { LoginModal } from "../../../components";
 import { Button, Flex, Dropdown, FixedZIndex, Box, IconButton } from "gestalt";
 import "gestalt/dist/gestalt.css";
 import {
@@ -16,13 +16,7 @@ import {
     NavContainerRight,
     NavItem,
     Logo,
-    CustomDropdown,
-    SearchIcon,
-    AvatarIcon,
-    BurgerIcon,
-    DropdownMenu,
     Avatar,
-    CustomNavLink,
 } from "./style";
 
 function Navbar() {
