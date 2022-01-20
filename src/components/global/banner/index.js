@@ -6,6 +6,7 @@ import {
     Paragraph,
     Span,
     PostButtonContainer,
+    LargeBanner,
 } from "./style";
 import { ContestPostButton } from "../../../components";
 
@@ -37,19 +38,33 @@ function GlobalBanner(props) {
 
     return (
         <div>
-            <Banner>
-                <Label>
-                    Who's your <Highlight>MUSE?</Highlight>
-                </Label>
-                <Paragraph>
-                    영감을 나누는 공간 <Span>MUSE</Span>
-                </Paragraph>
-                {props.name === "contest" && (
-                    <PostButtonContainer>
-                        <ContestPostButton />
-                    </PostButtonContainer>
-                )}
-            </Banner>
+            {props.name === "muse" ? (
+                <LargeBanner>
+                    <Label>
+                        New <Highlight>MUSE</Highlight> <br />
+                        Comming...
+                    </Label>
+                    {props.name === "contest" && (
+                        <PostButtonContainer>
+                            <ContestPostButton />
+                        </PostButtonContainer>
+                    )}
+                </LargeBanner>
+            ) : (
+                <Banner>
+                    <Label>
+                        Who's your <Highlight>MUSE?</Highlight>
+                    </Label>
+                    <Paragraph>
+                        영감을 나누는 공간 <Span>MUSE</Span>
+                    </Paragraph>
+                    {props.name === "contest" && (
+                        <PostButtonContainer>
+                            <ContestPostButton />
+                        </PostButtonContainer>
+                    )}
+                </Banner>
+            )}
         </div>
     );
 }

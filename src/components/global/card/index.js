@@ -79,56 +79,31 @@ import {
 function DetailPost(props) {
     const token = JSON.parse(localStorage.getItem("token"));
     const dispatch = useDispatch();
-    const history = useHistory();
-    const getUserInfo = useSelector((state) => state.userInfo);
     const [submit, setSubmit] = useState(false);
     //게시물 관련
-    const [url, setUrl] = useState("");
+    const [data, setData] = useState();
     const [created, setCreated] = useState("");
-    const [title, setTitle] = useState("");
-    const [image, setImage] = useState("");
-    const [writer, setWriter] = useState("");
-    const [content, setContent] = useState("");
-    const [hashtags, setHashtags] = useState();
     const [likesCount, setLikesCount] = useState();
     const [idx, setIdx] = useState(props.idx);
-    const [imagePreview, setImagePreview] = useState();
+    const [otherPosts, setOtherPosts] = useState([]);
     //댓글 관련
     const [currentComments, setCurrentComments] = useState("");
-    const [comments, setComments] = useState([]);
     //로딩 관련
     const [loading, setLoading] = useState(false);
-    const [show, setShow] = useState(false);
     const [showSpinner, setShowSpinner] = useState(false);
-    const [otherPosts, setOtherPosts] = useState([]);
-
-    const [updateContent, setUpdateContent] = useState("");
-    const [updateTitle, setUpdateTitle] = useState("");
-    const [updateHashtag, setUpdateHashtag] = useState("");
-    const [modalSize, setModalSize] = useState("lg");
+    const [recommendLoading, setRecommendLoading] = useState(false);
     //user
-    const [isLoginUserFollowed, setIsLoginUserFollowed] = useState();
+    const [isFollowed, setIsFollowed] = useState();
     const [isLiked, setIsLiked] = useState();
     const [isSaved, setIsSaved] = useState();
-    const [isWriter, setIsWriter] = useState();
-    const [badge, setBadge] = useState(0);
-    const [writerAvatar, setWriterAvatar] = useState();
 
     //무한스크롤
+    const modalRef = useRef(null); // otherposts 클릭시 맨 위 고정 ref
     const [page, setPage] = useState(1);
-    const [recommendLoading, setRecommendLoading] = useState(false);
-    const [options, setOptions] = useState("likes");
     const [ref, inView] = useInView({ trackVisibility: true, delay: 100 });
-    const modalRef = useRef(null);
     const [changeScroll, setChangeScroll] = useState(false);
 
-    //드롭다운
-    const [open, setOpen] = React.useState(false);
-    const [selected, setSelected] = React.useState(null, []);
-    const anchorRef = React.useRef(null);
-    const DROPDOWN_ZINDEX = new FixedZIndex(999);
-
-    //나가기
+    //CANCEL 버튼 함수
     const handleOut = () => {
         props.handleShouldShow(false);
     };
@@ -189,21 +164,12 @@ function DetailPost(props) {
             })
                 .then((res) => res.json())
                 .then((data) => {
+                    setData(data);
                     console.log(data);
                     setIsLiked(data.is_login_user_liked);
-                    setTitle(data.title);
-                    setImage(data.image);
-                    setImagePreview(data.image);
-                    setUrl(data.ref_url);
-                    setIsLoginUserFollowed(data.is_login_user_follow);
-                    setHashtags(data.hashtag);
                     setIdx(data.idx);
-                    setWriter(data.writer);
-                    setContent(data.content);
-                    setIsWriter(data.is_writer);
                     setLikesCount(data.likes);
-                    setWriterAvatar(data.writer_avatar);
-                    setComments(data.comment);
+                    setIsFollowed(data.is_login_user_follow);
                     setCreated(moment(data.created_at).format("YYYY-MM-DD"));
                     setIsSaved(data.is_login_user_bookmark);
                 })
@@ -220,21 +186,12 @@ function DetailPost(props) {
             })
                 .then((res) => res.json())
                 .then((data) => {
+                    setData(data);
                     console.log(data);
                     setIsLiked(data.is_login_user_liked);
-                    setTitle(data.title);
-                    setImage(data.image);
-                    setUrl(data.ref_url);
-                    setImagePreview(data.image);
-                    setIsLoginUserFollowed(data.is_login_user_follow);
-                    setHashtags(data.hashtag);
                     setIdx(data.idx);
-                    setWriter(data.writer);
-                    setContent(data.content);
-                    setIsWriter(data.is_writer);
                     setLikesCount(data.likes);
-                    setWriterAvatar(data.writer_avatar);
-                    setComments(data.comment);
+                    setIsFollowed(data.is_login_user_follow);
                     setCreated(moment(data.created_at).format("YYYY-MM-DD"));
                     setIsSaved(data.is_login_user_bookmark);
                 })
@@ -250,20 +207,29 @@ function DetailPost(props) {
     const handleFollow = () => {
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
         const token = JSON.parse(localStorage.getItem("token"));
-        console.log(token);
-        return fetch(`${API_DOMAIN}/account/follow/`, {
-            method: "POST",
-            headers: {
-                Authorization: `${token}`,
-                "content-type": "application/json",
-            },
-            body: JSON.stringify({
-                follower: writer,
-            }),
-        }).then(() => {
-            setIsLoginUserFollowed(!isLoginUserFollowed);
-            console.log(isLoginUserFollowed);
-        });
+
+        if (token === null) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "로그인을 해주세요",
+                showConfirmButton: false,
+                timer: 1000,
+            });
+        } else {
+            return fetch(`${API_DOMAIN}/account/follow/`, {
+                method: "POST",
+                headers: {
+                    Authorization: `${token}`,
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify({
+                    follower: data.writer,
+                }),
+            }).then(() => {
+                setIsFollowed(!isFollowed);
+            });
+        }
     };
     // 게시물 업데이트 관련
     // const handleClose = () => {
@@ -358,12 +324,21 @@ function DetailPost(props) {
 
     const handleLikes = () => {
         try {
-            const postIdx = idx;
-            dispatch(sendIsLiked(postIdx));
-            setIsLiked(!isLiked);
-            handleLikesCount();
-
-            console.log(isLiked);
+            const token = JSON.parse(localStorage.getItem("token"));
+            if (token === null) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Opps...",
+                    text: "먼저 로그인을 해주세요",
+                    showConfirmButton: false,
+                    timer: 1000,
+                });
+            } else {
+                const postIdx = idx;
+                dispatch(sendIsLiked(postIdx));
+                setIsLiked(!isLiked);
+                handleLikesCount();
+            }
         } catch (e) {
             console.error(e);
         }
@@ -371,10 +346,20 @@ function DetailPost(props) {
 
     const handleSave = () => {
         try {
-            const PostIdx = idx;
-            dispatch(sendIsSaved(PostIdx));
-            setIsSaved(!isSaved);
-            console.log("saved");
+            const token = JSON.parse(localStorage.getItem("token"));
+            if (token === null) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "먼저 로그인을 해주세요",
+                    showConfirmButton: false,
+                    timer: 1000,
+                });
+            } else {
+                const PostIdx = idx;
+                dispatch(sendIsSaved(PostIdx));
+                setIsSaved(!isSaved);
+            }
         } catch (e) {
             console.error(e);
         }
@@ -432,337 +417,363 @@ function DetailPost(props) {
 
     return (
         <ModalMainContainer ref={modalRef}>
-            <Box>
-                <CancelContainer>
-                    <IconButton
-                        icon="cancel"
-                        onClick={() => {
-                            handleOut();
-                        }}
-                    />
-                </CancelContainer>
-                {notMobile && (
-                    <ModalWriterInfoContainer>
-                        <Box>
-                            <Flex direction="row" alignItems="center">
-                                <ModalAvatar src={props.avatar} />
-                                <Flex direction="column">
-                                    <Flex direction="row" alignItems="center">
-                                        <Writer>{writer}</Writer>
-                                        {props.badge !== 0 && (
-                                            <BadgeDetail badge={props.badge}>
-                                                MUSE
-                                            </BadgeDetail>
-                                        )}
-                                    </Flex>
-
-                                    <Flex direction="row">
-                                        <Date>{created}</Date>
-                                    </Flex>
-                                </Flex>
-                            </Flex>
-                        </Box>
-                        <Box>
-                            <Flex direction="row">
-                                <Box marginEnd={3}>
-                                    {isWriter === false ? (
-                                        isLoginUserFollowed === false ? (
-                                            <Button
-                                                text="팔로우"
-                                                onClick={handleFollow}
-                                            ></Button>
-                                        ) : (
-                                            <Button
-                                                onClick={handleFollow}
-                                                text="팔로잉"
-                                                color="red"
-                                            ></Button>
-                                        )
-                                    ) : (
-                                        <></>
-                                    )}
-                                </Box>
-                                <Box marginEnd={3}>
-                                    {isLiked === true ? (
-                                        <IconButton
-                                            icon="heart"
-                                            bgColor="red"
-                                            onClick={handleLikes}
-                                        />
-                                    ) : (
-                                        <IconButton
-                                            icon="heart"
-                                            bgColor="lightGray"
-                                            onClick={handleLikes}
-                                        />
-                                    )}
-                                </Box>
-                                <Box marginEnd={3}>
-                                    {isSaved === true ? (
-                                        <IconButton
-                                            icon="folder"
-                                            bgColor="red"
-                                            onClick={handleSave}
-                                        />
-                                    ) : (
-                                        <IconButton
-                                            icon="folder"
-                                            bgColor="lightGray"
-                                            onClick={handleSave}
-                                        />
-                                    )}
-                                </Box>
-                                {isWriter === true && (
-                                    <Box marginEnd={3}>
-                                        <IconButton
-                                            icon="trash-can"
-                                            bgColor="lightGray"
-                                            onClick={handleDeletePost}
-                                        />
-                                    </Box>
-                                )}
-                            </Flex>
-                        </Box>
-                    </ModalWriterInfoContainer>
-                )}
-                {isMobile && (
-                    <ModalWriterInfoContainerMobile>
-                        <Box>
-                            <Flex direction="row" alignItems="center">
-                                <ModalAvatar src={props.avatar} />
-                                <Flex direction="column">
-                                    <Flex direction="row" alignItems="center">
-                                        <Writer>{writer}</Writer>
-                                        {props.badge !== 0 && (
-                                            <BadgeDetail badge={props.badge}>
-                                                MUSE
-                                            </BadgeDetail>
-                                        )}
-                                    </Flex>
-
-                                    <Flex direction="row">
-                                        <Date>{created}</Date>
-                                    </Flex>
-                                </Flex>
-                            </Flex>
-                        </Box>
-                        <Box marginTop={3}>
-                            <Flex direction="row">
-                                <Box marginEnd={3}>
-                                    {isWriter === false ? (
-                                        isLoginUserFollowed === false ? (
-                                            <Button
-                                                text="팔로우"
-                                                onClick={handleFollow}
-                                            ></Button>
-                                        ) : (
-                                            <Button
-                                                onClick={handleFollow}
-                                                text="팔로잉"
-                                                color="red"
-                                            ></Button>
-                                        )
-                                    ) : (
-                                        <></>
-                                    )}
-                                </Box>
-                                <Box marginEnd={3}>
-                                    {isLiked === true ? (
-                                        <IconButton
-                                            icon="heart"
-                                            bgColor="red"
-                                            onClick={handleLikes}
-                                        />
-                                    ) : (
-                                        <IconButton
-                                            icon="heart"
-                                            bgColor="lightGray"
-                                            onClick={handleLikes}
-                                        />
-                                    )}
-                                </Box>
-                                <Box marginEnd={3}>
-                                    {isSaved === true ? (
-                                        <IconButton
-                                            icon="folder"
-                                            bgColor="red"
-                                            onClick={handleSave}
-                                        />
-                                    ) : (
-                                        <IconButton
-                                            icon="folder"
-                                            bgColor="lightGray"
-                                            onClick={handleSave}
-                                        />
-                                    )}
-                                </Box>
-                                {isWriter === true && (
-                                    <Box marginEnd={3}>
-                                        <IconButton
-                                            icon="trash-can"
-                                            bgColor="lightGray"
-                                            onClick={handleDeletePost}
-                                        />
-                                    </Box>
-                                )}
-                            </Flex>
-                        </Box>
-                    </ModalWriterInfoContainerMobile>
-                )}
-            </Box>
-            <ModalImageContainer>
-                <ModalImage src={image} alt="" />
-            </ModalImageContainer>
-            <ModalInfoContainer>
+            {data !== undefined && (
                 <Box>
-                    <Title>{title}</Title>
-                </Box>
-                <Content>{content}</Content>
-                <Url
-                    onClick={() => {
-                        window.location.href = `${url}`;
-                    }}
-                >
-                    {url}
-                </Url>
-            </ModalInfoContainer>
-
-            <ModalCommentContainer>
-                {comments.map((comment) => (
-                    <React.Fragment key={comment.idx}>
-                        <Box
-                            marginTop={2}
-                            borderStyle="sm"
-                            rounding={4}
-                            padding={2}
-                        >
-                            <Flex
-                                direction="row"
-                                alignItems="center"
-                                justifyContent="between"
-                            >
+                    <Box>
+                        <CancelContainer>
+                            <IconButton
+                                icon="cancel"
+                                onClick={() => {
+                                    handleOut();
+                                }}
+                            />
+                        </CancelContainer>
+                        {notMobile && (
+                            <ModalWriterInfoContainer>
                                 <Box>
                                     <Flex direction="row" alignItems="center">
-                                        <Avatar
-                                            src={`${comment.writer_avatar}`}
-                                        />
-                                        <Box>
-                                            <CommentWriter>
-                                                {comment.writer}
-                                            </CommentWriter>
-                                            <Comment>{comment.comment}</Comment>
-                                        </Box>
+                                        <ModalAvatar src={data.writer_avatar} />
+                                        <Flex direction="column">
+                                            <Flex
+                                                direction="row"
+                                                alignItems="center"
+                                            >
+                                                <Writer>{data.writer}</Writer>
+                                                {data.badge !== 0 && (
+                                                    <BadgeDetail
+                                                        badge={data.badge}
+                                                    >
+                                                        MUSE
+                                                    </BadgeDetail>
+                                                )}
+                                            </Flex>
+
+                                            <Flex direction="row">
+                                                <Date>{created}</Date>
+                                            </Flex>
+                                        </Flex>
                                     </Flex>
                                 </Box>
-                                {comment.is_writer === true ? (
-                                    <Flex justifyContent="end">
-                                        <IconButton
-                                            icon="trash-can"
-                                            onClick={() =>
-                                                handleCommentDelete(comment.idx)
-                                            }
-                                        />
+                                <Box>
+                                    <Flex direction="row">
+                                        <Box marginEnd={3}>
+                                            {data.is_writer === false ? (
+                                                isFollowed === false ? (
+                                                    <Button
+                                                        text="팔로우"
+                                                        onClick={handleFollow}
+                                                    ></Button>
+                                                ) : (
+                                                    <Button
+                                                        onClick={handleFollow}
+                                                        text="팔로잉"
+                                                        color="red"
+                                                    ></Button>
+                                                )
+                                            ) : (
+                                                <></>
+                                            )}
+                                        </Box>
+                                        <Box marginEnd={3}>
+                                            {isLiked === true ? (
+                                                <IconButton
+                                                    icon="heart"
+                                                    bgColor="red"
+                                                    onClick={handleLikes}
+                                                />
+                                            ) : (
+                                                <IconButton
+                                                    icon="heart"
+                                                    bgColor="lightGray"
+                                                    onClick={handleLikes}
+                                                />
+                                            )}
+                                        </Box>
+                                        <Box marginEnd={3}>
+                                            {isSaved === true ? (
+                                                <IconButton
+                                                    icon="folder"
+                                                    bgColor="red"
+                                                    onClick={handleSave}
+                                                />
+                                            ) : (
+                                                <IconButton
+                                                    icon="folder"
+                                                    bgColor="lightGray"
+                                                    onClick={handleSave}
+                                                />
+                                            )}
+                                        </Box>
+                                        {data.is_writer === true && (
+                                            <Box marginEnd={3}>
+                                                <IconButton
+                                                    icon="trash-can"
+                                                    bgColor="lightGray"
+                                                    onClick={handleDeletePost}
+                                                />
+                                            </Box>
+                                        )}
                                     </Flex>
-                                ) : (
-                                    <></>
-                                )}
-                            </Flex>
-                        </Box>
-                    </React.Fragment>
-                ))}
+                                </Box>
+                            </ModalWriterInfoContainer>
+                        )}
+                        {isMobile && (
+                            <ModalWriterInfoContainerMobile>
+                                <Box>
+                                    <Flex direction="row" alignItems="center">
+                                        <ModalAvatar src={data.writer_avatar} />
+                                        <Flex direction="column">
+                                            <Flex
+                                                direction="row"
+                                                alignItems="center"
+                                            >
+                                                <Writer>
+                                                    {data.writer_avatar}
+                                                </Writer>
+                                                {data.badge !== 0 && (
+                                                    <BadgeDetail
+                                                        badge={data.badge}
+                                                    >
+                                                        MUSE
+                                                    </BadgeDetail>
+                                                )}
+                                            </Flex>
 
-                {token !== undefined ? (
-                    <>
-                        <Box paddingY={4} width="100%">
-                            <TextArea
-                                id="comment"
-                                placeholder="댓글 작성"
-                                rows="2"
-                                onChange={({ value }) =>
-                                    setCurrentComments(value)
-                                }
-                                onKeyDown={onKeyDownTagManagement}
-                                value={currentComments}
-                            />
+                                            <Flex direction="row">
+                                                <Date>{created}</Date>
+                                            </Flex>
+                                        </Flex>
+                                    </Flex>
+                                </Box>
+                                <Box marginTop={3}>
+                                    <Flex direction="row">
+                                        <Box marginEnd={3}>
+                                            {data.is_writer === false ? (
+                                                isFollowed === false ? (
+                                                    <Button
+                                                        text="팔로우"
+                                                        onClick={handleFollow}
+                                                    ></Button>
+                                                ) : (
+                                                    <Button
+                                                        onClick={handleFollow}
+                                                        text="팔로잉"
+                                                        color="red"
+                                                    ></Button>
+                                                )
+                                            ) : (
+                                                <></>
+                                            )}
+                                        </Box>
+                                        <Box marginEnd={3}>
+                                            {isLiked === true ? (
+                                                <IconButton
+                                                    icon="heart"
+                                                    bgColor="red"
+                                                    onClick={handleLikes}
+                                                />
+                                            ) : (
+                                                <IconButton
+                                                    icon="heart"
+                                                    bgColor="lightGray"
+                                                    onClick={handleLikes}
+                                                />
+                                            )}
+                                        </Box>
+                                        <Box marginEnd={3}>
+                                            {isSaved === true ? (
+                                                <IconButton
+                                                    icon="folder"
+                                                    bgColor="red"
+                                                    onClick={handleSave}
+                                                />
+                                            ) : (
+                                                <IconButton
+                                                    icon="folder"
+                                                    bgColor="lightGray"
+                                                    onClick={handleSave}
+                                                />
+                                            )}
+                                        </Box>
+                                        {data.is_writer === true && (
+                                            <Box marginEnd={3}>
+                                                <IconButton
+                                                    icon="trash-can"
+                                                    bgColor="lightGray"
+                                                    onClick={handleDeletePost}
+                                                />
+                                            </Box>
+                                        )}
+                                    </Flex>
+                                </Box>
+                            </ModalWriterInfoContainerMobile>
+                        )}
+                    </Box>
+                    <ModalImageContainer>
+                        <ModalImage src={data.image} alt="" />
+                    </ModalImageContainer>
+                    <ModalInfoContainer>
+                        <Box>
+                            <Title>{data.title}</Title>
                         </Box>
-                        <Flex justifyContent="end">
-                            <Box>
-                                <Button
-                                    text="제출"
-                                    onClick={handleSubmitComment}
-                                ></Button>
-                            </Box>
-                        </Flex>
-                    </>
-                ) : (
-                    <>
-                        <Box paddingY={2} width="100%">
-                            <TextArea
-                                disabled
-                                placeholder="댓글 작성"
-                                rows="2"
-                                onChange={({ currentComments }) =>
-                                    setCurrentComments(currentComments)
-                                }
-                            />
-                        </Box>
-                        <Flex justifyContent="end">
-                            <Box>
-                                <Button
-                                    text="제출"
-                                    onClick={handleSubmitComment}
-                                />
-                            </Box>
-                        </Flex>
-                    </>
-                )}
-            </ModalCommentContainer>
-            <Box marginTop={4}>
-                <StackGrid
-                    columnWidth={260}
-                    gutterWidth={8}
-                    duration={0}
-                    monitorImagesLoaded={true}
-                    style={{ width: "100%" }}
-                >
-                    {otherPosts.map((otherPost, idx) => (
-                        <React.Fragment key={idx}>
-                            {otherPosts.length - 1 === idx ? (
-                                <ListItem ref={ref}>
-                                    <OtherPostsImg
-                                        src={`${otherPost.image}`}
-                                        onClick={() => {
-                                            setIdx(otherPost.idx);
-                                            setPage(1);
-                                            setChangeScroll(!changeScroll);
-                                            setOtherPosts([]);
-                                        }}
+                        <Content>{data.content}</Content>
+                        <Url
+                            onClick={() => {
+                                window.location.href = `${data.ref_url}`;
+                            }}
+                        >
+                            {data.ref_url}
+                        </Url>
+                    </ModalInfoContainer>
+
+                    <ModalCommentContainer>
+                        {data.comment.map((comment) => (
+                            <React.Fragment key={comment.idx}>
+                                <Box
+                                    marginTop={2}
+                                    borderStyle="sm"
+                                    rounding={4}
+                                    padding={2}
+                                >
+                                    <Flex
+                                        direction="row"
+                                        alignItems="center"
+                                        justifyContent="between"
+                                    >
+                                        <Box>
+                                            <Flex
+                                                direction="row"
+                                                alignItems="center"
+                                            >
+                                                <Avatar
+                                                    src={`${comment.writer_avatar}`}
+                                                />
+                                                <Box>
+                                                    <CommentWriter>
+                                                        {comment.writer}
+                                                    </CommentWriter>
+                                                    <Comment>
+                                                        {comment.comment}
+                                                    </Comment>
+                                                </Box>
+                                            </Flex>
+                                        </Box>
+                                        {comment.is_writer === true ? (
+                                            <Flex justifyContent="end">
+                                                <IconButton
+                                                    icon="trash-can"
+                                                    onClick={() =>
+                                                        handleCommentDelete(
+                                                            comment.idx
+                                                        )
+                                                    }
+                                                />
+                                            </Flex>
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </Flex>
+                                </Box>
+                            </React.Fragment>
+                        ))}
+
+                        {token !== undefined ? (
+                            <>
+                                <Box paddingY={4} width="100%">
+                                    <TextArea
+                                        id="comment"
+                                        placeholder="댓글 작성"
+                                        rows="2"
+                                        onChange={({ value }) =>
+                                            setCurrentComments(value)
+                                        }
+                                        onKeyDown={onKeyDownTagManagement}
+                                        value={currentComments}
                                     />
-                                </ListItem>
-                            ) : (
-                                <ListItem>
-                                    <OtherPostsImg
-                                        src={`${otherPost.image}`}
-                                        onClick={() => {
-                                            setIdx(otherPost.idx);
-                                            setOtherPosts([]);
-                                            setChangeScroll(!changeScroll);
-                                            setPage(1);
-                                            console.log(idx);
-                                        }}
+                                </Box>
+                                <Flex justifyContent="end">
+                                    <Box>
+                                        <Button
+                                            text="제출"
+                                            onClick={handleSubmitComment}
+                                        ></Button>
+                                    </Box>
+                                </Flex>
+                            </>
+                        ) : (
+                            <>
+                                <Box paddingY={2} width="100%">
+                                    <TextArea
+                                        disabled
+                                        placeholder="댓글 작성"
+                                        rows="2"
+                                        onChange={({ currentComments }) =>
+                                            setCurrentComments(currentComments)
+                                        }
                                     />
-                                </ListItem>
-                            )}
-                        </React.Fragment>
-                    ))}
-                </StackGrid>
-            </Box>
+                                </Box>
+                                <Flex justifyContent="end">
+                                    <Box>
+                                        <Button
+                                            text="제출"
+                                            onClick={handleSubmitComment}
+                                        />
+                                    </Box>
+                                </Flex>
+                            </>
+                        )}
+                    </ModalCommentContainer>
+                    <Box marginTop={4}>
+                        <StackGrid
+                            columnWidth={260}
+                            gutterWidth={8}
+                            duration={0}
+                            monitorImagesLoaded={true}
+                            style={{ width: "100%" }}
+                        >
+                            {otherPosts.map((otherPost, idx) => (
+                                <React.Fragment key={idx}>
+                                    {otherPosts.length - 1 === idx ? (
+                                        <ListItem ref={ref}>
+                                            <OtherPostsImg
+                                                src={`${otherPost.image}`}
+                                                onClick={() => {
+                                                    setIdx(otherPost.idx);
+                                                    setPage(1);
+                                                    setChangeScroll(
+                                                        !changeScroll
+                                                    );
+                                                    setOtherPosts([]);
+                                                }}
+                                            />
+                                        </ListItem>
+                                    ) : (
+                                        <ListItem>
+                                            <OtherPostsImg
+                                                src={`${otherPost.image}`}
+                                                onClick={() => {
+                                                    setIdx(otherPost.idx);
+                                                    setOtherPosts([]);
+                                                    setChangeScroll(
+                                                        !changeScroll
+                                                    );
+                                                    setPage(1);
+                                                    console.log(idx);
+                                                }}
+                                            />
+                                        </ListItem>
+                                    )}
+                                </React.Fragment>
+                            ))}
+                        </StackGrid>
+                    </Box>
+                </Box>
+            )}
         </ModalMainContainer>
     );
 }
 
 function DetailPostPreview(props) {
-    const history = useHistory();
     const [shouldShow, setShouldShow] = React.useState(false);
     const handleShouldShow = (out) => {
         setShouldShow(out);

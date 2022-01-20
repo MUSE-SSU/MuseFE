@@ -18,7 +18,12 @@ export const Banner = styled.div`
         font-size: 12px;
     }
 `;
+
+export const LargeBanner = styled(Banner)`
+    height: 90vh;
+`;
 export const Label = styled.h1`
+    text-align: center;
     color: black;
     font-family: R-FLEX-BLACK;
     font-size: 3em;

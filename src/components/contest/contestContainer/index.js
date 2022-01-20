@@ -66,7 +66,6 @@ function MainContainer(props) {
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [options, setOptions] = useState("likes");
-    const [ref, inView] = useInView({ trackVisibility: true, delay: 100 });
     const [contestBool, setContestBool] = useState(true);
     const [isOn, setIsOn] = useState(false);
     // 드롭다운 state
@@ -75,6 +74,10 @@ function MainContainer(props) {
     const anchorRef = React.useRef(null);
     const DROPDOWN_ZINDEX = new FixedZIndex(10);
 
+    //무한스크롤
+    const [ref, inView] = useInView({ trackVisibility: true, delay: 100 });
+
+    //무한스크롤 getPosts
     const getPosts = useCallback(() => {
         setLoading(true);
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
@@ -98,6 +101,7 @@ function MainContainer(props) {
         setLoading(false);
     }, [page, options, contestBool]);
 
+    //정렬선택
     const likesOrder = ({ item }) => {
         setSelected(item);
         setPosts([]);
