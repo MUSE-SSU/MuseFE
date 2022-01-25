@@ -8,3 +8,4 @@ export const IS_LIKED = "IS_LIKED";
 export const CURRENT_IDX = "CURRENT_IDX";
 export const DETAIL_POST = "DETAIL_POST";
 export const CHECK_NICKNAME_DUPLICATION = "CHECK_NICKNAME_DUPLICATION";
+export const CHECK_IS_FIRST = "CHECK_IS_FIRST";

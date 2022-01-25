@@ -9,10 +9,12 @@ import {
     WeeklyColorContainer,
     GlobalNavbar,
     GlobalInfoButton,
+    GlobalToast,
 } from "../../components";
 import { userInfo } from "../../actions/userInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { HomeContainer, HomeInfoContainer } from "./style";
+import Swal from "sweetalert2";
 
 function Home() {
     return (
@@ -25,6 +27,7 @@ function Home() {
                 <WeeklyColorContainer />
                 <PreviewContainer name="reference" />
                 <PreviewContainer name="contest" />
+                <GlobalToast />
             </HomeInfoContainer>
         </HomeContainer>
     );

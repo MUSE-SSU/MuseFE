@@ -1,4 +1,4 @@
-import { AUTH, LOG_OUT } from "../constants/actionTypes";
+import { AUTH, LOG_OUT, CHECK_IS_FIRST } from "../constants/actionTypes";
 import * as api from "../api/index";
 
 export const kakaoLogin = (authorizeCodeFromKakao) => async (dispatch) => {
@@ -25,4 +25,8 @@ export const logOut = () => async (dispatch) => {
     } catch (e) {
         console.error(e);
     }
+};
+
+export const checkIsFirst = () => async (dispatch) => {
+    dispatch({ type: CHECK_IS_FIRST });
 };

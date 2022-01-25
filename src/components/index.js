@@ -7,6 +7,7 @@ export { default as RulesModal } from "./global/rulesModal";
 export { default as Card } from "./global/card";
 export { default as Logo } from "./global/logo";
 export { default as GlobalInfoButton } from "./global/infoButton";
+export { default as GlobalToast } from "./global/toast";
 
 // home 관련 컴포넌트
 export { default as ColorCard } from "./homepage/colorCard";
