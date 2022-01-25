@@ -23,16 +23,16 @@ import "./style.css";
 import {
     Box,
     Button,
-    Checkbox,
-    IconButton,
     CompositeZIndex,
     FixedZIndex,
     Flex,
-    Text,
     Layer,
     Modal,
 } from "gestalt";
 function Input() {
+    const dispatch = useDispatch();
+    const history = useHistory();
+
     const [show, setShow] = useState(false);
     const [image, setImage] = useState(null);
     const [content, setContent] = useState("");
@@ -42,37 +42,47 @@ function Input() {
     const [hashs, setHashs] = useState([]);
     const tag = "contest";
 
+    // file input 버튼 스켈레톤에 이식
     const hiddenFileInput = useRef(null);
 
+    // 모달 닫은 후 초기화
     const handleClose = () => {
         setShow(false);
         setContent(null);
         setTitle(null);
         setImagePreview(null);
     };
-    const dispatch = useDispatch();
-    const history = useHistory();
+
+    // 제목 변경 감지
     const onChangeTitle = (e) => {
         e.preventDefault();
         setTitle(e.target.value);
     };
+
+    // 내용 변경 감지
     const onChangeContent = (e) => {
         setContent(e.target.value);
     };
+
+    // 사진 변경 감지 및 미리보기 설정
     const onChangeImage = (e) => {
         setImage(e.target.files[0]);
         const imgTarget = e.target.files[0];
+        // 파일 읽기
         const fileReader = new FileReader();
         fileReader.readAsDataURL(imgTarget);
+        //파일을 읽었다면 실행하는 이벤트 핸들러
         fileReader.onload = function (e) {
             setImagePreview(e.target.result);
         };
     };
 
+    // 스켈레톤에 Click 이벤트 핸들링
     const handleHiddenInputFile = () => {
         hiddenFileInput.current.click();
     };
 
+    // Form 제출
     const handleSubmit = async (e) => {
         const data = new FormData();
         data.append("title", title);
@@ -81,6 +91,7 @@ function Input() {
         data.append("image", image);
         data.append("hashtag", hashtag);
 
+        // 필수 내용 ( 제목 && 이미지 )
         try {
             if (title == null || "" || image == null || "") {
                 Swal.fire({
@@ -91,8 +102,8 @@ function Input() {
                     timer: 1500,
                 });
             } else {
-                await dispatch(getUploadPost(data));
                 handleClose();
+                await dispatch(getUploadPost(data));
                 history.go(0);
             }
         } catch (e) {
@@ -100,12 +111,14 @@ function Input() {
         }
     };
 
+    // 해시태그 관련
     const KeyCodes = {
         enter: 13,
     };
     const trigger = [KeyCodes.enter];
 
-    const handleAddition = (hash) => {
+    // 해시태그 추가
+    const handleAddHash = (hash) => {
         if (hashs.length < 3) {
             setHashs([...hashs, hash]);
             setHashtag([...hashtag, hash.text]);
@@ -119,8 +132,8 @@ function Input() {
             });
         }
     };
-
-    const handleDelete = (i) => {
+    // 해시태그 삭제
+    const handleDeleteHash = (i) => {
         setHashs(hashs.filter((hash, index) => index !== i));
     };
 
@@ -168,8 +181,8 @@ function Input() {
                                     <ReactHashTags
                                         tags={hashs}
                                         delimiters={trigger}
-                                        handleAddition={handleAddition}
-                                        handleDelete={handleDelete}
+                                        handleAddition={handleAddHash}
+                                        handleDelete={handleDeleteHash}
                                         inline={false}
                                         placeholder="해시태그 입력 후 enter키를 눌러주세요"
                                     />
@@ -203,6 +216,7 @@ function Input() {
 }
 
 function ContestPostButton() {
+    // 모달 관련
     const [shouldShow, setShouldShow] = React.useState(false);
     const HEADER_ZINDEX = new FixedZIndex(10);
     const modalZIndex = new CompositeZIndex([HEADER_ZINDEX]);
@@ -213,6 +227,7 @@ function ContestPostButton() {
         );
     };
 
+    // 로그인 확인 후 모달 진입
     const handleShowModal = () => {
         const token = JSON.parse(localStorage.getItem("token"));
         if (token !== null || undefined) {

@@ -11,7 +11,6 @@ import {
 import { ContestPostButton } from "../../../components";
 
 const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-const token = JSON.parse(localStorage.getItem("token"));
 
 function GlobalBanner(props) {
     const [bannerTitle, setBannerTitle] = useState();

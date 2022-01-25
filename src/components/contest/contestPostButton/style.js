@@ -1,20 +1,6 @@
 import styled from "styled-components";
 import { FiPlus } from "react-icons/fi";
-import { BsFillQuestionCircleFill } from "react-icons/bs";
-import { motion } from "framer";
 import { WithContext as ReactTags } from "react-tag-input";
-import {
-    Box,
-    Button,
-    Checkbox,
-    IconButton,
-    CompositeZIndex,
-    FixedZIndex,
-    Flex,
-    Text,
-    Layer,
-    Modal,
-} from "gestalt";
 
 export const CustomInput = styled.input`
     background-color: var(--g-color-gray100);
@@ -128,11 +114,6 @@ export const IconContainer = styled.div`
     position: fixed;
     right: 0;
     bottom: 0;
-`;
-
-export const RadioInput = styled.input`
-    width: auto;
-    height: auto;
 `;
 
 export const ReactHashTags = styled(ReactTags)``;

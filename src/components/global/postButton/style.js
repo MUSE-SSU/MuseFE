@@ -185,23 +185,9 @@ export const IconContainer = styled.div`
     position: fixed;
     right: 0;
     bottom: 0;
-`;
-
-export const RadioInput = styled.input`
-    width: auto;
-    height: auto;
-`;
-
-export const RadioInputContainer = styled.div`
-    padding: 16px;
-    border: none;
-    width: 80%;
-    margin: 12px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: 12px;
+    @media (max-width: 425px) {
+        margin: 24px 12px 24px 12px;
+    }
 `;
 
 export const Hashtag = styled.h1`

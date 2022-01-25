@@ -109,13 +109,6 @@ export const InfoContainer = styled.figcaption`
     flex-direction: row;
 `;
 
-export const PostStatusContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-`;
-
 export const PostStatusContainerRect = styled.div`
     display: flex;
     flex-direction: row;
@@ -277,20 +270,7 @@ export const OtherPostsImg = styled.img`
     object-fit: contain;
 `;
 
-export const LoadingBack = styled.div`
-    background-color: transparent;
-`;
-
 export const ListItem = styled.div``;
-
-export const DropdownContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: flex-end;
-    align-items: center;
-    margin: 12px 0 12px 0;
-`;
 
 export const BadgePreview = styled.h1`
     font-family: R-FLEX-BLACK;

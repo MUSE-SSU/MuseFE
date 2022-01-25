@@ -268,9 +268,12 @@ function PostButton() {
     return (
         <React.Fragment>
             <style.IconContainer>
-                <style.PostButton onClick={handleShowModal}>
-                    <style.PlusButton />
-                </style.PostButton>
+                <IconButton
+                    icon="add"
+                    onClick={handleShowModal}
+                    bgColor="darkGray"
+                    size="xl"
+                />
             </style.IconContainer>
             {shouldShow && (
                 <Layer zIndex={modalZIndex}>

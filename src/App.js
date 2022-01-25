@@ -14,6 +14,7 @@ import {
     Replace,
     Contest,
     Search,
+    Info,
 } from "./pages";
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/replace" component={Replace} />
                 <Route path="/contest" component={Contest} />
                 <Route path="/search" component={Search} />
+                <Route path="/info" component={Info} />
             </Router>
         </div>
     );

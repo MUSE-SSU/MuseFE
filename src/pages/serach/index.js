@@ -3,6 +3,7 @@ import {
     GlobalNavbar,
     SearchContainer,
     GlobalPostButton,
+    GlobalInfoButton,
 } from "../../components";
 function Search() {
     return (
@@ -10,6 +11,7 @@ function Search() {
             <GlobalNavbar />
             <SearchContainer />
             <GlobalPostButton />
+            <GlobalInfoButton />
         </>
     );
 }

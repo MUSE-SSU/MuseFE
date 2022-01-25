@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "gestalt/dist/gestalt.css";
 import {
     Box,
@@ -13,10 +13,40 @@ import {
 } from "gestalt";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+function Tos(props) {
+    useEffect(() => {
+        console.log(props.title);
+    }, []);
+    return (
+        <>
+            <h1>{props.title}</h1>
+            <h1>asd;fkj</h1>
+        </>
+    );
+}
 function RulesModal() {
     const isLogged = useSelector((state) => state.authReducer.authData);
 
     const [agree, setAgree] = useState(false);
+    const [tosData, setTosData] = useState([]);
+
+    const getTos = () => {
+        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
+        return fetch(`${API_DOMAIN}/notice/?type=tos`, {
+            method: "GET",
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setTosData(data);
+                console.log(tosData);
+            });
+    };
+
+    useEffect(() => {
+        getTos();
+    }, []);
 
     const onClickAgree = () => {
         setAgree(!agree);
@@ -48,7 +78,17 @@ function RulesModal() {
             >
                 <Box margin={12}>
                     <Box marginBottom={8}>
-                        <Text>약관에 존나게 동의하십니까?</Text>
+                        {/* <Text>{title}</Text> */}
+                        {tosData.map((tos) => (
+                            <Tos title={tos.title} />
+                        ))}
+                        <button
+                            onClick={() => {
+                                console.log(tosData.title);
+                            }}
+                        >
+                            dsakfjd
+                        </button>
                     </Box>
                     <Checkbox
                         checked={agree}

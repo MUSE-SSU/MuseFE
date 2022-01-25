@@ -2,12 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useInView } from "react-intersection-observer";
 import { Card } from "../../../components";
 import axios from "axios";
-import * as style from "./style";
 import StackGrid from "react-stack-grid";
 import {
-    Container,
+    MainContainer,
     ListItem,
-    ToggleButtonH1,
+    ToggleButtonName,
     ToggleContainer,
     DropdownContainer,
 } from "./style";
@@ -15,6 +14,7 @@ import { motion } from "framer";
 import { Button, Flex, Dropdown, FixedZIndex } from "gestalt";
 import "gestalt/dist/gestalt.css";
 
+// 현재 || 이전 콘테스트 선택 토글
 function ToggleButton(props) {
     return (
         <ToggleContainer>
@@ -52,22 +52,23 @@ function ToggleButton(props) {
                     }}
                 />
             </div>
-            {props.contestBool === true ? (
-                <ToggleButtonH1>Current Contest</ToggleButtonH1>
+            {props.contestType === true ? (
+                <ToggleButtonName>Current Contest</ToggleButtonName>
             ) : (
-                <ToggleButtonH1>Past Contest</ToggleButtonH1>
+                <ToggleButtonName>Past Contest</ToggleButtonName>
             )}
         </ToggleContainer>
     );
 }
-function MainContainer(props) {
+function ContestContainer(props) {
     const [posts, setPosts] = useState([]);
     const [label, setLabel] = useState("인기순");
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [options, setOptions] = useState("likes");
-    const [contestBool, setContestBool] = useState(true);
+    const [contestType, setContestType] = useState(true);
     const [isOn, setIsOn] = useState(false);
+
     // 드롭다운 state
     const [open, setOpen] = React.useState(false);
     const [selected, setSelected] = React.useState(null);
@@ -82,7 +83,7 @@ function MainContainer(props) {
         setLoading(true);
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
         let contestT = "cur-contest";
-        if (contestBool == false) {
+        if (contestType == false) {
             contestT = "past-contest";
         }
         axios
@@ -99,7 +100,7 @@ function MainContainer(props) {
                 }
             });
         setLoading(false);
-    }, [page, options, contestBool]);
+    }, [page, options, contestType]);
 
     //정렬선택
     const likesOrder = ({ item }) => {
@@ -133,7 +134,7 @@ function MainContainer(props) {
         setPosts([]);
         setPage(1);
         setIsOn(!isOn);
-        setContestBool(!contestBool);
+        setContestType(!contestType);
     };
 
     useEffect(() => {
@@ -147,11 +148,11 @@ function MainContainer(props) {
         }
     }, [inView, loading]);
     return (
-        <style.MainContainer>
+        <MainContainer>
             <DropdownContainer>
                 <ToggleButton
                     isOn={isOn}
-                    contestBool={contestBool}
+                    contestType={contestType}
                     handleContest={handleContest}
                 />
                 <Flex justifyContent="center">
@@ -237,8 +238,8 @@ function MainContainer(props) {
                     </React.Fragment>
                 ))}
             </StackGrid>
-        </style.MainContainer>
+        </MainContainer>
     );
 }
 
-export default MainContainer;
+export default ContestContainer;

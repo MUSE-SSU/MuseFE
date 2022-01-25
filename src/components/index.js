@@ -6,6 +6,7 @@ export { default as LoginModal } from "./global/loginModal";
 export { default as RulesModal } from "./global/rulesModal";
 export { default as Card } from "./global/card";
 export { default as Logo } from "./global/logo";
+export { default as GlobalInfoButton } from "./global/infoButton";
 
 // home 관련 컴포넌트
 export { default as ColorCard } from "./homepage/colorCard";
@@ -29,3 +30,6 @@ export { default as NicknameUpdateButton } from "./mypage/nicknameUpdateButton";
 //search 관련 컴포넌트
 export { default as UserCard } from "./search/userCard";
 export { default as SearchContainer } from "./search/searchContainer";
+
+//info 관련 컴포넌트
+export { default as TosContainer } from "./info/tosContainer";

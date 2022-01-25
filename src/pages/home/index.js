@@ -8,6 +8,7 @@ import {
     PreviewContainer,
     WeeklyColorContainer,
     GlobalNavbar,
+    GlobalInfoButton,
 } from "../../components";
 import { userInfo } from "../../actions/userInfo";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +21,7 @@ function Home() {
                 <GlobalNavbar />
                 <GlobalBanner name="main" />
                 <GlobalPostButton />
+                <GlobalInfoButton />
                 <WeeklyColorContainer />
                 <PreviewContainer name="reference" />
                 <PreviewContainer name="contest" />

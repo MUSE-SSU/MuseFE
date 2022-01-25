@@ -9,25 +9,20 @@ import { sendIsLiked, sendIsSaved } from "../../../actions/post";
 import Loader from "react-loader-spinner";
 import StackGrid from "react-stack-grid";
 import {
-    getDetailPost,
     uploadCommentPost,
-    updatePost,
     deletePost,
-    updateComment,
     deleteComment,
 } from "../../../actions/post";
 import moment from "moment";
 import {
     CardContainer,
     CardContainerRect,
-    DropdownContainer,
     Image,
     ImageContainerRect,
     PostWriter,
     LikesIcon,
     InfoContainer,
     EyeIcon,
-    PostStatusContainer,
     PostStatusContainerRect,
     WriterContainer,
     CustomSpan,
@@ -40,13 +35,11 @@ import {
     CancelContainer,
     ModalAvatar,
     ReactModal,
-    ModalHeading,
     ModalWriterInfoContainer,
     Title,
     OtherPostsImg,
     CommentWriter,
     Avatar,
-    LoadingBack,
     ListItem,
     BadgePreview,
     BadgeDetail,
@@ -80,35 +73,38 @@ function DetailPost(props) {
     const token = JSON.parse(localStorage.getItem("token"));
     const dispatch = useDispatch();
     const [submit, setSubmit] = useState(false);
-    //게시물 관련
+
+    // 게시물 관련
     const [data, setData] = useState();
     const [created, setCreated] = useState("");
-    const [likesCount, setLikesCount] = useState();
     const [idx, setIdx] = useState(props.idx);
     const [otherPosts, setOtherPosts] = useState([]);
-    //댓글 관련
+
+    // 댓글 관련
     const [currentComments, setCurrentComments] = useState("");
-    //로딩 관련
+
+    // 로딩 관련
     const [loading, setLoading] = useState(false);
     const [showSpinner, setShowSpinner] = useState(false);
     const [recommendLoading, setRecommendLoading] = useState(false);
-    //user
+
+    // user
     const [isFollowed, setIsFollowed] = useState();
     const [isLiked, setIsLiked] = useState();
     const [isSaved, setIsSaved] = useState();
 
-    //무한스크롤
+    // 무한스크롤
     const modalRef = useRef(null); // otherposts 클릭시 맨 위 고정 ref
     const [page, setPage] = useState(1);
     const [ref, inView] = useInView({ trackVisibility: true, delay: 100 });
     const [changeScroll, setChangeScroll] = useState(false);
 
-    //CANCEL 버튼 함수
+    // CANCEL 버튼 함수
     const handleOut = () => {
         props.handleShouldShow(false);
     };
 
-    //모바일
+    // 모바일
     const isMobile = MediaQuery({
         query: "(max-width: 425px)",
     });
@@ -117,6 +113,7 @@ function DetailPost(props) {
         query: "(min-width: 426px)",
     });
 
+    // 모달 하단 추천 게시물 fetch
     const getRecommendedPosts = useCallback(() => {
         setRecommendLoading(true);
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
@@ -135,6 +132,7 @@ function DetailPost(props) {
         setRecommendLoading(false);
     }, [page, idx]);
 
+    // 무한스크롤 trigger
     useEffect(() => {
         // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
         if (inView && !recommendLoading) {
@@ -147,9 +145,9 @@ function DetailPost(props) {
     }, [getRecommendedPosts]);
     useEffect(() => {
         modalRef.current.scrollIntoView({ block: "start" });
-        console.log(changeScroll);
     }, [changeScroll]);
 
+    // 게시물 fetch
     useEffect(() => {
         setLoading(true);
         setShowSpinner(true);
@@ -165,10 +163,9 @@ function DetailPost(props) {
                 .then((res) => res.json())
                 .then((data) => {
                     setData(data);
-                    console.log(data);
+                    // 변환이 필요한 값들은 따로 저장
                     setIsLiked(data.is_login_user_liked);
                     setIdx(data.idx);
-                    setLikesCount(data.likes);
                     setIsFollowed(data.is_login_user_follow);
                     setCreated(moment(data.created_at).format("YYYY-MM-DD"));
                     setIsSaved(data.is_login_user_bookmark);
@@ -187,10 +184,9 @@ function DetailPost(props) {
                 .then((res) => res.json())
                 .then((data) => {
                     setData(data);
-                    console.log(data);
+                    // 변환이 필요한 값들은 따로 저장
                     setIsLiked(data.is_login_user_liked);
                     setIdx(data.idx);
-                    setLikesCount(data.likes);
                     setIsFollowed(data.is_login_user_follow);
                     setCreated(moment(data.created_at).format("YYYY-MM-DD"));
                     setIsSaved(data.is_login_user_bookmark);
@@ -204,6 +200,7 @@ function DetailPost(props) {
         }
     }, [idx, submit]);
 
+    // 팔로우 핸들링
     const handleFollow = () => {
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
         const token = JSON.parse(localStorage.getItem("token"));
@@ -231,60 +228,6 @@ function DetailPost(props) {
             });
         }
     };
-    // 게시물 업데이트 관련
-    // const handleClose = () => {
-    //     setShow(false);
-    //     setUpdateContent("");
-    //     setUpdateTitle(null);
-    //     setImagePreview(null);
-    //     setModalSize("lg");
-    // };
-    // const handleShow = () => setShow(true);
-
-    // const onChangeTitle = (e) => {
-    //     setUpdateTitle(e.target.value);
-    // };
-    // const onChangeContent = (e) => {
-    //     setUpdateContent(e.target.value);
-    // };
-
-    // const onChangeHashtag = (e) => {
-    //     setUpdateHashtag(e.target.value);
-    // };
-
-    // const onClickToUpdate = async () => {
-    //     const postIdx = idx;
-    //     const formData = new FormData();
-    //     if (updateContent == "") {
-    //         formData.append("content", content);
-    //     } else {
-    //         formData.append("content", updateContent);
-    //     }
-    //     if (updateTitle == "") {
-    //         formData.append("title", title);
-    //     } else {
-    //         formData.append("title", updateTitle);
-    //     }
-    //     if (updateHashtag == "") {
-    //         formData.append("hashtag", hashtags);
-    //     } else {
-    //         formData.append("hashtag", updateHashtag);
-    //     }
-
-    //     try {
-    //         await dispatch(updatePost(formData, postIdx));
-    //         await Swal.fire({
-    //             icon: "success",
-    //             title: "Change Complete",
-    //             text: "게시물이 수정되었습니다",
-    //             showConfirmButton: false,
-    //             timer: 1500,
-    //         });
-    //         window.location.reload();
-    //     } catch (e) {
-    //         console.error(e);
-    //     }
-    // };
 
     //댓글 작성
     const handleSubmitComment = async () => {
@@ -317,11 +260,7 @@ function DetailPost(props) {
         }
     };
 
-    const onChangeComment = (e) => {
-        setCurrentComments(e.target.value);
-        console.log(currentComments);
-    };
-
+    // 좋아요 핸들링
     const handleLikes = () => {
         try {
             const token = JSON.parse(localStorage.getItem("token"));
@@ -337,13 +276,13 @@ function DetailPost(props) {
                 const postIdx = idx;
                 dispatch(sendIsLiked(postIdx));
                 setIsLiked(!isLiked);
-                handleLikesCount();
             }
         } catch (e) {
             console.error(e);
         }
     };
 
+    // 게시물 저장 핸들링
     const handleSave = () => {
         try {
             const token = JSON.parse(localStorage.getItem("token"));
@@ -365,20 +304,14 @@ function DetailPost(props) {
         }
     };
 
-    const handleLikesCount = () => {
-        if (isLiked == true) {
-            setLikesCount(likesCount - 1);
-        } else {
-            setLikesCount(likesCount + 1);
-        }
-    };
-
+    // comment 제출 Enter 키 이식
     const onKeyDownTagManagement = ({ event: { keyCode } }) => {
         if (keyCode === 13 /* Enter */) {
             handleSubmitComment();
         }
     };
 
+    // 게시물 삭제
     const handleDeletePost = async () => {
         dispatch(deletePost(idx));
         await Swal.fire({
@@ -391,6 +324,7 @@ function DetailPost(props) {
         window.location.reload();
     };
 
+    // 댓글 삭제
     const handleCommentDelete = (commentIdx) => {
         try {
             dispatch(deleteComment(commentIdx));
@@ -400,6 +334,7 @@ function DetailPost(props) {
         }
     };
 
+    // 로딩 스피너
     if (loading === true) {
         return (
             <Box height="100vh" width="100%">

@@ -4,6 +4,7 @@ import {
     GlobalBanner,
     GlobalPostButton,
     ReferenceContainer,
+    GlobalInfoButton,
 } from "../../components";
 function Archives() {
     return (
@@ -12,6 +13,7 @@ function Archives() {
             <GlobalBanner />
             <ReferenceContainer name="reference" />
             <GlobalPostButton />
+            <GlobalInfoButton />
         </div>
     );
 }
