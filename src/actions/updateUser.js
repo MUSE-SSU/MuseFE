@@ -1,8 +1,3 @@
-import {
-    UPDATE_USER,
-    PROFILE_IMAGE_UPLOAD,
-    CHECK_NICKNAME_DUPLICATION,
-} from "../constants/actionTypes";
 import * as api from "../api";
 
 export const updateUser = (formData) => {

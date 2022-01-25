@@ -83,7 +83,7 @@ function ContestContainer(props) {
         setLoading(true);
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
         let contestT = "cur-contest";
-        if (contestType == false) {
+        if (contestType === false) {
             contestT = "past-contest";
         }
         axios

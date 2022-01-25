@@ -54,9 +54,10 @@ function Navbar() {
     const logOutBtn = () => {
         dispatch({ type: actionType.LOG_OUT });
     };
-
     useEffect(() => {
-        dispatch(userInfo());
+        if (isLogged === true) {
+            dispatch(userInfo());
+        }
     }, []);
 
     // 드롭다운 state

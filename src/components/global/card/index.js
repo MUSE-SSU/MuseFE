@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useMediaQuery as MediaQuery } from "react-responsive";
 import "react-router-modal/css/react-router-modal.css";
 import Swal from "sweetalert2";
 import { sendIsLiked, sendIsSaved } from "../../../actions/post";
-import Loader from "react-loader-spinner";
 import StackGrid from "react-stack-grid";
 import {
     uploadCommentPost,
@@ -50,23 +49,16 @@ import {
     Url,
     ModalWriterInfoContainerMobile,
 } from "./style";
-import { useHistory } from "react-router-dom";
 import {
     Box,
     Button,
-    Checkbox,
     Spinner,
     CompositeZIndex,
     FixedZIndex,
     Flex,
-    Text,
     Layer,
-    Modal,
     IconButton,
     TextArea,
-    Badge,
-    Icon,
-    Dropdown,
 } from "gestalt";
 
 function DetailPost(props) {

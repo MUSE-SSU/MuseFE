@@ -1,4 +1,3 @@
-import axios from "axios";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
 
@@ -20,7 +19,7 @@ export const kakaoLogin = (authorizeCodeFromKakao) => {
         .then((res) => res.json())
         .then((data) => {
             try {
-                if (data.result == false) {
+                if (data.result === false) {
                     return Swal.fire({
                         icon: "error",
                         title: "Oops...",
@@ -50,7 +49,7 @@ export const kakaoRegister = (authorizeCodeFromKakao) => {
         .then((res) => res.json())
         .then((data) => {
             try {
-                if (data.result == false) {
+                if (data.result === false) {
                     return Swal.fire({
                         icon: "error",
                         title: "Oops...",
@@ -58,7 +57,7 @@ export const kakaoRegister = (authorizeCodeFromKakao) => {
                         showConfirmButton: false,
                         timer: 1500,
                     });
-                } else if (data.result == true) {
+                } else if (data.result === true) {
                     return Swal.fire({
                         icon: "success",
                         title: "Success!",
@@ -120,7 +119,7 @@ export const uploadPost = (data) => {
 };
 
 export const detailPost = (postIdxUrl) => {
-    if (localStorage.getItem("token") == undefined) {
+    if (localStorage.getItem("token") === undefined) {
         return fetch(`${API_DOMAIN}/posts/display/detail/${postIdxUrl}/`, {})
             .then((res) => res.json())
             .then((data) => {

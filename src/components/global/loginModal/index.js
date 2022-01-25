@@ -16,7 +16,7 @@ import { RulesModal, Logo } from "../../../components";
 import { motion } from "framer";
 function LoginModal(props) {
     const [shouldShow, setShouldShow] = React.useState(false);
-    const HEADER_ZINDEX = new FixedZIndex(10);
+    const HEADER_ZINDEX = new FixedZIndex(998);
     const modalZIndex = new CompositeZIndex([HEADER_ZINDEX]);
 
     const ModalWithHeading = ({ onDismiss }) => {

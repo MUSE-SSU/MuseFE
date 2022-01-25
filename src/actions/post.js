@@ -1,4 +1,4 @@
-import { POST_UPLOAD, DETAIL_POST } from "../constants/actionTypes";
+import { DETAIL_POST } from "../constants/actionTypes";
 import * as api from "../api/index";
 
 export const getUploadPost = (data) => async () => {
