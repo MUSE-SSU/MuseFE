@@ -19,14 +19,6 @@ export const kakaoRegister = (authorizeCodeFromKakao) => async (dispatch) => {
     }
 };
 
-export const logOut = () => async (dispatch) => {
-    try {
-        dispatch({ type: LOG_OUT });
-    } catch (e) {
-        console.error(e);
-    }
-};
-
 export const checkIsFirst = () => async (dispatch) => {
     dispatch({ type: CHECK_IS_FIRST });
 };

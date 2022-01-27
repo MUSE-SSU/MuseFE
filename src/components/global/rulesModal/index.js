@@ -16,8 +16,6 @@ import { useSelector } from "react-redux";
 import { CheckboxContainer, BoldRouter } from "./style";
 
 function RulesModal() {
-    const isLogged = useSelector((state) => state.authReducer.authData);
-
     const [tosAgree, setTosAgree] = useState(false);
     const [privacyAgree, setPrivacyAgree] = useState(false);
 

@@ -15,7 +15,7 @@ function Success() {
             try {
                 await dispatch(kakaoLogin(authorizeCodeFromKakao));
                 // 서버에 전송 -> 받아와야됨(token) -> userInfo디스패치
-                await dispatch(userInfo());
+
                 history.push("/");
             } catch (e) {
                 console.error(e);

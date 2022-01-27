@@ -1,7 +1,11 @@
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState, useCallback } from "react";
+import moment from "moment";
 
 const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
+const KAKAO_KEY = process.env.REACT_APP_KAKAO_JS_KEY;
 const token = JSON.parse(localStorage.getItem("token"));
 /*------------------------------------------------------------------------------------------------*/
 // 로그인 및 회원가입
@@ -77,6 +81,7 @@ export const kakaoRegister = (authorizeCodeFromKakao) => {
 // 유저 관련
 export const getUserInfo = () => {
     const token = JSON.parse(localStorage.getItem("token"));
+    console.log(token);
     return fetch(`${API_DOMAIN}/account/`, {
         method: "GET",
         headers: {
@@ -213,4 +218,44 @@ export const sendIsSaved = (postIdx) => {
             Authorization: token,
         },
     });
+};
+
+export const GetPost = (idx) => {
+    const [isPostLoading, setIsPostLoading] = useState(false);
+    const [postData, setPostData] = useState(null);
+    const [postWriter, setPostWriter] = useState();
+    const [isUserFollowed, setIsUserFollowed] = useState();
+    const [isUserLiked, setIsUserLiked] = useState();
+    const [isUserSaved, setIsUserSaved] = useState();
+
+    useEffect(() => {
+        setIsPostLoading(true);
+        const fetchData = async () => {
+            try {
+                const resp = await axios.get(`${API_DOMAIN}/post/${idx}/`, {
+                    headers: { Authorization: token },
+                });
+                setPostData(resp?.data);
+                setPostWriter(resp?.data.writer);
+                setIsUserLiked(resp?.data.is_login_user_liked);
+                setIsUserFollowed(resp?.data.is_login_user_follow);
+                setIsUserSaved(resp?.data.is_login_user_bookmark);
+            } catch (e) {
+                console.error(e);
+            }
+        };
+        fetchData();
+        setIsPostLoading(false);
+    }, [idx]);
+    return {
+        setIsUserLiked,
+        setIsUserSaved,
+        setIsUserFollowed,
+        isPostLoading,
+        isUserLiked,
+        isUserSaved,
+        isUserFollowed,
+        postData,
+        postWriter,
+    };
 };

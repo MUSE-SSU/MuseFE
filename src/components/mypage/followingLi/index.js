@@ -12,14 +12,16 @@ import { useSelector } from "react-redux";
 import { Box, Flex } from "gestalt";
 
 function FollowingListLi(props) {
-    const [isUserFollowed, setIsUserFollowed] = useState(true);
+    const [isLiFollowed, setIsLiFollowed] = useState(true);
     const getUserNickname = useSelector((state) => state.userInfo.nickname);
     const [submit, setSubmit] = useState(false);
     const history = useHistory();
-
     const handleHistoryPushNickname = () => {
         window.location.href = `/my-page/${props.nickname}`;
     };
+    useEffect(() => {
+        console.log(isLiFollowed);
+    }, [isLiFollowed]);
     const handleFollow = () => {
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
         const token = JSON.parse(localStorage.getItem("token"));
@@ -33,8 +35,8 @@ function FollowingListLi(props) {
                 follower: props.nickname,
             }),
         }).then(() => {
-            setIsUserFollowed(!isUserFollowed);
-            setSubmit(!submit);
+            setIsLiFollowed(false);
+            props.followingTest(props.followingCount - 1);
         });
     };
     return (
@@ -45,14 +47,11 @@ function FollowingListLi(props) {
                     {props.nickname}
                 </FollowingNickname>
             </FollowingInfoContainer>
-            {props.isOwner === true &&
-                (isUserFollowed === true ? (
-                    <UnFollowButton onClick={handleFollow}>
-                        팔로잉 취소
-                    </UnFollowButton>
-                ) : (
-                    <FollowButton onClick={handleFollow}>팔로우</FollowButton>
-                ))}
+            {props.isOwner === true && (
+                <UnFollowButton onClick={handleFollow}>
+                    팔로잉 취소
+                </UnFollowButton>
+            )}
         </FollowingModalContainer>
     );
 }

@@ -32,6 +32,8 @@ function FollowingListModal(props) {
             >
                 <Box padding={8}>
                     <FollowingList
+                        followingCount={props.followingCount}
+                        followingTest={props.followingTest}
                         isOwner={props.isOwner}
                         followingLists={props.followingLists}
                     />
@@ -69,12 +71,14 @@ function FollowingList(props) {
 
     useEffect(() => {
         setFollowings(props.followingLists);
-    }, []);
+    }, [followings]);
     return (
         <FollowingListUlContainer>
             <FollowingListUl>
                 {followings.map((following) => (
                     <FollowingLi
+                        followingCount={props.followingCount}
+                        followingTest={props.followingTest}
                         isOwner={props.isOwner}
                         nickname={following.follower}
                         avatar={following.avatar}

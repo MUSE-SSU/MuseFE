@@ -33,7 +33,6 @@ function Input() {
             .then((data) => {
                 console.log(data);
                 setBadge(data.badge);
-                return data;
             });
     };
     useEffect(() => {
@@ -41,7 +40,6 @@ function Input() {
     }, []);
     const [badge, setBadge] = useState("");
     const [handle, setHandle] = useState();
-    const [show, setShow] = useState(false);
     const [image, setImage] = useState(null);
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
@@ -58,12 +56,7 @@ function Input() {
         e.preventDefault();
         setImageUrl(e.target.value);
     };
-    const handleClose = () => {
-        setShow(false);
-        setContent("");
-        setTitle(null);
-        setImagePreview(null);
-    };
+
     const dispatch = useDispatch();
     const history = useHistory();
     const onChangeTitle = (e) => {
@@ -107,8 +100,7 @@ function Input() {
                 });
             } else {
                 await dispatch(getUploadPost(data));
-                handleClose();
-                history.go(0);
+                window.location.reload();
             }
         } catch (e) {
             console.error(e);

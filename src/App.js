@@ -15,6 +15,7 @@ import {
     Contest,
     Search,
     Info,
+    Logout,
 } from "./pages";
 function App() {
     return (
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/contest" component={Contest} />
                 <Route path="/search" component={Search} />
                 <Route path="/info" component={Info} />
+                <Route path="/redirect-logout" component={Logout} />
             </Router>
         </div>
     );

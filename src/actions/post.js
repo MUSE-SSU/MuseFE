@@ -1,9 +1,17 @@
-import { DETAIL_POST } from "../constants/actionTypes";
+import { DETAIL_POST, GET_POST } from "../constants/actionTypes";
 import * as api from "../api/index";
 
 export const getUploadPost = (data) => async () => {
     try {
-        api.uploadPost(data);
+        await api.uploadPost(data);
+    } catch (e) {
+        console.error(e);
+    }
+};
+
+export const getPost = (idx) => {
+    try {
+        api.GetPost(idx);
     } catch (e) {
         console.error(e);
     }

@@ -20,6 +20,8 @@ import {
 } from "./style";
 
 function Navbar() {
+    const KAKAO_KEY = process.env.REACT_APP_KAKAO_JS_KEY;
+    const MUSE_DOMAIN = process.env.REACT_APP_MUSE_DOMAIN;
     const isLogged = useSelector((state) => state.authReducer.authData);
     const getUserAvatar = useSelector((state) => state.userInfo.avatar);
     const getUserNickname = useSelector((state) => state.userInfo.nickname);
@@ -52,12 +54,10 @@ function Navbar() {
     };
     const dispatch = useDispatch();
     const logOutBtn = () => {
-        dispatch({ type: actionType.LOG_OUT });
+        window.location.href = `https://kauth.kakao.com/oauth/logout?client_id=${KAKAO_KEY}&logout_redirect_uri=${MUSE_DOMAIN}/redirect-logout`;
     };
     useEffect(() => {
-        if (isLogged === true) {
-            dispatch(userInfo());
-        }
+        dispatch(userInfo());
     }, []);
 
     // 드롭다운 state

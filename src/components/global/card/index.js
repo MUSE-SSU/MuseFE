@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useMediaQuery as MediaQuery } from "react-responsive";
 import "react-router-modal/css/react-router-modal.css";
 import Swal from "sweetalert2";
+import { GetPost } from "../../../api";
 import { sendIsLiked, sendIsSaved } from "../../../actions/post";
 import StackGrid from "react-stack-grid";
 import {
@@ -80,21 +81,11 @@ function DetailPost(props) {
     const [showSpinner, setShowSpinner] = useState(false);
     const [recommendLoading, setRecommendLoading] = useState(false);
 
-    // user
-    const [isFollowed, setIsFollowed] = useState();
-    const [isLiked, setIsLiked] = useState();
-    const [isSaved, setIsSaved] = useState();
-
     // 무한스크롤
     const modalRef = useRef(null); // otherposts 클릭시 맨 위 고정 ref
     const [page, setPage] = useState(1);
     const [ref, inView] = useInView({ trackVisibility: true, delay: 100 });
     const [changeScroll, setChangeScroll] = useState(false);
-
-    // CANCEL 버튼 함수
-    const handleOut = () => {
-        props.handleShouldShow(false);
-    };
 
     // 모바일
     const isMobile = MediaQuery({
@@ -104,6 +95,18 @@ function DetailPost(props) {
     const notMobile = MediaQuery({
         query: "(min-width: 426px)",
     });
+
+    // 게시물 fetch
+    const {
+        isUserLiked,
+        isUserFollowed,
+        isUserSaved,
+        isLoading,
+        setIsUserFollowed,
+        setIsUserSaved,
+        setIsUserLiked,
+        postData,
+    } = GetPost(idx);
 
     // 모달 하단 추천 게시물 fetch
     const getRecommendedPosts = useCallback(() => {
@@ -135,63 +138,15 @@ function DetailPost(props) {
     useEffect(() => {
         getRecommendedPosts();
     }, [getRecommendedPosts]);
+
     useEffect(() => {
         modalRef.current.scrollIntoView({ block: "start" });
     }, [changeScroll]);
 
-    // 게시물 fetch
-    useEffect(() => {
-        setLoading(true);
-        setShowSpinner(true);
-        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-        const token = JSON.parse(localStorage.getItem("token"));
-        if (token !== null) {
-            return fetch(`${API_DOMAIN}/post/${idx}/`, {
-                method: "GET",
-                headers: {
-                    Authorization: `${token}`,
-                },
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    setData(data);
-                    // 변환이 필요한 값들은 따로 저장
-                    setIsLiked(data.is_login_user_liked);
-                    setIdx(data.idx);
-                    setIsFollowed(data.is_login_user_follow);
-                    setCreated(moment(data.created_at).format("YYYY-MM-DD"));
-                    setIsSaved(data.is_login_user_bookmark);
-                })
-                .finally(() => {
-                    setTimeout(() => {
-                        setLoading(false);
-                        setShowSpinner(false);
-                    }, 500);
-                });
-        }
-        if (token === null) {
-            return fetch(`${API_DOMAIN}/post/${idx}/`, {
-                method: "GET",
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    setData(data);
-                    // 변환이 필요한 값들은 따로 저장
-                    setIsLiked(data.is_login_user_liked);
-                    setIdx(data.idx);
-                    setIsFollowed(data.is_login_user_follow);
-                    setCreated(moment(data.created_at).format("YYYY-MM-DD"));
-                    setIsSaved(data.is_login_user_bookmark);
-                })
-                .finally(() => {
-                    setTimeout(() => {
-                        setLoading(false);
-                        setShowSpinner(false);
-                    }, 500);
-                });
-        }
-    }, [idx, submit]);
-
+    // 닫기 버튼 함수
+    const handleOut = () => {
+        props.handleShouldShow(false);
+    };
     // 팔로우 핸들링
     const handleFollow = () => {
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
@@ -213,10 +168,10 @@ function DetailPost(props) {
                     "content-type": "application/json",
                 },
                 body: JSON.stringify({
-                    follower: data.writer,
+                    follower: postData.writer,
                 }),
             }).then(() => {
-                setIsFollowed(!isFollowed);
+                setIsUserFollowed(!isUserFollowed);
             });
         }
     };
@@ -224,8 +179,6 @@ function DetailPost(props) {
     //댓글 작성
     const handleSubmitComment = async () => {
         try {
-            const token = JSON.parse(localStorage.getItem("token"));
-
             if (currentComments == "") {
                 Swal.fire({
                     icon: "error",
@@ -255,7 +208,6 @@ function DetailPost(props) {
     // 좋아요 핸들링
     const handleLikes = () => {
         try {
-            const token = JSON.parse(localStorage.getItem("token"));
             if (token === null) {
                 Swal.fire({
                     icon: "error",
@@ -267,7 +219,7 @@ function DetailPost(props) {
             } else {
                 const postIdx = idx;
                 dispatch(sendIsLiked(postIdx));
-                setIsLiked(!isLiked);
+                setIsUserLiked(!isUserLiked);
             }
         } catch (e) {
             console.error(e);
@@ -277,7 +229,6 @@ function DetailPost(props) {
     // 게시물 저장 핸들링
     const handleSave = () => {
         try {
-            const token = JSON.parse(localStorage.getItem("token"));
             if (token === null) {
                 Swal.fire({
                     icon: "error",
@@ -289,7 +240,7 @@ function DetailPost(props) {
             } else {
                 const PostIdx = idx;
                 dispatch(sendIsSaved(PostIdx));
-                setIsSaved(!isSaved);
+                setIsUserSaved(!isUserSaved);
             }
         } catch (e) {
             console.error(e);
@@ -327,7 +278,7 @@ function DetailPost(props) {
     };
 
     // 로딩 스피너
-    if (loading === true) {
+    if (isLoading === true) {
         return (
             <Box height="100vh" width="100%">
                 <Flex
@@ -344,7 +295,7 @@ function DetailPost(props) {
 
     return (
         <ModalMainContainer ref={modalRef}>
-            {data !== undefined && (
+            {postData !== null && (
                 <Box>
                     <Box>
                         <CancelContainer>
@@ -359,16 +310,20 @@ function DetailPost(props) {
                             <ModalWriterInfoContainer>
                                 <Box>
                                     <Flex direction="row" alignItems="center">
-                                        <ModalAvatar src={data.writer_avatar} />
+                                        <ModalAvatar
+                                            src={postData.writer_avatar}
+                                        />
                                         <Flex direction="column">
                                             <Flex
                                                 direction="row"
                                                 alignItems="center"
                                             >
-                                                <Writer>{data.writer}</Writer>
-                                                {data.badge !== 0 && (
+                                                <Writer>
+                                                    {postData.writer}
+                                                </Writer>
+                                                {postData.badge !== 0 && (
                                                     <BadgeDetail
-                                                        badge={data.badge}
+                                                        badge={postData.badge}
                                                     >
                                                         MUSE
                                                     </BadgeDetail>
@@ -384,8 +339,8 @@ function DetailPost(props) {
                                 <Box>
                                     <Flex direction="row">
                                         <Box marginEnd={3}>
-                                            {data.is_writer === false ? (
-                                                isFollowed === false ? (
+                                            {postData.is_writer === false ? (
+                                                isUserFollowed === false ? (
                                                     <Button
                                                         text="팔로우"
                                                         onClick={handleFollow}
@@ -402,7 +357,7 @@ function DetailPost(props) {
                                             )}
                                         </Box>
                                         <Box marginEnd={3}>
-                                            {isLiked === true ? (
+                                            {isUserLiked === true ? (
                                                 <IconButton
                                                     icon="heart"
                                                     bgColor="red"
@@ -417,7 +372,7 @@ function DetailPost(props) {
                                             )}
                                         </Box>
                                         <Box marginEnd={3}>
-                                            {isSaved === true ? (
+                                            {isUserSaved === true ? (
                                                 <IconButton
                                                     icon="folder"
                                                     bgColor="red"
@@ -431,7 +386,7 @@ function DetailPost(props) {
                                                 />
                                             )}
                                         </Box>
-                                        {data.is_writer === true && (
+                                        {postData.is_writer === true && (
                                             <Box marginEnd={3}>
                                                 <IconButton
                                                     icon="trash-can"
@@ -448,18 +403,20 @@ function DetailPost(props) {
                             <ModalWriterInfoContainerMobile>
                                 <Box>
                                     <Flex direction="row" alignItems="center">
-                                        <ModalAvatar src={data.writer_avatar} />
+                                        <ModalAvatar
+                                            src={postData.writer_avatar}
+                                        />
                                         <Flex direction="column">
                                             <Flex
                                                 direction="row"
                                                 alignItems="center"
                                             >
                                                 <Writer>
-                                                    {data.writer_avatar}
+                                                    {postData.writer_avatar}
                                                 </Writer>
-                                                {data.badge !== 0 && (
+                                                {postData.badge !== 0 && (
                                                     <BadgeDetail
-                                                        badge={data.badge}
+                                                        badge={postData.badge}
                                                     >
                                                         MUSE
                                                     </BadgeDetail>
@@ -475,8 +432,8 @@ function DetailPost(props) {
                                 <Box marginTop={3}>
                                     <Flex direction="row">
                                         <Box marginEnd={3}>
-                                            {data.is_writer === false ? (
-                                                isFollowed === false ? (
+                                            {postData.is_writer === false ? (
+                                                isUserFollowed === false ? (
                                                     <Button
                                                         text="팔로우"
                                                         onClick={handleFollow}
@@ -493,7 +450,7 @@ function DetailPost(props) {
                                             )}
                                         </Box>
                                         <Box marginEnd={3}>
-                                            {isLiked === true ? (
+                                            {isUserLiked === true ? (
                                                 <IconButton
                                                     icon="heart"
                                                     bgColor="red"
@@ -508,7 +465,7 @@ function DetailPost(props) {
                                             )}
                                         </Box>
                                         <Box marginEnd={3}>
-                                            {isSaved === true ? (
+                                            {isUserSaved === true ? (
                                                 <IconButton
                                                     icon="folder"
                                                     bgColor="red"
@@ -522,7 +479,7 @@ function DetailPost(props) {
                                                 />
                                             )}
                                         </Box>
-                                        {data.is_writer === true && (
+                                        {postData.is_writer === true && (
                                             <Box marginEnd={3}>
                                                 <IconButton
                                                     icon="trash-can"
@@ -537,24 +494,24 @@ function DetailPost(props) {
                         )}
                     </Box>
                     <ModalImageContainer>
-                        <ModalImage src={data.image} alt="" />
+                        <ModalImage src={postData.image} alt="" />
                     </ModalImageContainer>
                     <ModalInfoContainer>
                         <Box>
-                            <Title>{data.title}</Title>
+                            <Title>{postData.title}</Title>
                         </Box>
-                        <Content>{data.content}</Content>
+                        <Content>{postData.content}</Content>
                         <Url
                             onClick={() => {
-                                window.location.href = `${data.ref_url}`;
+                                window.location.href = `${postData.ref_url}`;
                             }}
                         >
-                            {data.ref_url}
+                            {postData.ref_url}
                         </Url>
                     </ModalInfoContainer>
 
                     <ModalCommentContainer>
-                        {data.comment.map((comment) => (
+                        {postData.comment.map((comment) => (
                             <React.Fragment key={comment.idx}>
                                 <Box
                                     marginTop={2}

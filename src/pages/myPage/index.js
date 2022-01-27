@@ -87,6 +87,10 @@ function MyPage() {
         });
     };
 
+    const followingTest = (followingCount) => {
+        setFollowingCount(followingCount);
+    };
+
     //마이페이지 주인 정보 불러오기
     const getOwnerInfo = () => {
         setLoading(true);
@@ -195,7 +199,7 @@ function MyPage() {
     }, []);
     useEffect(() => {
         getOwnerInfo();
-    }, [apiCall]);
+    }, [apiCall, followingCount]);
 
     return (
         <div>
@@ -263,6 +267,7 @@ function MyPage() {
                                 </FollowButtonContainer>
                                 <FollowButtonContainer>
                                     <FollowingModal
+                                        followingTest={followingTest}
                                         isOwner={isOwner}
                                         followingCount={followingCount}
                                         followingLists={followingLists}
