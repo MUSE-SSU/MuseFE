@@ -39,19 +39,19 @@ function Input(ownerInfo) {
     const [changedNickname, setChangedNickname] = useState(null);
     const [changedAvatar, setChangedAvatar] = useState(null);
     const [avatarPreview, setAvatarPreview] = useState(null);
-    const [originalIntroduce, setOriginalIntroduce] = useState(
-        ownerInfo.selfIntroduce
-    );
-    const [instagram, setInstagram] = useState(null);
-    const [changedIntroduce, setChangedIntroduce] = useState("");
+    const [introduce, setIntroduce] = useState(ownerInfo.selfIntroduce);
+    const [instagram, setInstagram] = useState(ownerInfo.instagram);
     const [deleteAvatarButton, setDeleteAvatarButton] = useState(false);
     const [duplicationData, setDuplicationData] = useState(null);
-    const introducePlaceholder = "자기소개 해주세요";
-    const instagramPlaceholder = "instagram ID를 적어서 자신을 홍보하세요!";
+    const introducePlaceholder = "자기소개를 해주세요!";
+    const instagramPlaceholder = "@instagram ID 를 적어서 자신을 홍보하세요!";
     const MUSE_DOMAIN = process.env.REACT_APP_MUSE_DOMAIN;
 
     const dispatch = useDispatch();
-
+    useEffect(() => {
+        console.log(ownerInfo.instagram);
+        console.log(ownerInfo.nickname);
+    }, []);
     const handleDuplication = (e) => {
         e.preventDefault();
         const nicknameDuplicationFormData = new FormData();
@@ -112,8 +112,7 @@ function Input(ownerInfo) {
 
     const onChangeIntroduce = (e) => {
         e.preventDefault();
-        setChangedIntroduce(e.target.value);
-        console.log(changedIntroduce);
+        setIntroduce(e.target.value);
     };
 
     const deleteAvatar = (e) => {
@@ -127,15 +126,16 @@ function Input(ownerInfo) {
         if (changedNickname !== null) {
             userProfileFormData.append("nickname", changedNickname);
         }
-        if (changedIntroduce !== "") {
-            userProfileFormData.append("self_introduce", changedIntroduce);
-        }
+
+        userProfileFormData.append("self_introduce", introduce);
+
         if (deleteAvatarButton === true) {
             userProfileFormData.append("avatar", "default_avatar.png");
         }
         if (changedAvatar !== null) {
             userProfileFormData.append("avatar", changedAvatar);
         }
+        userProfileFormData.append("insta_id", instagram);
 
         try {
             if (duplicationData === true && changedNickname !== null) {
@@ -189,6 +189,12 @@ function Input(ownerInfo) {
             console.error(e);
         }
     };
+    if (instagram === null) {
+        setInstagram("");
+    }
+    if (introduce === null) {
+        setIntroduce("");
+    }
     return (
         <>
             <form>
@@ -238,20 +244,35 @@ function Input(ownerInfo) {
                             </NicknameContainer>
                             <NicknameLabel>Instagram ID</NicknameLabel>
                             <InstagramContainer>
-                                <InstagramInput
-                                    type="text"
-                                    placeholder={instagramPlaceholder}
-                                    onChange={onChangeInstagram}
-                                />
+                                {ownerInfo.instagram === null ? (
+                                    <InstagramInput
+                                        type="text"
+                                        placeholder={instagramPlaceholder}
+                                        onChange={onChangeInstagram}
+                                    />
+                                ) : (
+                                    <InstagramInput
+                                        type="text"
+                                        onChange={onChangeInstagram}
+                                        value={instagram}
+                                    />
+                                )}
                             </InstagramContainer>
                         </div>
                         <div>
                             <NicknameLabel>Introduce</NicknameLabel>
                             <Pre>
-                                <Textarea
-                                    placeholder={introducePlaceholder}
-                                    onChange={onChangeIntroduce}
-                                ></Textarea>
+                                {ownerInfo.selfIntroduce !== null ? (
+                                    <Textarea
+                                        value={introduce}
+                                        onChange={onChangeIntroduce}
+                                    />
+                                ) : (
+                                    <Textarea
+                                        placeholder={introducePlaceholder}
+                                        onChange={onChangeIntroduce}
+                                    />
+                                )}
                             </Pre>
                         </div>
                     </Form>
@@ -266,7 +287,7 @@ function Input(ownerInfo) {
     );
 }
 
-function NicknameUpdateButton(nickname) {
+function NicknameUpdateButton(props) {
     const [shouldShow, setShouldShow] = React.useState(false);
     const HEADER_ZINDEX = new FixedZIndex(10);
     const modalZIndex = new CompositeZIndex([HEADER_ZINDEX]);
@@ -277,9 +298,10 @@ function NicknameUpdateButton(nickname) {
                 onDismiss={onDismiss}
                 footer={
                     <Input
-                        nickname={nickname.nickname}
-                        avatar={nickname.avatar}
-                        selfIntroduce={nickname.selfIntroduce}
+                        nickname={props.nickname}
+                        avatar={props.avatar}
+                        selfIntroduce={props.selfIntroduce}
+                        instagram={props.instagram}
                     />
                 }
                 size="sm"

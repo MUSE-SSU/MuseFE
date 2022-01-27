@@ -36,7 +36,7 @@ function FollowingListLi(props) {
             }),
         }).then(() => {
             setIsLiFollowed(false);
-            props.followingTest(props.followingCount - 1);
+            props.followingParams(props.followingCount - 1);
         });
     };
     return (

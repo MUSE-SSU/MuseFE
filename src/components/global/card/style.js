@@ -340,14 +340,14 @@ export const ModalInfoContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-left: 48px;
+    padding: 0 48px 0 48px;
     align-items: flex-start;
 `;
 
 export const Content = styled.p`
-    font-weight: 400;
+    font-weight: 600;
     font-family: Helvetica;
-    font-size: var(--g-text-font-size-5);
+    font-size: var(--g-text-font-size-4);
 `;
 
 export const Url = styled.a`
@@ -355,4 +355,27 @@ export const Url = styled.a`
     font-family: Helvetica;
     font-size: var(--g-text-font-size-4);
     text-decoration: underline;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 50%;
+    white-space: nowrap;
+`;
+
+export const Hashtag = styled.div`
+    background-color: var(--g-color-gray100);
+    border-radius: 16px;
+    padding: 4px 12px 4px 12px;
+    display: flex;
+    margin: 0 4px 0 4px;
+    cursor: pointer;
+    justify-content: center;
+    &:hover {
+        background-color: var(--g-color-gray150);
+    }
+`;
+
+export const HashtagName = styled.h1`
+    font-family: Helvetica;
+    font-weight: 600;
+    font-size: var(--g-text-font-size-3);
 `;

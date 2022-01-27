@@ -28,6 +28,7 @@ function FollowerListLi(props) {
             }),
         }).then(() => {
             setIsLoginUserFollowed(!isLoginUserFollowed);
+            props.followerParams(props.followerCount - 1);
         });
     };
     return (

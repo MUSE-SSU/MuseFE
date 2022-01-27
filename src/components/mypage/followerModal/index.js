@@ -36,6 +36,8 @@ function FollowerListModal(props) {
             >
                 <Box paddingX={8} paddingY={4}>
                     <FollowingList
+                        followerParams={props.followerParams}
+                        followerCount={props.followerCount}
                         followerLists={props.followerLists}
                         isOwner={props.isOwner}
                         submit={props.submit}
@@ -80,6 +82,8 @@ function FollowingList(props) {
             {followers.map((follower) => (
                 <>
                     <FollowerLi
+                        followerParams={props.followerParams}
+                        followerCount={props.followerCount}
                         nickname={follower.following}
                         avatar={follower.avatar}
                         isOwner={props.isOwner}

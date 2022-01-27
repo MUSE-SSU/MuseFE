@@ -1,14 +1,19 @@
 import styled from "styled-components";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { motion } from "framer";
-
+export const MainContainer = styled.div`
+    display: flex;
+    width: 100vw;
+    max-width: 1440px;
+    justify-content: center;
+    flex-direction: column;
+`;
 export const MyPageContainer = styled.div`
     margin-top: 40px;
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
-    width: 100vw;
+    flex-direction: column;
 `;
 export const Avatar = styled.img`
     width: 144px;
@@ -19,8 +24,8 @@ export const Avatar = styled.img`
 export const OwnerInfoContainer = styled.div`
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
     width: 92vw;
 `;
 
@@ -166,10 +171,14 @@ export const ButtonH1 = styled.h1`
 
 export const Introduce = styled.h2`
     font-weight: 600;
-    font-size: var(--g-text-font-size-3);
+    font-size: var(--g-text-font-size-5);
+    margin-bottom: 12px;
 `;
 
 export const Pre = styled.pre`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-weight: 600;
     padding: 24px 12px 24px 12px;
 `;
@@ -189,4 +198,10 @@ export const Badge = styled.h1`
     padding: 2px 4px 2px 4px;
     border-radius: 16px;
     margin-left: 4px;
+`;
+
+export const InstagramID = styled.p`
+    cursor: pointer;
+    font-family: Helvetica;
+    font-size: var(--g-text-font-size-3);
 `;

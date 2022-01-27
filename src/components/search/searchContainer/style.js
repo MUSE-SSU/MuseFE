@@ -13,6 +13,7 @@ export const MainContainer = styled.div`
 
 export const SearchBarContainer = styled.div`
     width: 92vw;
+    max-width: 1300px;
 `;
 
 export const SearchedDataContainer = styled.div`
@@ -26,6 +27,7 @@ export const SearchedDataName = styled.h1`
 
 export const SearchedDataNameContainer = styled.div`
     width: 92vw;
+    max-width: 1440px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -35,6 +37,7 @@ export const SearchedDataNameContainer = styled.div`
 
 export const SearchedDataGridContainer = styled.div`
     width: 92vw;
+    max-width: 1440px;
     display: flex;
     justify-content: flex-start;
 `;

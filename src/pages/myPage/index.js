@@ -12,6 +12,7 @@ import {
 import StackGrid from "react-stack-grid";
 import {
     Avatar,
+    MainContainer,
     MyPageContainer,
     OwnerInfoContainer,
     OwnerNicknameContainer,
@@ -29,6 +30,7 @@ import {
     PostContainer,
     FollowedButton,
     FollowButtonContainer,
+    InstagramID,
     ButtonH1,
     Badge,
 } from "./style";
@@ -87,8 +89,11 @@ function MyPage() {
         });
     };
 
-    const followingTest = (followingCount) => {
+    const followingParams = (followingCount) => {
         setFollowingCount(followingCount);
+    };
+    const followerParams = (followerCount) => {
+        setFollowerCount(followerCount);
     };
 
     //마이페이지 주인 정보 불러오기
@@ -193,13 +198,12 @@ function MyPage() {
     };
 
     // --------------------------------------------------------------------------------------------------------------------------
-
     useEffect(() => {
         getOwnerPosts();
     }, []);
     useEffect(() => {
         getOwnerInfo();
-    }, [apiCall, followingCount]);
+    }, [apiCall, followingCount, followerCount]);
 
     return (
         <div>
@@ -215,7 +219,7 @@ function MyPage() {
                     </Flex>
                 </Box>
             ) : (
-                <div>
+                <MainContainer>
                     <GlobalNavbar />
                     <MyPageContainer>
                         <OwnerInfoContainer>
@@ -233,6 +237,7 @@ function MyPage() {
                                     avatar={ownerInfo.avatar}
                                     nickname={ownerInfo.nickname}
                                     selfIntroduce={ownerInfo.self_introduce}
+                                    instagram={ownerInfo.insta_id}
                                 />
                             )}
                             {isOwner === false ? (
@@ -253,6 +258,18 @@ function MyPage() {
                                     <Introduce>
                                         {ownerInfo.self_introduce}
                                     </Introduce>
+                                    <InstagramID
+                                        onClick={() => {
+                                            const redirectInsta = ownerInfo.insta_id.split(
+                                                "@"
+                                            )[1];
+                                            window.open(
+                                                `https://www.instagram.com/${redirectInsta}/`
+                                            );
+                                        }}
+                                    >
+                                        {ownerInfo.insta_id}
+                                    </InstagramID>
                                 </Pre>
                             </div>
 
@@ -261,13 +278,14 @@ function MyPage() {
                                     <FollowerModal
                                         followerCount={followerCount}
                                         followerLists={followerLists}
+                                        followerParams={followerParams}
                                         isOwner={isOwner}
                                         submit={submit}
                                     />
                                 </FollowButtonContainer>
                                 <FollowButtonContainer>
                                     <FollowingModal
-                                        followingTest={followingTest}
+                                        followingParams={followingParams}
                                         isOwner={isOwner}
                                         followingCount={followingCount}
                                         followingLists={followingLists}
@@ -368,7 +386,7 @@ function MyPage() {
                             )}
                         </MyPostContainer>
                     </PostContainer>
-                </div>
+                </MainContainer>
             )}
         </div>
     );

@@ -9,14 +9,6 @@ export const getUploadPost = (data) => async () => {
     }
 };
 
-export const getPost = (idx) => {
-    try {
-        api.GetPost(idx);
-    } catch (e) {
-        console.error(e);
-    }
-};
-
 export const getDetailPost = (postIdxUrl) => async (dispatch) => {
     try {
         const response = await api.detailPost(postIdxUrl);

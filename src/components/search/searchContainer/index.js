@@ -27,9 +27,7 @@ function SearchContainer() {
     const [show, setShow] = useState(false);
     const [tagArray, setTagArray] = useState(["adsf", "일러스트", "포스터"]);
     const [isSearched, setIsSearched] = useState(false);
-    const [topTagData, setTopTagData] = useState([
-        { tag: null, nickname: null },
-    ]);
+    const [topTagData, setTopTagData] = useState([]);
 
     const regexSpace = /\u0020/gi;
     const getSearchedDataWithValue = async () => {
@@ -127,7 +125,6 @@ function SearchContainer() {
         console.log(searchQuery);
         console.log(q);
     }, []);
-
     return (
         <MainContainer>
             <Box paddingY={12}>
@@ -140,18 +137,19 @@ function SearchContainer() {
                 </SearchBarContainer>
             </Box>
             <TagMainContainer>
-                {topTagData.map((tag) => (
-                    <TagContainer
-                        back={tag.image}
-                        onClick={() => {
-                            getSearchedDataWithTag(tag.tag);
-                        }}
-                    >
-                        <OverlayContainer>
-                            <TagName>{tag.tag}</TagName>
-                        </OverlayContainer>
-                    </TagContainer>
-                ))}
+                {topTagData.length !== 0 &&
+                    topTagData.map((tag) => (
+                        <TagContainer
+                            back={tag.image}
+                            onClick={() => {
+                                getSearchedDataWithTag(tag.tag);
+                            }}
+                        >
+                            <OverlayContainer>
+                                <TagName>{tag.tag}</TagName>
+                            </OverlayContainer>
+                        </TagContainer>
+                    ))}
             </TagMainContainer>
             {loading === false ? (
                 isUserUsed === true ? (
