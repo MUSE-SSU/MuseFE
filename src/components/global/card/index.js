@@ -455,9 +455,7 @@ function DetailPost(props) {
                                                 direction="row"
                                                 alignItems="center"
                                             >
-                                                <Writer>
-                                                    {data.writer_avatar}
-                                                </Writer>
+                                                <Writer>{data.writer}</Writer>
                                                 {data.badge !== 0 && (
                                                     <BadgeDetail
                                                         badge={data.badge}

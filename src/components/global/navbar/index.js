@@ -173,43 +173,39 @@ function Navbar() {
                 <Container>
                     <NavContainerMobile>
                         <NavContainerLeft>
-                            <IconButton
-                                icon="menu"
-                                ref={anchorRefMobileLeft}
-                                onClick={() =>
-                                    setOpenMobileLeft((prevVal) => !prevVal)
-                                }
-                            />
-                            {openMobileLeft && (
-                                <Dropdown
-                                    zIndex={DROPDOWN_ZINDEX}
-                                    anchor={anchorRefMobileLeft.current}
-                                    id="action-variant-dropdown-example"
-                                    onDismiss={() => setOpenMobileLeft(false)}
+                            <NavLink
+                                to="/Muse"
+                                activeStyle={{ color: "var(--g-color-blue" }}
+                            >
+                                <NavItem
+                                    whileHover={{ scale: 1.2 }}
+                                    whileTap={{ scale: 0.9 }}
                                 >
-                                    <Dropdown.Item
-                                        onSelect={handleHistoryMuse}
-                                        option={{
-                                            label: "Muse",
-                                        }}
-                                        selected={selectedMobileLeft}
-                                    />
-                                    <Dropdown.Item
-                                        onSelect={handleHistoryReference}
-                                        option={{
-                                            label: "Reference",
-                                        }}
-                                        selected={selectedMobileLeft}
-                                    />
-                                    <Dropdown.Item
-                                        onSelect={handleHistoryContest}
-                                        option={{
-                                            label: "Contest",
-                                        }}
-                                        selected={selectedMobileLeft}
-                                    />
-                                </Dropdown>
-                            )}
+                                    MUSE
+                                </NavItem>
+                            </NavLink>
+                            <NavLink
+                                to="/reference"
+                                activeStyle={{ color: "var(--g-color-blue" }}
+                            >
+                                <NavItem
+                                    whileHover={{ scale: 1.2 }}
+                                    whileTap={{ scale: 0.9 }}
+                                >
+                                    Reference
+                                </NavItem>
+                            </NavLink>
+                            <NavLink
+                                to="/Contest"
+                                activeStyle={{ color: "var(--g-color-blue" }}
+                            >
+                                <NavItem
+                                    whileHover={{ scale: 1.2 }}
+                                    whileTap={{ scale: 0.9 }}
+                                >
+                                    Contest
+                                </NavItem>
+                            </NavLink>
                         </NavContainerLeft>
                         <Link to="/">
                             <Logo>MUSE</Logo>

@@ -189,6 +189,7 @@ export const ModalWriterInfoContainer = styled.div`
 `;
 
 export const CancelContainer = styled.div`
+    margin-top: 24px;
     width: 98%;
     display: flex;
     flex-direction: row;
