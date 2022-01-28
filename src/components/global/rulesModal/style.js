@@ -6,7 +6,7 @@ export const CheckboxContainer = styled.div`
 `;
 
 export const BoldRouter = styled.p`
-    margin-left: 6px;
+    margin-left: 4px;
     font-weight: 600;
     cursor: pointer;
 `;

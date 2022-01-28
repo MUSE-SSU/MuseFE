@@ -369,6 +369,7 @@ export const Hashtag = styled.div`
     display: flex;
     margin: 0 4px 0 4px;
     cursor: pointer;
+    max-width: 20%;
     justify-content: center;
     &:hover {
         background-color: var(--g-color-gray150);
@@ -379,4 +380,6 @@ export const HashtagName = styled.h1`
     font-family: Helvetica;
     font-weight: 600;
     font-size: var(--g-text-font-size-3);
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;

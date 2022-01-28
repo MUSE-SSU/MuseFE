@@ -61,15 +61,19 @@ function Navbar() {
     }, []);
 
     // 드롭다운 state
-    const [open, setOpen] = React.useState(false);
-    const [selected, setSelected] = React.useState(null);
-    const anchorRef = React.useRef(null);
+    const [open, setOpen] = useState(false);
+    const [selected, setSelected] = useState(null);
+
+    const anchorRefDesktopRight = useRef(null);
     const DROPDOWN_ZINDEX = new FixedZIndex(10);
+    const [selectedDesktopRight, setSelectedDesktopRight] = useState(null);
 
     //드롭다운 모바잃 state
     const [openMobileLeft, setOpenMobileLeft] = useState(false);
     const [selectedMobileLeft, setSelectedMobileLeft] = useState(null);
+    const [selectedMobileRight, setSelectedMobileRight] = useState(null);
     const anchorRefMobileLeft = useRef(null);
+    const anchorRefMobileRight = useRef(null);
 
     return (
         <div>
@@ -132,7 +136,7 @@ function Navbar() {
                                     </Box>
                                     <Avatar
                                         src={getUserAvatar}
-                                        ref={anchorRef}
+                                        ref={anchorRefDesktopRight}
                                         onClick={() =>
                                             setOpen((prevVal) => !prevVal)
                                         }
@@ -140,7 +144,9 @@ function Navbar() {
                                     {open && (
                                         <Dropdown
                                             zIndex={DROPDOWN_ZINDEX}
-                                            anchor={anchorRef.current}
+                                            anchor={
+                                                anchorRefDesktopRight.current
+                                            }
                                             id="action-variant-dropdown-example"
                                             onDismiss={() => setOpen(false)}
                                         >
@@ -150,7 +156,7 @@ function Navbar() {
                                                     value: "조회수순",
                                                     label: "마이페이지",
                                                 }}
-                                                selected={selected}
+                                                selected={selectedDesktopRight}
                                             />
                                             <Dropdown.Item
                                                 onSelect={logOutBtn}
@@ -158,7 +164,7 @@ function Navbar() {
                                                     value: "최신순",
                                                     label: "로그아웃",
                                                 }}
-                                                selected={selected}
+                                                selected={selectedDesktopRight}
                                             />
                                         </Dropdown>
                                     )}
@@ -228,7 +234,7 @@ function Navbar() {
                                     </Box>
                                     <Avatar
                                         src={getUserAvatar}
-                                        ref={anchorRef}
+                                        ref={anchorRefDesktopRight}
                                         onClick={() =>
                                             setOpen((prevVal) => !prevVal)
                                         }
@@ -236,7 +242,9 @@ function Navbar() {
                                     {open && (
                                         <Dropdown
                                             zIndex={DROPDOWN_ZINDEX}
-                                            anchor={anchorRef.current}
+                                            anchor={
+                                                anchorRefDesktopRight.current
+                                            }
                                             id="action-variant-dropdown-example"
                                             onDismiss={() => setOpen(false)}
                                         >
@@ -246,7 +254,7 @@ function Navbar() {
                                                     value: "조회수순",
                                                     label: "마이페이지",
                                                 }}
-                                                selected={selected}
+                                                selected={selectedDesktopRight}
                                             />
                                             <Dropdown.Item
                                                 onSelect={logOutBtn}
@@ -254,7 +262,7 @@ function Navbar() {
                                                     value: "최신순",
                                                     label: "로그아웃",
                                                 }}
-                                                selected={selected}
+                                                selected={selectedDesktopRight}
                                             />
                                         </Dropdown>
                                     )}
@@ -278,6 +286,7 @@ function Navbar() {
                             />
                             {openMobileLeft && (
                                 <Dropdown
+                                    idealDirection="right"
                                     zIndex={DROPDOWN_ZINDEX}
                                     anchor={anchorRefMobileLeft.current}
                                     id="action-variant-dropdown-example"
@@ -328,15 +337,18 @@ function Navbar() {
                                     </Box>
                                     <Avatar
                                         src={getUserAvatar}
-                                        ref={anchorRef}
-                                        onClick={() =>
-                                            setOpen((prevVal) => !prevVal)
-                                        }
+                                        ref={anchorRefMobileRight}
+                                        onClick={() => {
+                                            setOpen((prevVal) => !prevVal);
+                                            console.log("avatarClicked");
+                                        }}
                                     />
                                     {open && (
                                         <Dropdown
                                             zIndex={DROPDOWN_ZINDEX}
-                                            anchor={anchorRef.current}
+                                            anchor={
+                                                anchorRefMobileRight.current
+                                            }
                                             id="action-variant-dropdown-example"
                                             onDismiss={() => setOpen(false)}
                                         >
@@ -346,7 +358,7 @@ function Navbar() {
                                                     value: "조회수순",
                                                     label: "마이페이지",
                                                 }}
-                                                selected={selected}
+                                                selected={selectedMobileRight}
                                             />
                                             <Dropdown.Item
                                                 onSelect={logOutBtn}
@@ -354,7 +366,7 @@ function Navbar() {
                                                     value: "최신순",
                                                     label: "로그아웃",
                                                 }}
-                                                selected={selected}
+                                                selected={selectedMobileRight}
                                             />
                                         </Dropdown>
                                     )}

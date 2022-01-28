@@ -19,7 +19,8 @@ import {
     SubmitButtonContainer,
     InputContainer,
     ModalName,
-    Form,
+    InputDetailContainer,
+    InputDetailTextContainer,
     Pre,
     Textarea,
     DeleteButton,
@@ -200,7 +201,7 @@ function Input(ownerInfo) {
             <form>
                 <InputContainer>
                     <ModalName>프로필 수정</ModalName>
-                    <Form>
+                    <InputDetailContainer>
                         <label htmlFor="input-file">
                             {avatarPreview == null ? (
                                 <AvatarContainer>
@@ -228,7 +229,7 @@ function Input(ownerInfo) {
                             style={{ display: "none" }}
                             onChange={onChangeAvatar}
                         />
-                        <div>
+                        <InputDetailTextContainer>
                             <NicknameLabel>Nickname</NicknameLabel>
                             <NicknameContainer>
                                 <NicknameInput
@@ -258,24 +259,26 @@ function Input(ownerInfo) {
                                     />
                                 )}
                             </InstagramContainer>
-                        </div>
-                        <div>
+                        </InputDetailTextContainer>
+                        <InputDetailTextContainer>
                             <NicknameLabel>Introduce</NicknameLabel>
                             <Pre>
                                 {ownerInfo.selfIntroduce !== null ? (
                                     <Textarea
+                                        maxlength="30"
                                         value={introduce}
                                         onChange={onChangeIntroduce}
                                     />
                                 ) : (
                                     <Textarea
+                                        maxlength="30"
                                         placeholder={introducePlaceholder}
                                         onChange={onChangeIntroduce}
                                     />
                                 )}
                             </Pre>
-                        </div>
-                    </Form>
+                        </InputDetailTextContainer>
+                    </InputDetailContainer>
                     <SubmitButtonContainer>
                         <SubmitButton type="submit" onClick={handleSubmit}>
                             제출

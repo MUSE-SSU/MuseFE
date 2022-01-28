@@ -7,12 +7,14 @@ export const MainContainer = styled.div`
     max-width: 1440px;
     justify-content: center;
     flex-direction: column;
+    overflow: hidden;
 `;
 export const MyPageContainer = styled.div`
     margin-top: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
     flex-direction: column;
 `;
 export const Avatar = styled.img`
@@ -26,7 +28,7 @@ export const OwnerInfoContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 92vw;
+    width: 100%;
 `;
 
 export const OwnerNicknameContainer = styled.div`
@@ -39,7 +41,7 @@ export const OwnerNicknameContainer = styled.div`
 `;
 
 export const OwnerNickname = styled.h1`
-    font-weight: 900;
+    font-weight: 600;
     font-size: var(--g-text-font-size-6);
     display: inline;
 `;
@@ -99,6 +101,9 @@ export const DisplayOrderButton = styled(FollowButton)`
     border-radius: 0px;
     background-color: var(--g-color-gray100);
     color: black;
+    &:hover {
+        background-color: var(--g-color-gray150);
+    }
     @media (max-width: 724px) {
         width: 320px;
     }
@@ -115,6 +120,9 @@ export const DisplayOrderButton2 = styled(FollowButton)`
     width: 360px;
     background-color: var(--g-color-gray100);
     color: black;
+    &:hover {
+        background-color: var(--g-color-gray150);
+    }
     @media (max-width: 724px) {
         width: 320px;
     }
@@ -170,17 +178,25 @@ export const ButtonH1 = styled.h1`
 `;
 
 export const Introduce = styled.h2`
-    font-weight: 600;
-    font-size: var(--g-text-font-size-5);
+    font-family: Helvetica;
+    font-weight: 500;
+    font-size: var(--g-text-font-size-4);
     margin-bottom: 12px;
+    height: auto;
+    word-break: break-word;
 `;
 
-export const Pre = styled.pre`
+export const IntroduceContainer = styled.div`
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    font-weight: 600;
+    text-align: center;
+    width: 60vw;
     padding: 24px 12px 24px 12px;
+    flex-direction: column;
+    @media (max-width: 1023px) {
+        width: 80vw;
+    }
 `;
 
 export const FollowedButton = styled(FollowButton)`
@@ -204,4 +220,5 @@ export const InstagramID = styled.p`
     cursor: pointer;
     font-family: Helvetica;
     font-size: var(--g-text-font-size-3);
+    font-weight: 600;
 `;

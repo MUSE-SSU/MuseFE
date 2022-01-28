@@ -46,11 +46,11 @@ function RulesModal() {
                     </Flex>
                 }
             >
-                <Box margin={12}>
+                <Box margin={6}>
                     <CheckboxContainer>
                         <Checkbox
                             checked={tosAgree}
-                            label="이용약관(필수)"
+                            label="이용약관"
                             onClick={() => {
                                 setTosAgree(!tosAgree);
                             }}
@@ -60,13 +60,13 @@ function RulesModal() {
                                 window.open("/info");
                             }}
                         >
-                            [자세히 보기]
+                            [자세히]
                         </BoldRouter>
                     </CheckboxContainer>
                     <CheckboxContainer>
                         <Checkbox
                             checked={privacyAgree}
-                            label="개인정보 수집 및 이용 동의(필수)"
+                            label="개인정보 수집 및 이용 동의"
                             onClick={() => {
                                 setPrivacyAgree(!privacyAgree);
                             }}
@@ -76,7 +76,7 @@ function RulesModal() {
                                 window.open("/info");
                             }}
                         >
-                            [자세히 보기]
+                            [자세히]
                         </BoldRouter>
                     </CheckboxContainer>
                 </Box>

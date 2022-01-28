@@ -17,13 +17,13 @@ import {
     OwnerInfoContainer,
     OwnerNicknameContainer,
     OwnerNickname,
+    IntroduceContainer,
     OwnerFollower,
     FollowButton,
     FollowContainer,
     FollowCountContainer,
     MyPostContainer,
     Introduce,
-    Pre,
     DisplayOrderButton,
     DisplayOrderButton2,
     OrderButtonContainer,
@@ -222,39 +222,41 @@ function MyPage() {
                 <MainContainer>
                     <GlobalNavbar />
                     <MyPageContainer>
-                        <OwnerInfoContainer>
-                            <Avatar src={ownerInfo.avatar} />
-                            <OwnerNicknameContainer>
-                                <OwnerNickname>
-                                    {ownerInfo.nickname}
-                                </OwnerNickname>
-                                {ownerInfo.badge > 0 && (
-                                    <Badge badge={ownerInfo.badge}>MUSE</Badge>
+                        <Box width="100%">
+                            <OwnerInfoContainer>
+                                <Avatar src={ownerInfo.avatar} />
+                                <OwnerNicknameContainer>
+                                    <OwnerNickname>
+                                        {ownerInfo.nickname}
+                                    </OwnerNickname>
+                                    {ownerInfo.badge > 0 && (
+                                        <Badge badge={ownerInfo.badge}>
+                                            MUSE
+                                        </Badge>
+                                    )}
+                                </OwnerNicknameContainer>
+                                {isOwner == true && (
+                                    <NicknameUpdateButton
+                                        avatar={ownerInfo.avatar}
+                                        nickname={ownerInfo.nickname}
+                                        selfIntroduce={ownerInfo.self_introduce}
+                                        instagram={ownerInfo.insta_id}
+                                    />
                                 )}
-                            </OwnerNicknameContainer>
-                            {isOwner == true && (
-                                <NicknameUpdateButton
-                                    avatar={ownerInfo.avatar}
-                                    nickname={ownerInfo.nickname}
-                                    selfIntroduce={ownerInfo.self_introduce}
-                                    instagram={ownerInfo.insta_id}
-                                />
-                            )}
-                            {isOwner === false ? (
-                                isLoginUserFollow == false ? (
-                                    <FollowButton onClick={handleFollow}>
-                                        팔로우
-                                    </FollowButton>
+                                {isOwner === false ? (
+                                    isLoginUserFollow == false ? (
+                                        <FollowButton onClick={handleFollow}>
+                                            팔로우
+                                        </FollowButton>
+                                    ) : (
+                                        <FollowedButton onClick={handleFollow}>
+                                            팔로잉
+                                        </FollowedButton>
+                                    )
                                 ) : (
-                                    <FollowedButton onClick={handleFollow}>
-                                        팔로잉
-                                    </FollowedButton>
-                                )
-                            ) : (
-                                <></>
-                            )}
-                            <div>
-                                <Pre>
+                                    <></>
+                                )}
+                                <IntroduceContainer>
                                     <Introduce>
                                         {ownerInfo.self_introduce}
                                     </Introduce>
@@ -270,29 +272,29 @@ function MyPage() {
                                     >
                                         {ownerInfo.insta_id}
                                     </InstagramID>
-                                </Pre>
-                            </div>
+                                </IntroduceContainer>
 
-                            <FollowContainer>
-                                <FollowButtonContainer>
-                                    <FollowerModal
-                                        followerCount={followerCount}
-                                        followerLists={followerLists}
-                                        followerParams={followerParams}
-                                        isOwner={isOwner}
-                                        submit={submit}
-                                    />
-                                </FollowButtonContainer>
-                                <FollowButtonContainer>
-                                    <FollowingModal
-                                        followingParams={followingParams}
-                                        isOwner={isOwner}
-                                        followingCount={followingCount}
-                                        followingLists={followingLists}
-                                    />
-                                </FollowButtonContainer>
-                            </FollowContainer>
-                        </OwnerInfoContainer>
+                                <FollowContainer>
+                                    <FollowButtonContainer>
+                                        <FollowerModal
+                                            followerCount={followerCount}
+                                            followerLists={followerLists}
+                                            followerParams={followerParams}
+                                            isOwner={isOwner}
+                                            submit={submit}
+                                        />
+                                    </FollowButtonContainer>
+                                    <FollowButtonContainer>
+                                        <FollowingModal
+                                            followingParams={followingParams}
+                                            isOwner={isOwner}
+                                            followingCount={followingCount}
+                                            followingLists={followingLists}
+                                        />
+                                    </FollowButtonContainer>
+                                </FollowContainer>
+                            </OwnerInfoContainer>
+                        </Box>
                     </MyPageContainer>
                     <PostContainer>
                         <MyPostContainer>

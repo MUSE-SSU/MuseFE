@@ -13,8 +13,8 @@ export const Avatar = styled.img`
 `;
 
 export const NicknameInput = styled.input`
-    width: 288px;
     height: 48px;
+    width: 70%;
     font-size: var(--g-text-font-size-4);
     color: var(--g-color-gray200);
     border-radius: 16px;
@@ -28,14 +28,14 @@ export const NicknameInput = styled.input`
 `;
 
 export const InstagramInput = styled(NicknameInput)`
-    width: 400px;
+    width: 70%;
 `;
 
 export const NicknameDuplicateButton = styled.button`
     margin-left: 12px;
     width: 72px;
-    height: 36px;
-    border-radius: 12px;
+    height: 48px;
+    border-radius: 24px;
     background-color: var(--g-color-gray100);
     border: none;
     font-weight: 600;
@@ -101,18 +101,24 @@ export const ModalName = styled.h1`
     margin-bottom: 24px;
 `;
 
-export const Form = styled.div`
+export const InputDetailContainer = styled.div`
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    width: 90%;
+    overflow: hidden;
+`;
+
+export const InputDetailTextContainer = styled.div`
+    width: 100%;
 `;
 
 export const Textarea = styled.textarea`
     white-space: pre-wrap;
     overflow-wrap: break-word;
     word-break: break-word;
-    width: 400px;
+    width: 70%;
     height: 96px;
     border: none;
     background-color: var(--g-color-gray100);
@@ -135,6 +141,7 @@ export const NicknameContainer = styled.div`
     flex-direction: row;
     align-items: center;
     margin-bottom: 12px;
+    width: 100%;
 `;
 
 export const InstagramContainer = styled(NicknameContainer)``;

@@ -83,6 +83,8 @@ function SearchContainer() {
             .then((res) => {
                 try {
                     console.log(res.data);
+                    console.log(res.data);
+                    console.log(res.data);
                     setTopTagData(res.data);
                 } catch (e) {
                     console.log(e);

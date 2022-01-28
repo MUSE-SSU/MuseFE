@@ -3,23 +3,33 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUploadPost } from "../../../actions/post";
 import {
-    CustomForm,
+    InputText,
+    InputFile,
+    SubmitButton,
     InfoContainer,
     InfoContainerSection1,
     InfoContainerSection2,
-    CustomButton,
-    Pre,
-    CustomInput,
-    CustomInputFile,
-    ImgPreview,
-    ImgPreviewContainer,
-    ImgPreviewSkeleton,
-    ImgPreviewSkeletonPlusButton,
-    CustomTextarea,
+    InputForm,
+    InputPre,
+    ImagePreview,
+    ImagePreviewContainer,
+    ImagePreviewSkeleton,
+    ImagePreviewSkeletonPlusIcon,
+    InputTextarea,
+    MobilImageContainer,
+    MobileImagePreviewContainer,
+    MobileImagePreviewSkeleton,
+    MobileImagePreviewSkeletonPlusIcon,
+    MobileInputForm,
+    MobileInfoContainer,
+    MobileHashtagContainer,
+    MobileInfoContainerScetion,
+    MobileInputPre,
 } from "./style";
-import Swal from "sweetalert2";
 import { WithContext as ReactHashTags } from "react-tag-input";
-import "./style.css";
+import { useMediaQuery as MediaQuery } from "react-responsive";
+import Swal from "sweetalert2";
+import "../../global/postButton/style.css";
 import {
     Box,
     Button,
@@ -30,6 +40,13 @@ import {
     Modal,
 } from "gestalt";
 function Input() {
+    const isMobile = MediaQuery({
+        query: "(max-width: 425px)",
+    });
+    const notMobile = MediaQuery({
+        query: "(min-width: 426px) and (max-width: 2560px)",
+    });
+
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -139,78 +156,160 @@ function Input() {
 
     return (
         <>
-            <Box overflow="hidden">
-                <Box>
-                    <Flex
-                        alignItems="center"
-                        justifyContent="center"
-                        direction="row"
-                        gap="6"
-                    >
-                        <CustomForm
-                            onSubmit={handleSubmit}
-                            encType="multipart/form-data"
+            {notMobile && (
+                <Box overflow="hidden">
+                    <Box>
+                        <Flex
+                            alignItems="center"
+                            justifyContent="center"
+                            direction="row"
+                            gap="6"
                         >
-                            {imagePreview != null ? (
-                                <ImgPreviewContainer>
-                                    <ImgPreview src={imagePreview} alt="" />
-                                </ImgPreviewContainer>
-                            ) : (
-                                <ImgPreviewSkeleton
-                                    onClick={handleHiddenInputFile}
-                                    onChange={onChangeImage}
-                                >
-                                    <ImgPreviewSkeletonPlusButton />
-                                </ImgPreviewSkeleton>
-                            )}
-                            <InfoContainer>
-                                <InfoContainerSection1>
-                                    <CustomInput
-                                        type="text"
-                                        name="title"
-                                        onChange={onChangeTitle}
-                                        placeholder="제목"
-                                        autocomplete="off"
-                                    />
-                                    <CustomInputFile
-                                        type="file"
-                                        name="images"
+                            <InputForm
+                                onSubmit={handleSubmit}
+                                encType="multipart/form-data"
+                            >
+                                {imagePreview != null ? (
+                                    <ImagePreviewContainer>
+                                        <ImagePreview
+                                            src={imagePreview}
+                                            alt=""
+                                        />
+                                    </ImagePreviewContainer>
+                                ) : (
+                                    <ImagePreviewSkeleton
+                                        onClick={handleHiddenInputFile}
                                         onChange={onChangeImage}
-                                        ref={hiddenFileInput}
-                                    />
-                                    <ReactHashTags
-                                        tags={hashs}
-                                        delimiters={trigger}
-                                        handleAddition={handleAddHash}
-                                        handleDelete={handleDeleteHash}
-                                        inline={false}
-                                        placeholder="해시태그 입력 후 enter키를 눌러주세요"
-                                    />
-                                    <Pre>
-                                        <CustomTextarea
-                                            name="Text1"
-                                            cols="90"
-                                            Rows="4"
-                                            maxLength="90"
-                                            onChange={onChangeContent}
-                                            placeholder="내용"
+                                    >
+                                        <ImagePreviewSkeletonPlusIcon />
+                                    </ImagePreviewSkeleton>
+                                )}
+                                <InfoContainer>
+                                    <InfoContainerSection1>
+                                        <InputText
+                                            type="text"
+                                            name="title"
+                                            onChange={onChangeTitle}
+                                            placeholder="제목"
                                             autocomplete="off"
                                         />
-                                    </Pre>
-                                </InfoContainerSection1>
-                                <InfoContainerSection2>
-                                    <CustomButton
-                                        type="button"
-                                        onClick={handleSubmit}
-                                    >
-                                        제출
-                                    </CustomButton>
-                                </InfoContainerSection2>
-                            </InfoContainer>
-                        </CustomForm>
-                    </Flex>
+                                        <InputFile
+                                            type="file"
+                                            name="images"
+                                            onChange={onChangeImage}
+                                            ref={hiddenFileInput}
+                                        />
+                                        <ReactHashTags
+                                            tags={hashs}
+                                            delimiters={trigger}
+                                            handleAddition={handleAddHash}
+                                            handleDelete={handleDeleteHash}
+                                            inline={false}
+                                            placeholder="해시태그 입력 후 enter키를 눌러주세요"
+                                        />
+                                        <InputPre>
+                                            <InputTextarea
+                                                name="Text1"
+                                                cols="90"
+                                                Rows="4"
+                                                maxLength="90"
+                                                onChange={onChangeContent}
+                                                placeholder="내용"
+                                                autocomplete="off"
+                                            />
+                                        </InputPre>
+                                    </InfoContainerSection1>
+                                    <InfoContainerSection2>
+                                        <SubmitButton
+                                            type="button"
+                                            onClick={handleSubmit}
+                                        >
+                                            제출
+                                        </SubmitButton>
+                                    </InfoContainerSection2>
+                                </InfoContainer>
+                            </InputForm>
+                        </Flex>
+                    </Box>
                 </Box>
-            </Box>
+            )}
+            {isMobile && (
+                <Box overflow="hidden">
+                    <Box>
+                        <Flex
+                            alignItems="center"
+                            justifyContent="center"
+                            direction="row"
+                            gap="6"
+                        >
+                            <MobileInputForm
+                                onSubmit={handleSubmit}
+                                encType="multipart/form-data"
+                            >
+                                {imagePreview != null ? (
+                                    <MobileImagePreviewContainer>
+                                        <ImagePreview
+                                            src={imagePreview}
+                                            alt=""
+                                        />
+                                    </MobileImagePreviewContainer>
+                                ) : (
+                                    <MobileImagePreviewSkeleton
+                                        onClick={handleHiddenInputFile}
+                                        onChange={onChangeImage}
+                                    >
+                                        <MobileImagePreviewSkeletonPlusIcon />
+                                    </MobileImagePreviewSkeleton>
+                                )}
+                                <MobileInfoContainer>
+                                    <InfoContainerSection1>
+                                        <InputText
+                                            type="text"
+                                            name="title"
+                                            onChange={onChangeTitle}
+                                            placeholder="제목"
+                                            autocomplete="off"
+                                        />
+                                        <InputFile
+                                            type="file"
+                                            name="images"
+                                            onChange={onChangeImage}
+                                            ref={hiddenFileInput}
+                                        />
+                                        <ReactHashTags
+                                            tags={hashs}
+                                            delimiters={trigger}
+                                            handleAddition={handleAddHash}
+                                            handleDelete={handleDeleteHash}
+                                            inline={false}
+                                            placeholder="해시태그 입력 후 enter키를 눌러주세요"
+                                        />
+                                        <MobileInputPre>
+                                            <InputTextarea
+                                                name="Text1"
+                                                cols="90"
+                                                Rows="4"
+                                                maxLength="90"
+                                                onChange={onChangeContent}
+                                                placeholder="내용"
+                                                autocomplete="off"
+                                            />
+                                        </MobileInputPre>
+                                    </InfoContainerSection1>
+                                    <InfoContainerSection2>
+                                        <SubmitButton
+                                            type="button"
+                                            onClick={handleSubmit}
+                                        >
+                                            제출
+                                        </SubmitButton>
+                                    </InfoContainerSection2>
+                                </MobileInfoContainer>
+                            </MobileInputForm>
+                        </Flex>
+                    </Box>
+                </Box>
+            )}
         </>
     );
 }
@@ -218,12 +317,12 @@ function Input() {
 function ContestPostButton() {
     // 모달 관련
     const [shouldShow, setShouldShow] = React.useState(false);
-    const HEADER_ZINDEX = new FixedZIndex(10);
+    const HEADER_ZINDEX = new FixedZIndex(998);
     const modalZIndex = new CompositeZIndex([HEADER_ZINDEX]);
 
     const ModalWithHeading = ({ onDismiss }) => {
         return (
-            <Modal onDismiss={onDismiss} footer={<Input />} size="lg"></Modal>
+            <Modal onDismiss={onDismiss} footer={<Input />} size="md"></Modal>
         );
     };
 

@@ -346,7 +346,7 @@ function DetailPost(props) {
     return (
         <ModalMainContainer ref={modalRef}>
             {data !== undefined && (
-                <Box>
+                <Box width="100%">
                     <Box>
                         <CancelContainer>
                             <IconButton

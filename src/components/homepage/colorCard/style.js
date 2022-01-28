@@ -62,9 +62,9 @@ export const ColorHexa = styled.h1`
 export const MainContainer = styled(motion.div)`
     cursor: pointer;
     width: 18vw;
+    height: calc(18vw * 1.2);
     max-width: 260px;
-    height: 20vh;
-    max-height: 280px;
+    max-height: 312px;
     overflow: hidden;
     border: 3px solid black;
     display: flex;
@@ -82,27 +82,7 @@ export const MainContainer = styled(motion.div)`
     }
     //모바일
     @media (max-width: 479px) {
-        height: 20vh;
-    }
-
-    //태블릿
-    @media (max-width: 767px) and (min-width: 480px) {
-    }
-
-    //노트북
-    @media (max-width: 1023px) and (min-width: 768px) {
-    }
-
-    //데스크탑 & 대형노트북
-    @media (min-width: 1024px) {
-        width: 18vw;
-        height: 30vh;
-        overflow: hidden;
-        border: 3px solid black;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
+        border: 2px solid black;
     }
 `;
 
@@ -114,7 +94,6 @@ export const Test = styled.div`
     max-height: 480px;
     background-color: ${(props) => props.color};
     @media (max-width: 320px) {
-        margin-left: 2px;
         justify-content: center;
         height: 80px;
     }
