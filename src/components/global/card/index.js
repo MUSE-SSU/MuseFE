@@ -49,6 +49,7 @@ import {
     ModalInfoContainer,
     Content,
     Url,
+    OtherPostsContainer,
     ModalWriterInfoContainerMobile,
 } from "./style";
 import {
@@ -551,32 +552,23 @@ function DetailPost(props) {
                         </Box>
 
                         <Content>{data.content}</Content>
-                        <Box width="100%">
-                            <Flex
-                                width="100%"
-                                height="100%"
-                                alignItems="center"
-                                justifyContent="between"
+                        <Box width="100%" overflow="hidden">
+                            <Url
+                                onClick={() => {
+                                    window.location.href = `${data.ref_url}`;
+                                }}
                             >
-                                <Url
-                                    onClick={() => {
-                                        window.location.href = `${data.ref_url}`;
-                                    }}
-                                >
-                                    {data.ref_url}
-                                </Url>
-                                <Box>
-                                    <Flex>
-                                        {data.hashtag.map((tag) => (
-                                            <Hashtag>
-                                                <HashtagName>
-                                                    #{tag}
-                                                </HashtagName>
-                                            </Hashtag>
-                                        ))}
-                                    </Flex>
-                                </Box>
-                            </Flex>
+                                {data.ref_url}
+                            </Url>
+                            <Box width="100%">
+                                <Flex justifyContent="center">
+                                    {data.hashtag.map((tag) => (
+                                        <Hashtag>
+                                            <HashtagName>#{tag}</HashtagName>
+                                        </Hashtag>
+                                    ))}
+                                </Flex>
+                            </Box>
                         </Box>
                     </ModalInfoContainer>
 
@@ -679,7 +671,7 @@ function DetailPost(props) {
                     </ModalCommentContainer>
                     <Box marginTop={4}>
                         <StackGrid
-                            columnWidth={260}
+                            columnWidth={300}
                             gutterWidth={8}
                             duration={0}
                             monitorImagesLoaded={true}

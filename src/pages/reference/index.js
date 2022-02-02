@@ -8,13 +8,13 @@ import {
 } from "../../components";
 function Archives() {
     return (
-        <div>
+        <>
             <GlobalNavbar />
             <GlobalBanner />
             <ReferenceContainer name="reference" />
             <GlobalPostButton />
             <GlobalInfoButton />
-        </div>
+        </>
     );
 }
 

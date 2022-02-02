@@ -115,10 +115,11 @@ export const updateUser = (formData) => {
 /*------------------------------------------------------------------------------------------------*/
 // 포스트 관련
 export const uploadPost = (data) => {
+    const token = JSON.parse(localStorage.getItem("token"));
     return fetch(`${API_DOMAIN}/post/`, {
         method: "POST",
         headers: {
-            Authorization: `${token}`,
+            Authorization: token,
         },
         body: data,
     });

@@ -83,7 +83,9 @@ function Navbar() {
                         <NavContainerLeft>
                             <NavLink
                                 to="/Muse"
-                                activeStyle={{ color: "var(--g-color-blue" }}
+                                activeStyle={{
+                                    color: "var(--g-color-blue",
+                                }}
                             >
                                 <NavItem
                                     whileHover={{ scale: 1.2 }}
@@ -140,6 +142,13 @@ function Navbar() {
                                         onClick={() =>
                                             setOpen((prevVal) => !prevVal)
                                         }
+                                        whileHover={{
+                                            scale: 1.1,
+                                        }}
+                                        initial={{ scale: 0 }}
+                                        animate={{
+                                            scale: [0, 0, 1.1, 0.96, 1.02, 1],
+                                        }}
                                     />
                                     {open && (
                                         <Dropdown
@@ -340,7 +349,6 @@ function Navbar() {
                                         ref={anchorRefMobileRight}
                                         onClick={() => {
                                             setOpen((prevVal) => !prevVal);
-                                            console.log("avatarClicked");
                                         }}
                                     />
                                     {open && (

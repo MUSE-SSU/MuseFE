@@ -73,7 +73,7 @@ export const Logo = styled(motion.div)`
     color: var(--g-color-blue);
 `;
 
-export const Avatar = styled.img`
+export const Avatar = styled(motion.img)`
     width: 28px;
     height: 28px;
     border-radius: 50%;

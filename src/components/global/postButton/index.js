@@ -145,9 +145,10 @@ function Input() {
     //hashtag 관리
     const KeyCodes = {
         enter: 13,
+        backSpace: 8,
     };
     const trigger = [KeyCodes.enter];
-
+    const deleteTrigger = [KeyCodes.backSpace];
     const handleAddition = (hash) => {
         if (showHashtag.length < 3) {
             setShowHashtag([...showHashtag, hash]);
@@ -164,8 +165,8 @@ function Input() {
     };
 
     const handleDelete = (i) => {
-        setShowHashtag(showHashtag.filter((index) => index !== i));
-        setHashtag(hashtag.filter((index) => index !== i));
+        setShowHashtag(showHashtag.filter((hash, index) => index !== i));
+        setHashtag(hashtag.filter((hash, index) => index !== i));
     };
 
     return (

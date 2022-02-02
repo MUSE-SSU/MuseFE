@@ -186,10 +186,13 @@ export const ModalWriterInfoContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
+    @media (max-width: 425px) {
+        padding: 0 12px 0 12px;
+    }
 `;
 
 export const CancelContainer = styled.div`
-    margin-top: 24px;
+    margin-top: 12px;
     width: 98%;
     display: flex;
     flex-direction: row;
@@ -199,6 +202,7 @@ export const CancelContainer = styled.div`
 export const ModalWriterInfoContainerMobile = styled(ModalWriterInfoContainer)`
     flex-direction: column;
     justify-content: center;
+    width: 100%;
     align-items: space-between;
     padding: 12px 0 12px 0;
 `;
@@ -206,6 +210,9 @@ export const ModalWriterInfoContainerMobile = styled(ModalWriterInfoContainer)`
 export const ModalMainContainer = styled.div``;
 export const ModalCommentContainer = styled.div`
     padding: 0 48px 0 48px;
+    @media (max-width: 425px) {
+        padding: 0 12px 0 12px;
+    }
 `;
 export const ModalImageContainer = styled.div`
     display: flex;
@@ -231,6 +238,7 @@ export const Title = styled.h1`
     font-size: var(--g-text-font-size-6);
     font-weight: 900;
     font-family: R-FLEX-BLACK, Helvetica;
+    margin-bottom: 12px;
 `;
 
 export const Date = styled(Writer)`
@@ -266,7 +274,7 @@ export const Comment = styled.p`
 
 export const OtherPostsImg = styled.img`
     border-radius: 12px;
-    width: 260px;
+    width: 300px;
     cursor: pointer;
     object-fit: contain;
 `;
@@ -337,12 +345,20 @@ export const UnFollowButton = styled(motion.button)`
     }
 `;
 
+export const OtherPostsContainer = styled.div`
+    display: flex;
+    justify-content: center;
+`;
 export const ModalInfoContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 0 48px 0 48px;
     align-items: flex-start;
+    width: 100%;
+    @media (max-width: 425px) {
+        padding: 0 12px 0 12px;
+    }
 `;
 
 export const Content = styled.p`
@@ -367,9 +383,12 @@ export const Hashtag = styled.div`
     border-radius: 16px;
     padding: 4px 12px 4px 12px;
     display: flex;
-    margin: 0 4px 0 4px;
+    margin: 12px 4px 12px 4px;
     cursor: pointer;
-    max-width: 20%;
+    height: 36px;
+    width: 9vw;
+    min-width: 98px;
+    align-items: center;
     justify-content: center;
     &:hover {
         background-color: var(--g-color-gray150);
@@ -381,5 +400,6 @@ export const HashtagName = styled.h1`
     font-weight: 600;
     font-size: var(--g-text-font-size-3);
     overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
 `;

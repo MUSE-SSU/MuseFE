@@ -31,10 +31,6 @@ function GlobalBanner(props) {
             });
     };
 
-    useEffect(() => {
-        getBanner();
-    }, []);
-
     return (
         <div>
             {props.name === "muse" ? (

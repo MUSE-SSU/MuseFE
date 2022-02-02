@@ -116,6 +116,4 @@ export const InfoContainer = styled.div`
     justify-content: flex-start;
 `;
 
-export const HomeContainer = styled.div`
-    width: 100vw;
-`;
+export const MainContainer = styled.div``;
