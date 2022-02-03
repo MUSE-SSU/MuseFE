@@ -11,29 +11,36 @@ import {
     BannerImg,
     BannerInfoContainer,
     BannerImgContainer,
+    OverlayContainer,
 } from "./style";
+import { useAnimation } from "framer";
 import { ContestPostButton } from "../../../components";
+import { Overlay } from "react-bootstrap";
 
 const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
 
 function GlobalBanner(props) {
+    const animation = useAnimation();
+    const animation2 = useAnimation();
     const [bannerTitle, setBannerTitle] = useState();
     const [bannerContent, setBannerContent] = useState();
 
-    const getBanner = () => {
-        return fetch(`${API_DOMAIN}/banner/?type=${props.name}`, {
-            method: "GET",
-            headers: {
-                "content-type": "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setBannerTitle(data.title);
-                setBannerContent(data.content);
-            });
-    };
+    async function sequence() {
+        await animation.start({
+            opacity: 0,
+            transition: { duration: 0.3 },
+        });
+        await animation2.start({
+            opacity: 0,
+            transition: { duration: 0.3 },
+        });
+        await animation.start({
+            opacity: 1,
+        });
+        await animation2.start({
+            opacity: 1,
+        });
+    }
 
     return (
         <Container>
@@ -51,11 +58,14 @@ function GlobalBanner(props) {
                 </LargeBanner>
             ) : (
                 <Banner>
-                    <BannerInfoContainer>
-                        <Label>
-                            Who's your <Highlight>MUSE?</Highlight>
+                    <BannerInfoContainer animate={sequence}>
+                        <Label animate={animation} initial={{ opacity: 0 }}>
+                            Who's your <Highlight>MUSE</Highlight>
                         </Label>
-                        <Paragraph>
+                        <Paragraph
+                            animate={animation2}
+                            initial={{ opacity: 0 }}
+                        >
                             영감을 나누는 공간 <Span>MUSE</Span>
                         </Paragraph>
                         {props.name === "contest" && (
@@ -64,9 +74,14 @@ function GlobalBanner(props) {
                             </PostButtonContainer>
                         )}
                     </BannerInfoContainer>
-                    <BannerImgContainer>
-                        <BannerImg src={"/Gradient1.png"} />
+
+                    <BannerImgContainer
+                        animate={{ rotate: 720 }}
+                        transition={{ duration: 1200 }}
+                    >
+                        <BannerImg src={"/fixed.png"} />
                     </BannerImgContainer>
+                    <OverlayContainer />
                 </Banner>
             )}
         </Container>

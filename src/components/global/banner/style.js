@@ -3,11 +3,12 @@ import { motion } from "framer";
 
 export const Banner = styled.div`
     max-width: 1440px;
-    height: 360px;
+    height: 480px;
     background-color: var(--g-color-blue-overlay);
     display: flex;
     justify-content: space-between;
     overflow: hidden;
+    position: relative;
     width: 100vw;
     align-items: center;
     font-size: 24px;
@@ -21,20 +22,23 @@ export const Banner = styled.div`
     }
 `;
 
-export const BannerInfoContainer = styled.div`
+export const BannerInfoContainer = styled(motion.div)`
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     flex-direction: column;
     margin-left: 4vw;
-    width: 50%;
+    width: 100%;
+    z-index: 300;
 `;
 
 export const BannerImg = styled(motion.img)`
-    width: 110%;
-    height: auto;
+    object-fit: fill;
 `;
-export const BannerImgContainer = styled.div``;
+export const BannerImgContainer = styled(motion.div)`
+    position: absolute;
+`;
+
 export const LargeBanner = styled.div`
     height: 480px;
     width: 100vw;
@@ -55,26 +59,26 @@ export const LargeBanner = styled.div`
         font-size: 12px;
     }
 `;
-export const Label = styled.h1`
+export const Label = styled(motion.h1)`
     text-align: center;
-    color: black;
+    color: white;
     font-family: R-FLEX-BLACK;
     font-size: 3em;
 `;
-export const Paragraph = styled.h2`
+export const Paragraph = styled(motion.h2)`
     margin-top: 24px;
-    color: black;
+    color: white;
     font-family: Noto-Sans-KR-Black;
     font-weight: 900;
     font-size: 1.2em;
 `;
-export const Highlight = styled.span`
-    color: var(--g-color-blue);
+export const Highlight = styled(motion.span)`
+    color: white;
     font-family: R-FLEX-BLACK;
 `;
 
 export const Span = styled.span`
-    color: black;
+    color: white;
     font-family: R-FLEX-BLACK;
     font-weight: 900;
     font-size: 1.2em;
@@ -90,4 +94,15 @@ export const PostButtonContainer = styled(motion.div)`
 export const Container = styled.div`
     display: flex;
     justify-content: center;
+`;
+
+export const OverlayContainer = styled.div`
+    background: rgba(0, 0, 0, 0.1);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
 `;
