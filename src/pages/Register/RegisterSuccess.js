@@ -24,7 +24,7 @@ function Success() {
             }
         }
     }, []);
-    return <div></div>;
+    return <></>;
 }
 
 export default Success;

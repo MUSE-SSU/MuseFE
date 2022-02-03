@@ -133,18 +133,6 @@ function Navbar() {
                                         whileHover={{
                                             scale: 1.1,
                                         }}
-                                        initial={{ scale: 0 }}
-                                        animate={{
-                                            scale: [
-                                                0,
-                                                0,
-                                                0,
-                                                1.1,
-                                                0.96,
-                                                1.02,
-                                                1,
-                                            ],
-                                        }}
                                     >
                                         <Link to="/search">
                                             <IconButton
@@ -160,11 +148,7 @@ function Navbar() {
                                             setOpen((prevVal) => !prevVal)
                                         }
                                         whileHover={{
-                                            scale: 1.1,
-                                        }}
-                                        initial={{ scale: 0 }}
-                                        animate={{
-                                            scale: [0, 0, 1.1, 0.96, 1.02, 1],
+                                            scale: 1.2,
                                         }}
                                     />
                                     {open && (

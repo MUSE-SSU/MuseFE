@@ -41,6 +41,7 @@ import {
     Text,
     Layer,
     Modal,
+    Spinner,
     Toast,
 } from "gestalt";
 function Input() {
@@ -77,6 +78,8 @@ function Input() {
     const [imagePreview, setImagePreview] = useState();
     const [imageUrl, setImageUrl] = useState("");
     const [showHashtag, setShowHashtag] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [showSpinner, setShowSpinner] = useState(false);
     const tag = "reference";
 
     const hiddenFileInput = useRef(null);
@@ -110,6 +113,8 @@ function Input() {
     };
 
     const handleSubmit = async () => {
+        setLoading(true);
+        setShowSpinner(true);
         const data = new FormData();
         data.append("upload_type", tag);
         data.append("title", title);
@@ -128,6 +133,7 @@ function Input() {
                 });
             } else {
                 await dispatch(getUploadPost(data));
+
                 window.location.reload();
             }
         } catch (e) {
@@ -236,12 +242,25 @@ function Input() {
                                     />
                                 </MobileInfoContainerSection1>
                                 <InfoContainerSection2>
-                                    <SubmitButton
-                                        type="button"
-                                        onClick={handleSubmit}
-                                    >
-                                        제출
-                                    </SubmitButton>
+                                    {loading === false ? (
+                                        <SubmitButton
+                                            type="button"
+                                            onClick={handleSubmit}
+                                        >
+                                            제출
+                                        </SubmitButton>
+                                    ) : (
+                                        <Box>
+                                            <Flex
+                                                width="100%"
+                                                height="100%"
+                                                alignItems="center"
+                                                justifyContent="center"
+                                            >
+                                                <Spinner show={showSpinner} />
+                                            </Flex>
+                                        </Box>
+                                    )}
                                 </InfoContainerSection2>
                             </MobileInfoContainer>
                         </MobileInputForm>
@@ -322,12 +341,27 @@ function Input() {
                                         />
                                     </InfoContainerSection1>
                                     <InfoContainerSection2>
-                                        <SubmitButton
-                                            type="button"
-                                            onClick={handleSubmit}
-                                        >
-                                            제출
-                                        </SubmitButton>
+                                        {loading === false ? (
+                                            <SubmitButton
+                                                type="button"
+                                                onClick={handleSubmit}
+                                            >
+                                                제출
+                                            </SubmitButton>
+                                        ) : (
+                                            <Box height="40px" marginTop={9}>
+                                                <Flex
+                                                    width="100%"
+                                                    height="100%"
+                                                    alignItems="center"
+                                                    justifyContent="center"
+                                                >
+                                                    <Spinner
+                                                        show={showSpinner}
+                                                    />
+                                                </Flex>
+                                            </Box>
+                                        )}
                                     </InfoContainerSection2>
                                 </InfoContainer>
                             </InputForm>

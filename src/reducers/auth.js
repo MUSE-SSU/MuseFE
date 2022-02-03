@@ -6,7 +6,6 @@ export const authReducer = (
     switch (action.type) {
         case AUTH:
             if (action.payload.result === false) {
-                console.log("회원가입 하세요");
                 return { ...state, authData: false };
             } else if (action.payload.result === true) {
                 localStorage.setItem(

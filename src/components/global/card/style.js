@@ -227,6 +227,7 @@ export const ModalImage = styled.img`
 
 export const Writer = styled.h1`
     font-size: var(--g-text-font-size-5);
+    cursor: pointer;
     font-weight: 600;
     @media (max-width: 375px) {
         font-size: var(--g-text-font-size-4);
@@ -249,6 +250,7 @@ export const Date = styled(Writer)`
 export const ModalAvatar = styled.img`
     width: 48px;
     height: 48px;
+    cursor: pointer;
     border-radius: 50%;
     margin-right: 8px;
     @media (max-width: 375px) {

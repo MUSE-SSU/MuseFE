@@ -63,7 +63,7 @@ export const kakaoRegister = (authorizeCodeFromKakao) => {
                         timer: 1500,
                     });
                 } else if (data.result === true) {
-                    return Swal.fire({
+                    Swal.fire({
                         icon: "success",
                         title: "Success!",
                         text: "회원가입이 완료되었습니다",

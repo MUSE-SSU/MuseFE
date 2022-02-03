@@ -7,6 +7,7 @@ import "react-router-modal/css/react-router-modal.css";
 import Swal from "sweetalert2";
 import { sendIsLiked, sendIsSaved } from "../../../actions/post";
 import StackGrid from "react-stack-grid";
+import { Link } from "react-router-dom";
 import {
     uploadCommentPost,
     deletePost,
@@ -361,13 +362,23 @@ function DetailPost(props) {
                             <ModalWriterInfoContainer>
                                 <Box>
                                     <Flex direction="row" alignItems="center">
-                                        <ModalAvatar src={data.writer_avatar} />
+                                        <Link to={`/my-page/${data.writer}`}>
+                                            <ModalAvatar
+                                                src={data.writer_avatar}
+                                            />
+                                        </Link>
                                         <Flex direction="column">
                                             <Flex
                                                 direction="row"
                                                 alignItems="center"
                                             >
-                                                <Writer>{data.writer}</Writer>
+                                                <Link
+                                                    to={`/my-page/${data.writer}`}
+                                                >
+                                                    <Writer>
+                                                        {data.writer}
+                                                    </Writer>
+                                                </Link>
                                                 {data.badge !== 0 && (
                                                     <BadgeDetail
                                                         badge={data.badge}
