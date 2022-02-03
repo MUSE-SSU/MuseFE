@@ -602,13 +602,21 @@ function DetailPost(props) {
                                                 direction="row"
                                                 alignItems="center"
                                             >
-                                                <Avatar
-                                                    src={`${comment.writer_avatar}`}
-                                                />
+                                                <Link
+                                                    to={`/my-page/${comment.writer}`}
+                                                >
+                                                    <Avatar
+                                                        src={`${comment.writer_avatar}`}
+                                                    />
+                                                </Link>
                                                 <Box>
-                                                    <CommentWriter>
-                                                        {comment.writer}
-                                                    </CommentWriter>
+                                                    <Link
+                                                        to={`/my-page/${comment.writer}`}
+                                                    >
+                                                        <CommentWriter>
+                                                            {comment.writer}
+                                                        </CommentWriter>
+                                                    </Link>
                                                     <Comment>
                                                         {comment.comment}
                                                     </Comment>

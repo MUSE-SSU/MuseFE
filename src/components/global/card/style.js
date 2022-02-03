@@ -267,6 +267,7 @@ export const ReactModal = styled(Modal)`
 export const CommentWriter = styled.h1`
     font-size: 14px;
     font-weight: 600;
+    cursor: pointer;
 `;
 
 export const Comment = styled.p`

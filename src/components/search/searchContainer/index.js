@@ -30,6 +30,8 @@ function SearchContainer() {
     const [topTagData, setTopTagData] = useState([]);
 
     const regexSpace = /\u0020/gi;
+
+    //검색어로 fetch
     const getSearchedDataWithValue = async () => {
         setLoading(true);
         const processedValue = searchValue.replace(regexSpace, "%2B");
@@ -124,8 +126,6 @@ function SearchContainer() {
         if (q !== null) {
             getSearchedDataWithQuery(q);
         }
-        console.log(searchQuery);
-        console.log(q);
     }, []);
     return (
         <MainContainer>
