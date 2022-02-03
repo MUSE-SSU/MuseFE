@@ -77,7 +77,7 @@ function Navbar() {
     const anchorRefMobileRight = useRef(null);
 
     return (
-        <div>
+        <>
             {isDesktop && (
                 <Container>
                     <NavContainerDesktop>
@@ -385,7 +385,7 @@ function Navbar() {
                     </NavContainerMobile>
                 </Container>
             )}
-        </div>
+        </>
     );
 }
 

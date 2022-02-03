@@ -8,6 +8,9 @@ import {
     PostButtonContainer,
     LargeBanner,
     Container,
+    BannerImg,
+    BannerInfoContainer,
+    BannerImgContainer,
 } from "./style";
 import { ContestPostButton } from "../../../components";
 
@@ -48,17 +51,22 @@ function GlobalBanner(props) {
                 </LargeBanner>
             ) : (
                 <Banner>
-                    <Label>
-                        Who's your <Highlight>MUSE?</Highlight>
-                    </Label>
-                    <Paragraph>
-                        영감을 나누는 공간 <Span>MUSE</Span>
-                    </Paragraph>
-                    {props.name === "contest" && (
-                        <PostButtonContainer>
-                            <ContestPostButton />
-                        </PostButtonContainer>
-                    )}
+                    <BannerInfoContainer>
+                        <Label>
+                            Who's your <Highlight>MUSE?</Highlight>
+                        </Label>
+                        <Paragraph>
+                            영감을 나누는 공간 <Span>MUSE</Span>
+                        </Paragraph>
+                        {props.name === "contest" && (
+                            <PostButtonContainer>
+                                <ContestPostButton />
+                            </PostButtonContainer>
+                        )}
+                    </BannerInfoContainer>
+                    <BannerImgContainer>
+                        <BannerImg src={"/Gradient1.png"} />
+                    </BannerImgContainer>
                 </Banner>
             )}
         </Container>

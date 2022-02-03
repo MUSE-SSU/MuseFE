@@ -1,16 +1,17 @@
 import styled from "styled-components";
 import { motion } from "framer";
+
 export const Banner = styled.div`
     max-width: 1440px;
-    height: 480px;
+    height: 360px;
     background-color: var(--g-color-blue-overlay);
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     overflow: hidden;
     width: 100vw;
     align-items: center;
     font-size: 24px;
-    flex-direction: column;
+    flex-direction: row;
     white-space: nowrap;
     @media (max-width: 768px) {
         font-size: 18px;
@@ -20,6 +21,20 @@ export const Banner = styled.div`
     }
 `;
 
+export const BannerInfoContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-left: 4vw;
+    width: 50%;
+`;
+
+export const BannerImg = styled(motion.img)`
+    width: 110%;
+    height: auto;
+`;
+export const BannerImgContainer = styled.div``;
 export const LargeBanner = styled.div`
     height: 480px;
     width: 100vw;
