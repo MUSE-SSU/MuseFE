@@ -2,13 +2,9 @@ import styled from "styled-components";
 
 export const MainContainer = styled.div`
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    padding: 0 36px 0 36px;
-    overflow-x: hidden;
-
     flex-direction: column;
+    max-width: 1440px;
+    align-items: center;
 `;
 
 export const SearchBarContainer = styled.div`
@@ -52,8 +48,9 @@ export const SearchedDataNone = styled.h1`
 
 export const TagMainContainer = styled.div`
     width: 80vw;
+    max-width: 1440px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 `;
 
