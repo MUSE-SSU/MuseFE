@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory, NavLink } from "react-router-dom";
-import * as actionType from "../../../constants/actionTypes";
+import { motion } from "framer";
 import { userInfo } from "../../../actions/userInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery as MediaQuery } from "react-responsive";
@@ -17,6 +17,7 @@ import {
     NavItem,
     Logo,
     Avatar,
+    MarginEndBox,
 } from "./style";
 
 function Navbar() {
@@ -128,14 +129,30 @@ function Navbar() {
                                     justifyContent="center"
                                     alignItems="center"
                                 >
-                                    <Box marginEnd={4}>
+                                    <MarginEndBox
+                                        whileHover={{
+                                            scale: 1.1,
+                                        }}
+                                        initial={{ scale: 0 }}
+                                        animate={{
+                                            scale: [
+                                                0,
+                                                0,
+                                                0,
+                                                1.1,
+                                                0.96,
+                                                1.02,
+                                                1,
+                                            ],
+                                        }}
+                                    >
                                         <Link to="/search">
                                             <IconButton
                                                 icon="search"
                                                 iconColor="black"
                                             />
                                         </Link>
-                                    </Box>
+                                    </MarginEndBox>
                                     <Avatar
                                         src={getUserAvatar}
                                         ref={anchorRefDesktopRight}

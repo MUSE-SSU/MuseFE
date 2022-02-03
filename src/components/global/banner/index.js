@@ -7,6 +7,7 @@ import {
     Span,
     PostButtonContainer,
     LargeBanner,
+    Container,
 } from "./style";
 import { ContestPostButton } from "../../../components";
 
@@ -32,7 +33,7 @@ function GlobalBanner(props) {
     };
 
     return (
-        <div>
+        <Container>
             {props.name === "muse" ? (
                 <LargeBanner>
                     <Label>
@@ -60,7 +61,7 @@ function GlobalBanner(props) {
                     )}
                 </Banner>
             )}
-        </div>
+        </Container>
     );
 }
 

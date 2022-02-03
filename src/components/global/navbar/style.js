@@ -79,3 +79,7 @@ export const Avatar = styled(motion.img)`
     border-radius: 50%;
     cursor: pointer;
 `;
+
+export const MarginEndBox = styled(motion.div)`
+    margin-right: 12px;
+`;

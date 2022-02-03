@@ -67,9 +67,6 @@ function Input() {
                 setBadge(data.badge);
             });
     };
-    useEffect(() => {
-        getUserInfo();
-    }, []);
     const [badge, setBadge] = useState("");
     const [handle, setHandle] = useState();
     const [image, setImage] = useState(null);
@@ -112,7 +109,7 @@ function Input() {
         hiddenFileInput.current.click();
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async () => {
         const data = new FormData();
         data.append("upload_type", tag);
         data.append("title", title);
@@ -120,7 +117,6 @@ function Input() {
         data.append("ref_url", imageUrl);
         data.append("image", image);
         data.append("hashtag", hashtag);
-
         try {
             if (title == null || "" || image == null || "") {
                 Swal.fire({
@@ -138,9 +134,6 @@ function Input() {
             console.error(e);
         }
     };
-    useEffect(() => {
-        console.log(hashtag);
-    }, [hashtag]);
 
     //hashtag 관리
     const KeyCodes = {
