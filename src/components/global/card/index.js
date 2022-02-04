@@ -30,6 +30,7 @@ import {
     ModalImage,
     ModalImageContainer,
     Comment,
+    FollowText,
     Writer,
     Date,
     CancelContainer,
@@ -59,6 +60,7 @@ import {
     Button,
     Spinner,
     CompositeZIndex,
+    Icon,
     FixedZIndex,
     Flex,
     Layer,
@@ -421,7 +423,9 @@ function DetailPost(props) {
                                                         color="white"
                                                         onClick={handleFollow}
                                                     >
-                                                        팔로우
+                                                        <FollowText isMargin="0">
+                                                            팔로우
+                                                        </FollowText>
                                                     </FollowButton>
                                                 ) : (
                                                     <FollowButton
@@ -433,7 +437,13 @@ function DetailPost(props) {
                                                         color="black"
                                                         onClick={handleFollow}
                                                     >
-                                                        팔로잉
+                                                        <FollowText isMargin="6">
+                                                            팔로잉
+                                                        </FollowText>
+                                                        <Icon
+                                                            icon="check"
+                                                            size="12"
+                                                        />
                                                     </FollowButton>
                                                 )
                                             ) : (
@@ -523,7 +533,9 @@ function DetailPost(props) {
                                                         color="white"
                                                         onClick={handleFollow}
                                                     >
-                                                        팔로우
+                                                        <FollowText isMargin="0">
+                                                            팔로우
+                                                        </FollowText>
                                                     </FollowButton>
                                                 ) : (
                                                     <FollowButton
@@ -535,7 +547,13 @@ function DetailPost(props) {
                                                         color="black"
                                                         onClick={handleFollow}
                                                     >
-                                                        팔로잉
+                                                        <FollowText isMargin="6">
+                                                            팔로잉
+                                                        </FollowText>
+                                                        <Icon
+                                                            icon="check"
+                                                            size="12"
+                                                        />
                                                     </FollowButton>
                                                 )
                                             ) : (

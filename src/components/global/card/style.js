@@ -388,9 +388,11 @@ export const HashtagName = styled.h1`
 
 export const FollowButton = styled(motion.button)`
     border-radius: 24px;
-    box-sizing: border-box;
     min-width: 60px;
     border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     &:focus {
         border: none;
     }
@@ -405,11 +407,14 @@ export const FollowButton = styled(motion.button)`
     margin-bottom: 8px;
     min-height: 40px;
     padding: 8px 12px 8px 12px;
-
     //background-color: var(--g-colorGray100);
     background-color: ${(props) => `var(--g-color-${props.background})`};
     color: ${(props) => `${props.color}`};
     cursor: pointer;
-    display: inline-block;
     font-weight: 700;
+`;
+
+export const FollowText = styled.p`
+    font-weight: 700;
+    margin-right: ${(props) => `${props.isMargin}px`};
 `;
