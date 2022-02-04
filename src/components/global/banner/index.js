@@ -75,11 +75,13 @@ function GlobalBanner(props) {
                         )}
                     </BannerInfoContainer>
 
-                    <BannerImgContainer
-                        animate={{ rotate: 720 }}
-                        transition={{ duration: 1200 }}
-                    >
-                        <BannerImg src={"/fixed.png"} />
+                    <BannerImgContainer>
+                        <BannerImg
+                            initial={{ scale: 1.3 }}
+                            animate={{ rotate: 720 }}
+                            transition={{ duration: 200 }}
+                            src={"/fixed.png"}
+                        />
                     </BannerImgContainer>
                     <OverlayContainer />
                 </Banner>

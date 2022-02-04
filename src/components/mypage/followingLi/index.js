@@ -19,9 +19,6 @@ function FollowingListLi(props) {
     const handleHistoryPushNickname = () => {
         window.location.href = `/my-page/${props.nickname}`;
     };
-    useEffect(() => {
-        console.log(isLiFollowed);
-    }, [isLiFollowed]);
     const handleFollow = () => {
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
         const token = JSON.parse(localStorage.getItem("token"));

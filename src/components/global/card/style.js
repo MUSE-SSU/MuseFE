@@ -151,6 +151,7 @@ export const WriterContainer = styled.div`
 export const Avatar = styled.img`
     width: 24px;
     height: 24px;
+    cursor: pointer;
     border-radius: 50%;
     margin-right: 8px;
 `;

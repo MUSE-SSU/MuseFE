@@ -33,7 +33,10 @@ export const BannerInfoContainer = styled(motion.div)`
 `;
 
 export const BannerImg = styled(motion.img)`
-    object-fit: fill;
+    position: absolute;
+    top: 50%;
+
+    margin-top: -978px;
 `;
 export const BannerImgContainer = styled(motion.div)`
     position: absolute;
@@ -97,7 +100,7 @@ export const Container = styled.div`
 `;
 
 export const OverlayContainer = styled.div`
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.55);
     position: absolute;
     width: 100%;
     height: 100%;

@@ -7,7 +7,7 @@ import "react-router-modal/css/react-router-modal.css";
 import Swal from "sweetalert2";
 import { sendIsLiked, sendIsSaved } from "../../../actions/post";
 import StackGrid from "react-stack-grid";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
     uploadCommentPost,
     deletePost,
@@ -69,6 +69,7 @@ function DetailPost(props) {
     const token = JSON.parse(localStorage.getItem("token"));
     const dispatch = useDispatch();
     const [submit, setSubmit] = useState(false);
+    const history = useHistory();
 
     // 게시물 관련
     const [data, setData] = useState();
@@ -239,6 +240,15 @@ function DetailPost(props) {
                     showConfirmButton: false,
                     timer: 1500,
                 });
+            }
+            if (currentComments.length > 100) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "최대 100자까지 작성 가능합니다.",
+                    showConfirmButton: false,
+                    timer: 1000,
+                });
             } else if (token == undefined) {
                 Swal.fire({
                     icon: "error",
@@ -362,23 +372,25 @@ function DetailPost(props) {
                             <ModalWriterInfoContainer>
                                 <Box>
                                     <Flex direction="row" alignItems="center">
-                                        <Link to={`/my-page/${data.writer}`}>
-                                            <ModalAvatar
-                                                src={data.writer_avatar}
-                                            />
-                                        </Link>
+                                        <ModalAvatar
+                                            onClick={() => {
+                                                window.location.href = `/my-page/${data.writer}`;
+                                            }}
+                                            src={data.writer_avatar}
+                                        />
                                         <Flex direction="column">
                                             <Flex
                                                 direction="row"
                                                 alignItems="center"
                                             >
-                                                <Link
-                                                    to={`/my-page/${data.writer}`}
+                                                <Writer
+                                                    onClick={() => {
+                                                        window.location.href = `/my-page/${data.writer}`;
+                                                    }}
                                                 >
-                                                    <Writer>
-                                                        {data.writer}
-                                                    </Writer>
-                                                </Link>
+                                                    {data.writer}
+                                                </Writer>
+
                                                 {data.badge !== 0 && (
                                                     <BadgeDetail
                                                         badge={data.badge}
@@ -602,21 +614,21 @@ function DetailPost(props) {
                                                 direction="row"
                                                 alignItems="center"
                                             >
-                                                <Link
-                                                    to={`/my-page/${comment.writer}`}
-                                                >
-                                                    <Avatar
-                                                        src={`${comment.writer_avatar}`}
-                                                    />
-                                                </Link>
+                                                <Avatar
+                                                    src={`${comment.writer_avatar}`}
+                                                    onClick={() => {
+                                                        window.location.href = `/my-page/${comment.writer}`;
+                                                    }}
+                                                />
                                                 <Box>
-                                                    <Link
-                                                        to={`/my-page/${comment.writer}`}
+                                                    <CommentWriter
+                                                        onClick={() => {
+                                                            window.location.href = `/my-page/${comment.writer}`;
+                                                        }}
                                                     >
-                                                        <CommentWriter>
-                                                            {comment.writer}
-                                                        </CommentWriter>
-                                                    </Link>
+                                                        {comment.writer}
+                                                    </CommentWriter>
+
                                                     <Comment>
                                                         {comment.comment}
                                                     </Comment>
