@@ -9,6 +9,39 @@ export const MainContainer = styled.div`
     flex-direction: column;
     overflow: hidden;
 `;
+
+export const FollowButton = styled(motion.button)`
+    border-radius: 24px;
+    min-width: 60px;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &:focus {
+        border: none;
+    }
+    &:active {
+        background-color: var(--g-colorGray100Active);
+    }
+    &:hover {
+        //background-color: var(--g-colorRed100Hovered);
+        background-color: ${(props) => `var(--g-color${props.hovered})`};
+    }
+    transition: transform 85ms ease-out;
+    margin-bottom: 8px;
+    min-height: 40px;
+    padding: 8px 12px 8px 12px;
+    //background-color: var(--g-colorGray100);
+    background-color: ${(props) => `var(--g-color-${props.background})`};
+    color: ${(props) => `${props.color}`};
+    cursor: pointer;
+    font-weight: 700;
+`;
+export const FollowText = styled.p`
+    font-weight: 700;
+    margin-right: ${(props) => `${props.isMargin}px`};
+`;
+
 export const MyPageContainer = styled.div`
     margin-top: 40px;
     display: flex;
@@ -65,20 +98,6 @@ export const FollowCountContainer = styled(motion.div)`
     &:hover {
         background-color: var(--g-color-blue);
         color: var(--g-color-white);
-    }
-`;
-
-export const FollowButton = styled(motion.button)`
-    background-color: var(--g-color-blue);
-    border: none;
-    border-radius: 36px;
-    color: var(--g-color-white);
-    font-weight: 600;
-    font-size: var(--g-text-font-size-3);
-    padding: 0 16px 0 16px;
-    line-height: 36px;
-    &:hover {
-        opacity: 0.8;
     }
 `;
 
@@ -197,11 +216,6 @@ export const IntroduceContainer = styled.div`
     @media (max-width: 1023px) {
         width: 80vw;
     }
-`;
-
-export const FollowedButton = styled(FollowButton)`
-    background-color: var(--g-color-gray100);
-    color: black;
 `;
 
 export const PostContainer = styled.div``;

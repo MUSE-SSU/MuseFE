@@ -33,9 +33,10 @@ import {
     InstagramID,
     ButtonH1,
     Badge,
+    FollowText,
 } from "./style";
 
-import { Spinner, Box, Flex } from "gestalt";
+import { Spinner, Box, Flex, Icon } from "gestalt";
 
 function MyPage() {
     const getUserNickname = useSelector((state) => state.userInfo.nickname);
@@ -245,13 +246,34 @@ function MyPage() {
                                 )}
                                 {isOwner === false ? (
                                     isLoginUserFollow == false ? (
-                                        <FollowButton onClick={handleFollow}>
-                                            팔로우
+                                        <FollowButton
+                                            whileTap={{
+                                                scale: 0.9,
+                                            }}
+                                            hovered="Red100Hovered"
+                                            background="blue"
+                                            color="white"
+                                            onClick={handleFollow}
+                                        >
+                                            <FollowText isMargin="0">
+                                                팔로우
+                                            </FollowText>
                                         </FollowButton>
                                     ) : (
-                                        <FollowedButton onClick={handleFollow}>
-                                            팔로잉
-                                        </FollowedButton>
+                                        <FollowButton
+                                            whileTap={{
+                                                scale: 0.9,
+                                            }}
+                                            hovered="Gray100Hovered"
+                                            background="gray100"
+                                            color="black"
+                                            onClick={handleFollow}
+                                        >
+                                            <FollowText isMargin="6">
+                                                팔로잉
+                                            </FollowText>
+                                            <Icon icon="check" size="12" />
+                                        </FollowButton>
                                     )
                                 ) : (
                                     <></>
