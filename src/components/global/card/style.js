@@ -418,3 +418,12 @@ export const FollowText = styled.p`
     font-weight: 700;
     margin-right: ${(props) => `${props.isMargin}px`};
 `;
+export const ToastContainer = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 244px;
+`;
+
+export const IconContainer = styled.div``;
+export const ToastMainContainer = styled(motion.div)``;

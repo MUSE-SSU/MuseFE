@@ -34,7 +34,7 @@ function WeeklyColorContainer() {
             </NameContainer>
             <ColorContainer>
                 {weeklyColors.map((weeklyColor, idx) => (
-                    <Link to={`/search/?q=${weeklyColors[idx]}`}>
+                    <Link to={`/search?q=${weeklyColors[idx]}`}>
                         <ColorCard
                             color={`${weeklyColor}`}
                             hexa={weeklyColorsHexa[idx]}

@@ -44,6 +44,7 @@ import {
     CommentWriter,
     Avatar,
     ListItem,
+    ToastMainContainer,
     BadgePreview,
     BadgeDetail,
     ModalMainContainer,
@@ -54,17 +55,21 @@ import {
     OtherPostsContainer,
     ModalWriterInfoContainerMobile,
     FollowButton,
+    IconContainer,
+    ToastContainer,
 } from "./style";
 import {
     Box,
     Button,
     Spinner,
     CompositeZIndex,
+    Toast,
     Icon,
     FixedZIndex,
     Flex,
     Layer,
     IconButton,
+    Text,
     TextArea,
 } from "gestalt";
 
@@ -99,6 +104,10 @@ function DetailPost(props) {
     const [ref, inView] = useInView({ trackVisibility: true, delay: 100 });
     const [changeScroll, setChangeScroll] = useState(false);
 
+    // 토스트 관련
+    const [showToast, setShowToast] = useState(false);
+    const TOAST_ZINDEX = new FixedZIndex(999);
+    const toastZIndex = new CompositeZIndex([TOAST_ZINDEX]);
     // CANCEL 버튼 함수
     const handleOut = () => {
         props.handleShouldShow(false);
@@ -358,10 +367,65 @@ function DetailPost(props) {
         );
     }
 
+    // 토스트
+    const handleToast = () => {
+        setShowToast(true);
+        setTimeout(() => {
+            setShowToast(false);
+        }, 3000);
+    };
+
     return (
         <ModalMainContainer ref={modalRef}>
             {data !== undefined && (
                 <Box width="100%">
+                    {showToast === true && (
+                        <Layer zIndex={toastZIndex}>
+                            <Box
+                                dangerouslySetInlineStyle={{
+                                    __style: {
+                                        bottom: 50,
+                                        left: "50%",
+                                        transform: "translateX(-50%)",
+                                    },
+                                }}
+                                fit
+                                paddingX={1}
+                                position="fixed"
+                            >
+                                <ToastMainContainer
+                                    initial={{
+                                        y: 300,
+                                        opacity: 0,
+                                    }}
+                                    animate={{
+                                        y: 0,
+                                        opacity: 1,
+                                    }}
+                                >
+                                    <Toast
+                                        text={
+                                            <ToastContainer>
+                                                <Text inline weight="bold">
+                                                    정말 삭제하실 건가요?
+                                                </Text>
+                                            </ToastContainer>
+                                        }
+                                        button={
+                                            <IconContainer>
+                                                <IconButton
+                                                    size="sm"
+                                                    icon="trash-can"
+                                                    onClick={handleDeletePost}
+                                                    bgColor="darkGray"
+                                                />
+                                            </IconContainer>
+                                        }
+                                    />
+                                </ToastMainContainer>
+                            </Box>
+                        </Layer>
+                    )}
                     <Box>
                         <CancelContainer>
                             <IconButton
@@ -485,7 +549,10 @@ function DetailPost(props) {
                                                 <IconButton
                                                     icon="trash-can"
                                                     bgColor="lightGray"
-                                                    onClick={handleDeletePost}
+                                                    // onClick={handleDeletePost}
+                                                    onClick={() => {
+                                                        handleToast();
+                                                    }}
                                                 />
                                             </Box>
                                         )}
@@ -631,7 +698,13 @@ function DetailPost(props) {
                             <Box width="100%">
                                 <Flex justifyContent="center">
                                     {data.hashtag.map((tag) => (
-                                        <Hashtag>
+                                        <Hashtag
+                                            onClick={() => {
+                                                history.push(
+                                                    `/search?q=${tag}`
+                                                );
+                                            }}
+                                        >
                                             <HashtagName>#{tag}</HashtagName>
                                         </Hashtag>
                                     ))}
@@ -800,7 +873,7 @@ function DetailPostPreview(props) {
     const handleShouldShow = (out) => {
         setShouldShow(out);
     };
-    const HEADER_ZINDEX = new FixedZIndex(999);
+    const HEADER_ZINDEX = new FixedZIndex(998);
     const modalZIndex = new CompositeZIndex([HEADER_ZINDEX]);
     const ModalWithHeading = ({ onDismiss }) => {
         return (
