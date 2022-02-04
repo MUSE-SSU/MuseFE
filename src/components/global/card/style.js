@@ -303,29 +303,6 @@ export const BadgeDetail = styled(BadgePreview)`
     margin-left: 4px;
 `;
 
-export const FollowButton = styled(motion.button)`
-    width: 80px;
-    max-width: 100px;
-    height: 30px;
-    background-color: var(--g-color-blue);
-    border: none;
-    border-radius: 20px;
-    color: var(--g-color-white);
-    font-family: "Helvetica";
-    font-weight: 600;
-    font-size: var(--g-text-font-size-3);
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    line-height: 33px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    &:hover {
-        opacity: 0.8;
-    }
-`;
-
 export const UnFollowButton = styled(motion.button)`
     width: 80px;
     max-width: 100px;
@@ -407,4 +384,32 @@ export const HashtagName = styled.h1`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+`;
+
+export const FollowButton = styled(motion.button)`
+    border-radius: 24px;
+    box-sizing: border-box;
+    min-width: 60px;
+    border: none;
+    &:focus {
+        border: none;
+    }
+    &:active {
+        background-color: var(--g-colorGray100Active);
+    }
+    &:hover {
+        //background-color: var(--g-colorRed100Hovered);
+        background-color: ${(props) => `var(--g-color${props.hovered})`};
+    }
+    transition: transform 85ms ease-out;
+    margin-bottom: 8px;
+    min-height: 40px;
+    padding: 8px 12px 8px 12px;
+
+    //background-color: var(--g-colorGray100);
+    background-color: ${(props) => `var(--g-color-${props.background})`};
+    color: ${(props) => `${props.color}`};
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 700;
 `;

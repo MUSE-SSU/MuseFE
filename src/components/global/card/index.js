@@ -52,6 +52,7 @@ import {
     Url,
     OtherPostsContainer,
     ModalWriterInfoContainerMobile,
+    FollowButton,
 } from "./style";
 import {
     Box,
@@ -411,16 +412,29 @@ function DetailPost(props) {
                                         <Box marginEnd={3}>
                                             {data.is_writer === false ? (
                                                 isFollowed === false ? (
-                                                    <Button
-                                                        text="팔로우"
+                                                    <FollowButton
+                                                        whileTap={{
+                                                            scale: 0.9,
+                                                        }}
+                                                        hovered="Red100Hovered"
+                                                        background="blue"
+                                                        color="white"
                                                         onClick={handleFollow}
-                                                    ></Button>
+                                                    >
+                                                        팔로우
+                                                    </FollowButton>
                                                 ) : (
-                                                    <Button
+                                                    <FollowButton
+                                                        whileTap={{
+                                                            scale: 0.9,
+                                                        }}
+                                                        hovered="Gray100Hovered"
+                                                        background="gray100"
+                                                        color="black"
                                                         onClick={handleFollow}
-                                                        text="팔로잉"
-                                                        color="red"
-                                                    ></Button>
+                                                    >
+                                                        팔로잉
+                                                    </FollowButton>
                                                 )
                                             ) : (
                                                 <></>
@@ -500,16 +514,29 @@ function DetailPost(props) {
                                         <Box marginEnd={3}>
                                             {data.is_writer === false ? (
                                                 isFollowed === false ? (
-                                                    <Button
-                                                        text="팔로우"
+                                                    <FollowButton
+                                                        whileTap={{
+                                                            scale: 0.9,
+                                                        }}
+                                                        hovered="Red100Hovered"
+                                                        background="blue"
+                                                        color="white"
                                                         onClick={handleFollow}
-                                                    ></Button>
+                                                    >
+                                                        팔로우
+                                                    </FollowButton>
                                                 ) : (
-                                                    <Button
+                                                    <FollowButton
+                                                        whileTap={{
+                                                            scale: 0.9,
+                                                        }}
+                                                        hovered="Gray100Hovered"
+                                                        background="gray100"
+                                                        color="black"
                                                         onClick={handleFollow}
-                                                        text="팔로잉"
-                                                        color="red"
-                                                    ></Button>
+                                                    >
+                                                        팔로잉
+                                                    </FollowButton>
                                                 )
                                             ) : (
                                                 <></>

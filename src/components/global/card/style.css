@@ -3300,7 +3300,7 @@ html[dir="rtl"] .StA {
 }
 :root {
     --g-colorRed0: #ff5247;
-    --g-colorRed100: #e60023;
+    --g-colorRed100: var(--g-color-blue);
     --g-colorGray0: #fff;
     --g-colorGray50: #fff;
     --g-colorGray100: #efefef;
@@ -3324,12 +3324,12 @@ html[dir="rtl"] .StA {
     --g-colorGray100Hovered: #e2e2e2;
     --g-colorGray150Hovered: #d0d0d0;
     --g-colorGray200Hovered: #878787;
-    --g-colorRed100Hovered: #ad081b;
+    --g-colorRed100Hovered: #0045cb;
     --g-blueHovered: #4a8ad4;
     --g-colorGray0Active: #e0e0e0;
     --g-colorGray100Active: #dadada;
     --g-colorGray200Active: #828282;
-    --g-colorRed100Active: #a3081a;
+    --g-colorRed100Active: #0045cb;
     --g-blueActive: #4a85c9;
     --g-colorTransparentDarkGray: rgba(51, 51, 51, 0.8);
     --g-colorTransparentWhite: hsla(0, 0%, 100%, 0.8);
@@ -3342,7 +3342,7 @@ html[dir="rtl"] .StA {
     color: var(--g-colorRed100);
 }
 .Jrn {
-    background-color: var(--g-colorRed100);
+    background-color: var(--g-color-blue);
 }
 .HuA {
     background-color: var(--g-colorRed0);
