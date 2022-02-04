@@ -26,7 +26,8 @@ import {
     MobileImagePreviewSkeletonPlusIcon,
     MobileInfoContainerSection1,
     MobileInputPre,
-    ReactHashTags,
+    HashtagContainer,
+    HashtagMainContainer,
 } from "./style";
 
 import Swal from "sweetalert2";
@@ -43,6 +44,7 @@ import {
     Modal,
     Spinner,
     Toast,
+    Tag,
 } from "gestalt";
 function Input() {
     const isMobile = MediaQuery({
@@ -75,9 +77,10 @@ function Input() {
     const [title, setTitle] = useState("");
     const [hashtag, setHashtag] = useState([]);
     const [tmpHashtag, setTmpHashtag] = useState("");
+
     const [imagePreview, setImagePreview] = useState();
     const [imageUrl, setImageUrl] = useState("");
-    const [showHashtag, setShowHashtag] = useState([]);
+
     const [loading, setLoading] = useState(false);
     const [showSpinner, setShowSpinner] = useState(false);
     const tag = "reference";
@@ -89,6 +92,35 @@ function Input() {
         setImageUrl(e.target.value);
     };
 
+    const onChangeHashtag = (e) => {
+        //해시태그 작성 -> 엔터누르면 다음 인덱스로 넘어감?
+        setTmpHashtag(e.target.value);
+    };
+    const onKeyPressEnter = (e) => {
+        if (hashtag.length >= 3) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "해시태그는 최대 3개입니다",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        } else if (e.key === "Enter" && tmpHashtag !== "") {
+            setHashtag([...hashtag, tmpHashtag]);
+            setTmpHashtag("");
+        }
+    };
+    const onRemoveHashtagWithKey = (e) => {
+        if (e.keyCode === 8) {
+            setHashtag(
+                hashtag.filter((hash, idx) => idx !== hashtag.length - 1)
+            );
+        }
+    };
+    const onRemoveHashtag = (currentIdx) => {
+        setHashtag(hashtag.filter((hash, idx) => idx !== currentIdx));
+        console.log(hashtag);
+    };
     const dispatch = useDispatch();
     const history = useHistory();
     const onChangeTitle = (e) => {
@@ -142,31 +174,26 @@ function Input() {
     };
 
     //hashtag 관리
-    const KeyCodes = {
-        enter: 13,
-        backSpace: 8,
-    };
-    const trigger = [KeyCodes.enter];
-    const deleteTrigger = [KeyCodes.backSpace];
-    const handleAddition = (hash) => {
-        if (showHashtag.length < 3) {
-            setShowHashtag([...showHashtag, hash]);
-            setHashtag([...hashtag, hash.text]);
-        } else {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "해시태그는 최대 3개입니다",
-                showConfirmButton: false,
-                timer: 1500,
-            });
-        }
-    };
-
-    const handleDelete = (i) => {
-        setShowHashtag(showHashtag.filter((hash, index) => index !== i));
-        setHashtag(hashtag.filter((hash, index) => index !== i));
-    };
+    // const KeyCodes = {
+    //     enter: 13,
+    //     backSpace: 8,
+    // };
+    // const trigger = [KeyCodes.enter];
+    // const deleteTrigger = [KeyCodes.backSpace];
+    // const handleAddition = (hash) => {
+    //     if (showHashtag.length < 3) {
+    //         setShowHashtag([...showHashtag, hash]);
+    //         setHashtag([...hashtag, hash.text]);
+    //     } else {
+    //         Swal.fire({
+    //             icon: "error",
+    //             title: "Oops...",
+    //             text: "해시태그는 최대 3개입니다",
+    //             showConfirmButton: false,
+    //             timer: 1500,
+    //         });
+    //     }
+    // };
 
     return (
         <>
@@ -233,13 +260,33 @@ function Input() {
                                             autocomplete="off"
                                         />
                                     </MobileInputPre>
-                                    <ReactHashTags
-                                        tags={showHashtag}
-                                        delimiters={trigger}
-                                        handleAddition={handleAddition}
-                                        handleDelete={handleDelete}
-                                        inline={false}
-                                        placeholder="해시태그 입력 후 enter"
+                                    {hashtag.length === 0 ? (
+                                        <></>
+                                    ) : (
+                                        <HashtagMainContainer>
+                                            {hashtag.map((hash, idx) => (
+                                                <HashtagContainer>
+                                                    <Tag
+                                                        text={hash}
+                                                        onRemove={() =>
+                                                            onRemoveHashtag(idx)
+                                                        }
+                                                    />
+                                                </HashtagContainer>
+                                            ))}
+                                        </HashtagMainContainer>
+                                    )}
+                                    <InputText
+                                        type="text"
+                                        value={tmpHashtag}
+                                        name="해시태그"
+                                        onChange={onChangeHashtag}
+                                        onKeyDown={onRemoveHashtagWithKey}
+                                        onKeyPress={onKeyPressEnter}
+                                        placeholder="해시태그 입력 후 엔터"
+                                        min="0"
+                                        step="1"
+                                        autocomplete="off"
                                     />
                                 </MobileInfoContainerSection1>
                                 <InfoContainerSection2>
@@ -333,13 +380,35 @@ function Input() {
                                                 autocomplete="off"
                                             />
                                         </InputPre>
-                                        <ReactHashTags
-                                            tags={showHashtag}
-                                            delimiters={trigger}
-                                            handleAddition={handleAddition}
-                                            handleDelete={handleDelete}
-                                            inline={false}
-                                            placeholder="해시태그 입력 후 enter"
+                                        {hashtag.length === 0 ? (
+                                            <></>
+                                        ) : (
+                                            <HashtagMainContainer>
+                                                {hashtag.map((hash, idx) => (
+                                                    <HashtagContainer>
+                                                        <Tag
+                                                            text={hash}
+                                                            onRemove={() =>
+                                                                onRemoveHashtag(
+                                                                    idx
+                                                                )
+                                                            }
+                                                        />
+                                                    </HashtagContainer>
+                                                ))}
+                                            </HashtagMainContainer>
+                                        )}
+                                        <InputText
+                                            type="text"
+                                            value={tmpHashtag}
+                                            name="해시태그"
+                                            onChange={onChangeHashtag}
+                                            onKeyDown={onRemoveHashtagWithKey}
+                                            onKeyPress={onKeyPressEnter}
+                                            placeholder="해시태그 입력 후 엔터"
+                                            min="0"
+                                            step="1"
+                                            autocomplete="off"
                                         />
                                     </InfoContainerSection1>
                                     <InfoContainerSection2>
@@ -379,10 +448,6 @@ function PostButton() {
     const [shouldShow, setShouldShow] = React.useState(false);
     const HEADER_ZINDEX = new FixedZIndex(998);
     const modalZIndex = new CompositeZIndex([HEADER_ZINDEX]);
-
-    useEffect(() => {
-        console.log("hi");
-    }, []);
 
     const ModalWithHeading = ({ onDismiss }) => {
         return (

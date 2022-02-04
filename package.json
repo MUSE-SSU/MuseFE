@@ -36,6 +36,7 @@
     "react-stack-grid": "^0.7.1",
     "react-svg-blob": "^0.3.0",
     "react-tag-input": "^6.7.3",
+    "react-tagsinput": "^3.19.0",
     "reactstrap": "^8.10.0",
     "redux": "^4.1.1",
     "redux-persist": "^6.0.0",

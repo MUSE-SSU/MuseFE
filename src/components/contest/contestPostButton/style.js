@@ -64,7 +64,7 @@ export const InputText = styled.input`
     background-color: var(--g-color-gray100);
     padding: 16px;
     border: none;
-    width: 90%;
+    width: 100%;
     height: 48px;
     border-radius: 24px;
     margin-bottom: 12px;
@@ -136,10 +136,10 @@ export const InputTextarea = styled.textarea`
     white-space: pre-wrap;
     overflow-wrap: break-word;
     word-break: break-word;
-    width: 90%;
+    width: 100%;
     border: none;
     height: 120px;
-    margin: 12px 0 12px 0;
+    margin: 0px 0 12px 0;
     background-color: var(--g-color-gray100);
     border-radius: 16px;
     padding: 16px;
@@ -243,4 +243,13 @@ export const MobileInfoContainerSection1 = styled(InfoContainerSection1)`
 
 export const MobileInputPre = styled(InputPre)`
     align-items: center;
+`;
+export const HashtagContainer = styled.div`
+    margin: 4px 8px 4px 0px;
+    display: inline-block;
+`;
+
+export const HashtagMainContainer = styled.div`
+    white-space: pre-wrap;
+    margin-bottom: 12px;
 `;

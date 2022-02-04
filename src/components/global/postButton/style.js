@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { FiPlus } from "react-icons/fi";
 import { BsFillQuestionCircleFill } from "react-icons/bs";
 import { motion } from "framer";
-import { WithContext as ReactTags } from "react-tag-input";
-
+import { Tag } from "gestalt";
 import {
     Box,
     Button,
@@ -18,56 +17,12 @@ import {
 } from "gestalt";
 
 import "./style.css";
-export const PostButton = styled(motion.div)`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 56px;
-    height: 56px;
-    margin: 0;
-    border: none;
-    padding: 0;
-    border: none;
-    border-radius: 50%;
-    background-color: var(--g-color-blue);
-    margin-bottom: 12px;
-    cursor: pointer;
-    z-index: 100;
-`;
-
-export const PlusButton = styled(FiPlus)`
-    width: 36px;
-    height: 36px;
-    margin: 0;
-    color: var(--g-color-white);
-    padding: 0;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    stroke-width: 3;
-`;
-
-export const QaButton = styled(BsFillQuestionCircleFill)`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 56px;
-    height: 56px;
-    margin: 0;
-    border: none;
-    padding: 0;
-    border: none;
-    cursor: pointer;
-    border-radius: 50%;
-    background-color: var(--g-color-white);
-    color: var(--g-color-blue);
-`;
 
 export const InputText = styled.input`
     background-color: var(--g-color-gray100);
     padding: 16px;
     border: none;
-    width: 90%;
+    width: 100%;
     height: 48px;
     border-radius: 24px;
     margin-bottom: 12px;
@@ -139,10 +94,10 @@ export const InputTextarea = styled.textarea`
     white-space: pre-wrap;
     overflow-wrap: break-word;
     word-break: break-word;
-    width: 90%;
+    width: 100%;
     border: none;
     height: 120px;
-    margin: 12px 0 12px 0;
+    margin: 0px 0 12px 0;
     background-color: var(--g-color-gray100);
     border-radius: 16px;
     padding: 16px;
@@ -247,4 +202,13 @@ export const MobileInfoContainerSection1 = styled(InfoContainerSection1)`
 export const MobileInputPre = styled(InputPre)`
     align-items: center;
 `;
-export const ReactHashTags = styled(ReactTags)``;
+
+export const HashtagContainer = styled.div`
+    margin: 4px 8px 4px 0px;
+    display: inline-block;
+`;
+
+export const HashtagMainContainer = styled.div`
+    white-space: pre-wrap;
+    margin-bottom: 12px;
+`;
