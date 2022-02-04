@@ -42,7 +42,7 @@ function Input(ownerInfo) {
     const [avatarPreview, setAvatarPreview] = useState(null);
     const [introduce, setIntroduce] = useState(ownerInfo.selfIntroduce);
     const [instagram, setInstagram] = useState(ownerInfo.instagram);
-    const [deleteAvatarButton, setDeleteAvatarButton] = useState(false);
+    const [deleteCurrentAvatar, setDeleteCurrentAvatar] = useState(false);
     const [duplicationData, setDuplicationData] = useState(null);
     const introducePlaceholder = "자기소개를 해주세요!";
     const instagramPlaceholder = "@instagram ID 를 적어서 자신을 홍보하세요!";
@@ -102,6 +102,7 @@ function Input(ownerInfo) {
 
     const onChangeAvatar = (e) => {
         e.preventDefault();
+        setDeleteCurrentAvatar(false);
         setChangedAvatar(e.target.files[0]);
         const imgTarget = e.target.files[0];
         const fileReader = new FileReader();
@@ -118,7 +119,7 @@ function Input(ownerInfo) {
 
     const deleteAvatar = (e) => {
         e.preventDefault();
-        setDeleteAvatarButton(true);
+        setDeleteCurrentAvatar(true);
     };
 
     const handleSubmit = async (e) => {
@@ -130,8 +131,9 @@ function Input(ownerInfo) {
 
         userProfileFormData.append("self_introduce", introduce);
 
-        if (deleteAvatarButton === true) {
+        if (deleteCurrentAvatar === true) {
             userProfileFormData.append("avatar", "default_avatar.png");
+            setAvatarPreview(null);
         }
         if (changedAvatar !== null) {
             userProfileFormData.append("avatar", changedAvatar);
@@ -203,9 +205,9 @@ function Input(ownerInfo) {
                     <ModalName>프로필 수정</ModalName>
                     <InputDetailContainer>
                         <label htmlFor="input-file">
-                            {avatarPreview == null ? (
+                            {avatarPreview === null ? (
                                 <AvatarContainer>
-                                    {deleteAvatarButton == false ? (
+                                    {deleteCurrentAvatar === false ? (
                                         <Avatar src={ownerInfo.avatar} />
                                     ) : (
                                         <Avatar src="https://muse-bucket.s3.ap-northeast-2.amazonaws.com/media/public/default_avatar.png" />
@@ -216,7 +218,11 @@ function Input(ownerInfo) {
                                 </AvatarContainer>
                             ) : (
                                 <AvatarContainer>
-                                    <Avatar src={avatarPreview} />
+                                    {deleteCurrentAvatar === false ? (
+                                        <Avatar src={avatarPreview} />
+                                    ) : (
+                                        <Avatar src="https://muse-bucket.s3.ap-northeast-2.amazonaws.com/media/public/default_avatar.png" />
+                                    )}
                                     <DeleteButton onClick={deleteAvatar}>
                                         삭제
                                     </DeleteButton>
