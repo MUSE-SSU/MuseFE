@@ -113,8 +113,6 @@ function Input() {
     };
 
     const handleSubmit = async () => {
-        setLoading(true);
-        setShowSpinner(true);
         const data = new FormData();
         data.append("upload_type", tag);
         data.append("title", title);
@@ -132,6 +130,8 @@ function Input() {
                     timer: 1500,
                 });
             } else {
+                setLoading(true);
+                setShowSpinner(true);
                 await dispatch(getUploadPost(data));
 
                 window.location.reload();
@@ -201,6 +201,7 @@ function Input() {
                                     <InputText
                                         type="text"
                                         name="title"
+                                        maxLength="20"
                                         onChange={onChangeTitle}
                                         placeholder="*제목"
                                         autocomplete="off"
@@ -226,7 +227,7 @@ function Input() {
                                             name="Text1"
                                             cols="90"
                                             Rows="4"
-                                            maxLength="90"
+                                            maxLength="100"
                                             onChange={onChangeContent}
                                             placeholder="내용"
                                             autocomplete="off"
@@ -302,6 +303,7 @@ function Input() {
                                             type="text"
                                             name="title"
                                             onChange={onChangeTitle}
+                                            maxLength="20"
                                             placeholder="*제목"
                                             autocomplete="off"
                                         />

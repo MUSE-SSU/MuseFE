@@ -369,6 +369,7 @@ export const Content = styled.p`
     font-weight: 600;
     font-family: Helvetica;
     font-size: var(--g-text-font-size-4);
+    white-space: pre;
 `;
 
 export const Url = styled.a`
