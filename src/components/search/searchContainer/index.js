@@ -3,6 +3,7 @@ import { Flex, SearchField, Box, Spinner } from "gestalt";
 import axios from "axios";
 import StackGrid from "react-stack-grid";
 import { Card, UserCard, SearchTag } from "../../../components";
+import { useHistory } from "react-router-dom";
 import {
     MainContainer,
     SearchBarContainer,
@@ -19,6 +20,7 @@ import {
 function SearchContainer() {
     const searchQuery = new URLSearchParams(document.location.search);
     const q = searchQuery.get("q");
+    const history = useHistory();
     const [searchValue, setSearchValue] = useState("");
     const [loading, setLoading] = useState(false);
     const [searchedUsers, setSearchedUsers] = useState([{ nickname: null }]);
@@ -97,26 +99,26 @@ function SearchContainer() {
             .then(setLoading(false));
     };
 
-    const getSearchedDataWithTag = async (tag) => {
-        setLoading(true);
-        setShow(true);
-        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-        await axios
-            .get(`${API_DOMAIN}/search/?q=${tag}`)
-            //http://ec2-3-36-100-177.ap-northeast-2.compute.amazonaws.com/api/search/q?=gdgd
-            .then((res) => {
-                try {
-                    console.log(res.data);
-                    setSearchedPosts(res.data.post);
-                    setSearchedUsers(res.data.user);
-                    setIsUserUsed(true);
-                } catch (e) {
-                    console.log(e);
-                }
-            });
-        setIsSearched(true);
-        setLoading(false);
-    };
+    // const getSearchedDataWithTag = async (tag) => {
+    //     setLoading(true);
+    //     setShow(true);
+    //     const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
+    //     await axios
+    //         .get(`${API_DOMAIN}/search/?q=${tag}`)
+    //         //http://ec2-3-36-100-177.ap-northeast-2.compute.amazonaws.com/api/search/q?=gdgd
+    //         .then((res) => {
+    //             try {
+    //                 console.log(res.data);
+    //                 setSearchedPosts(res.data.post);
+    //                 setSearchedUsers(res.data.user);
+    //                 setIsUserUsed(true);
+    //             } catch (e) {
+    //                 console.log(e);
+    //             }
+    //         });
+    //     setIsSearched(true);
+    //     setLoading(false);
+    // };
     const onKeyDownTagManagement = ({ event: { keyCode } }) => {
         if (keyCode === 13 /* Enter */) {
             getSearchedDataWithValue();
@@ -128,7 +130,7 @@ function SearchContainer() {
         if (q !== null) {
             getSearchedDataWithQuery(q);
         }
-    }, []);
+    }, [q]);
     return (
         <MainContainer>
             <Box paddingY={12}>
@@ -146,7 +148,7 @@ function SearchContainer() {
                         <TagContainer
                             back={tag.image}
                             onClick={() => {
-                                getSearchedDataWithTag(tag.tag);
+                                history.push(`/search?q=${tag.tag}`);
                             }}
                         >
                             <OverlayContainer>

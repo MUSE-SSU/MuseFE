@@ -111,7 +111,7 @@ function Input() {
         }
     };
     const onRemoveHashtagWithKey = (e) => {
-        if (e.keyCode === 8) {
+        if (e.keyCode === 8 && tmpHashtag === "") {
             setHashtag(
                 hashtag.filter((hash, idx) => idx !== hashtag.length - 1)
             );
