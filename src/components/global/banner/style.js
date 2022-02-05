@@ -27,7 +27,7 @@ export const BannerInfoContainer = styled(motion.div)`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-left: 4vw;
+
     width: 100%;
     z-index: 300;
 `;
@@ -64,7 +64,7 @@ export const LargeBanner = styled.div`
 `;
 export const Label = styled(motion.h1)`
     text-align: center;
-    color: white;
+    color: ${(props) => `var(--g-color-${props.color})`};
     font-family: R-FLEX-BLACK;
     font-size: 3em;
 `;
@@ -76,7 +76,7 @@ export const Paragraph = styled(motion.h2)`
     font-size: 1.2em;
 `;
 export const Highlight = styled(motion.span)`
-    color: white;
+    color: ${(props) => `var(--g-color-${props.color})`};
     font-family: R-FLEX-BLACK;
 `;
 

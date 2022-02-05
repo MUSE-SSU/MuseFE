@@ -46,8 +46,8 @@ function GlobalBanner(props) {
         <Container>
             {props.name === "muse" ? (
                 <LargeBanner>
-                    <Label>
-                        New <Highlight>MUSE</Highlight> <br />
+                    <Label color="black">
+                        New <Highlight color="blue">MUSE</Highlight> <br />
                         Comming...
                     </Label>
                     {props.name === "contest" && (
@@ -59,8 +59,12 @@ function GlobalBanner(props) {
             ) : (
                 <Banner>
                     <BannerInfoContainer animate={sequence}>
-                        <Label animate={animation} initial={{ opacity: 0 }}>
-                            Who's your <Highlight>MUSE</Highlight>
+                        <Label
+                            color="white"
+                            animate={animation}
+                            initial={{ opacity: 0 }}
+                        >
+                            Who's your <Highlight color="white">MUSE</Highlight>
                         </Label>
                         <Paragraph
                             animate={animation2}

@@ -54,6 +54,8 @@ function SearchContainer() {
         setIsSearched(true);
         setLoading(false);
     };
+
+    //쿼리뜯어서 보내기
     const getSearchedDataWithQuery = async (q) => {
         setLoading(true);
         //const processedValue = q.replace(regexSpace, "%2B");
