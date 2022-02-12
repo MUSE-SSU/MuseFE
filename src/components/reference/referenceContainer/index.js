@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useInView } from "react-intersection-observer";
-import { Card } from "../../../components";
+import { Card, ContestPostButton } from "../../../components";
 import axios from "axios";
-import { Button, Flex, Dropdown, FixedZIndex } from "gestalt";
+import { Button, Flex, Dropdown, FixedZIndex, Box, Spinner } from "gestalt";
 import "gestalt/dist/gestalt.css";
 import { useMediaQuery as MediaQuery } from "react-responsive";
 import StackGrid from "react-stack-grid";
@@ -21,10 +21,13 @@ function ReferenceContainer(props) {
     const [posts, setPosts] = useState([]);
     const [label, setLabel] = useState("인기순");
     const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [showSpinner, setShowSpinner] = useState(true);
     const [options, setOptions] = useState("likes");
     const [ref, inView] = useInView({ trackVisibility: true, delay: 100 });
     const [contestBool, setContestBool] = useState(true);
+    const [error, setError] = useState();
+    const [lastImgLoading, setLastImgLoading] = useState(false);
 
     // 드롭다운 state
     const [open, setOpen] = React.useState(false);
@@ -34,6 +37,8 @@ function ReferenceContainer(props) {
 
     const getPosts = useCallback(() => {
         setLoading(true);
+        setShowSpinner(true);
+        setLastImgLoading(true);
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
         axios
             .get(
@@ -42,6 +47,8 @@ function ReferenceContainer(props) {
             .then((res) => {
                 try {
                     console.log(res.data);
+                    setError(res.data?.message);
+                    console.log(error);
                     const fetchedData = res.data;
                     const mergedData = posts.concat(...fetchedData);
                     setPosts(mergedData);
@@ -50,6 +57,7 @@ function ReferenceContainer(props) {
                 }
             });
         setLoading(false);
+        setShowSpinner(false);
     }, [page, options, contestBool]);
 
     const likesOrder = ({ item }) => {
@@ -84,11 +92,16 @@ function ReferenceContainer(props) {
     }, [getPosts]);
 
     useEffect(() => {
-        // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
-        if (inView && !loading) {
+        // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니고, 마지막이 아니면
+        if (inView && !loading && error === undefined) {
             setPage((state) => state + 1);
         }
-    }, [inView, loading]);
+    }, [inView, loading, error]);
+    useEffect(() => {
+        if (loading && error !== undefined) {
+            setLoading(false);
+        }
+    }, [loading, error]);
     const isMobile = MediaQuery({
         query: "(max-width: 425px)",
     });
@@ -187,6 +200,18 @@ function ReferenceContainer(props) {
                     </React.Fragment>
                 ))}
             </StackGrid>
+            {loading === true && (
+                <Box height="3vh" width="100%">
+                    <Flex
+                        width="100%"
+                        height="100%"
+                        alignItems="center"
+                        justifyContent="center"
+                    >
+                        <Spinner show={showSpinner} />
+                    </Flex>
+                </Box>
+            )}
         </MainContainer>
     );
 }

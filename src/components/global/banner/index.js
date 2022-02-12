@@ -60,17 +60,18 @@ function GlobalBanner(props) {
                 <Banner>
                     <BannerInfoContainer animate={sequence}>
                         <Label
-                            color="white"
+                            color="black"
                             animate={animation}
                             initial={{ opacity: 0 }}
                         >
-                            Who's your <Highlight color="white">MUSE</Highlight>
+                            Who's your <Highlight color="blue">MUSE</Highlight>
                         </Label>
                         <Paragraph
+                            color="black"
                             animate={animation2}
                             initial={{ opacity: 0 }}
                         >
-                            영감을 나누는 공간 <Span>MUSE</Span>
+                            영감을 나누는 공간 <Span color="blue">MUSE</Span>
                         </Paragraph>
                         {props.name === "contest" && (
                             <PostButtonContainer>
@@ -78,16 +79,6 @@ function GlobalBanner(props) {
                             </PostButtonContainer>
                         )}
                     </BannerInfoContainer>
-
-                    <BannerImgContainer>
-                        <BannerImg
-                            initial={{ scale: 1.3 }}
-                            animate={{ rotate: 720 }}
-                            transition={{ duration: 200 }}
-                            src={"/fixed.png"}
-                        />
-                    </BannerImgContainer>
-                    <OverlayContainer />
                 </Banner>
             )}
         </Container>

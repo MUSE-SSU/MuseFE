@@ -342,9 +342,9 @@ function DetailPost(props) {
     };
 
     // 댓글 삭제
-    const handleCommentDelete = (commentIdx) => {
+    const handleCommentDelete = async (commentIdx) => {
         try {
-            dispatch(deleteComment(commentIdx));
+            await dispatch(deleteComment(commentIdx));
             setSubmit(!submit);
         } catch (e) {
             console.error(e);
@@ -979,6 +979,11 @@ function DetailPostPreview(props) {
 }
 
 function Card(props) {
+    useEffect(() => {
+        if (props?.isLast === true) {
+            console.log(props?.isLast);
+        }
+    }, []);
     return (
         <DetailPostPreview
             idx={props.idx}
@@ -991,6 +996,7 @@ function Card(props) {
             rect={props.rect}
             likes={props.likes}
             badge={props.badge}
+            isLast={props?.isLast}
         />
     );
 }

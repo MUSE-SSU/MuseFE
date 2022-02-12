@@ -31,7 +31,6 @@ export const FollowButton = styled(motion.button)`
     margin-bottom: 8px;
     min-height: 40px;
     padding: 8px 12px 8px 12px;
-    //background-color: var(--g-colorGray100);
     background-color: ${(props) => `var(--g-color-${props.background})`};
     color: ${(props) => `${props.color}`};
     cursor: pointer;
@@ -113,9 +112,11 @@ export const OrderButtonContainer = styled.div`
     }
 `;
 
-export const DisplayOrderButton = styled(FollowButton)`
+export const DisplayOrderButton = styled.div`
     margin: 0 3px 24px 3px;
     padding: 12px 100px 12px 100px;
+    display: flex;
+    justify-content: center;
     width: 360px;
     border-radius: 0px;
     background-color: var(--g-color-gray100);
@@ -131,24 +132,7 @@ export const DisplayOrderButton = styled(FollowButton)`
     }
 `;
 
-export const DisplayOrderButton2 = styled(FollowButton)`
-    margin: 0 3px 24px 3px;
-    padding: 12px 100px 12px 100px;
-    background-color: transparent;
-    border-radius: 0px;
-    width: 360px;
-    background-color: var(--g-color-gray100);
-    color: black;
-    &:hover {
-        background-color: var(--g-color-gray150);
-    }
-    @media (max-width: 724px) {
-        width: 320px;
-    }
-    @media (max-width: 386px) {
-        width: 300px;
-    }
-`;
+export const DisplayOrderButton2 = styled(DisplayOrderButton)``;
 
 export const FollowContainer = styled.div`
     display: flex !important;

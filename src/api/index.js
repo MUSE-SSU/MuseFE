@@ -87,7 +87,7 @@ export const getUserInfo = () => {
         method: "GET",
         headers: {
             "content-type": "application/json",
-            Authorization: `${token}`,
+            Authorization: token,
         },
     })
         .then((res) => res.json())
@@ -98,10 +98,11 @@ export const getUserInfo = () => {
 };
 
 export const updateUser = (formData) => {
+    const token = JSON.parse(localStorage.getItem("token"));
     return fetch(`${API_DOMAIN}/account/update/`, {
         method: "POST",
         headers: {
-            Authorization: `${token}`,
+            Authorization: token,
         },
         body: formData,
     })
@@ -136,7 +137,7 @@ export const detailPost = (postIdxUrl) => {
     fetch(`${API_DOMAIN}/posts/display/detail/${postIdxUrl}/`, {
         method: "GET",
         headers: {
-            Authorization: `${token}`,
+            Authorization: token,
         },
     })
         .then((res) => res.json())
@@ -150,7 +151,7 @@ export const updatePost = (formData, postIdx) => {
     return fetch(`${API_DOMAIN}/posts/update/${postIdx}/`, {
         method: "POST",
         headers: {
-            Authorization: `${token}`,
+            Authorization: token,
         },
         body: formData,
     });
@@ -161,7 +162,7 @@ export const deletePost = (postIdx) => {
     return fetch(`${API_DOMAIN}/post/${postIdx}/`, {
         method: "DELETE",
         headers: {
-            Authorization: `${token}`,
+            Authorization: token,
         },
     });
 };
@@ -184,16 +185,18 @@ export const CommentUpload = (idx, currentComments) => {
 };
 
 export const updateComment = (comment, commentIdx) => {
+    const token = JSON.parse(localStorage.getItem("token"));
     return fetch(`${API_DOMAIN}/comment/${commentIdx}/`, {
         method: "PATCH",
         header: {
-            Authorization: `${token}`,
+            Authorization: token,
         },
         body: comment,
     });
 };
 
 export const deleteComment = (commentIdx) => {
+    const token = JSON.parse(localStorage.getItem("token"));
     fetch(`${API_DOMAIN}/comment/${commentIdx}/`, {
         method: "DELETE",
         headers: { Authorization: token },
@@ -214,6 +217,7 @@ export const sendIsLiked = (postIdx) => {
 };
 
 export const sendIsSaved = (postIdx) => {
+    const token = JSON.parse(localStorage.getItem("token"));
     return fetch(`${API_DOMAIN}/post/${postIdx}/bookmark/`, {
         method: "POST",
         headers: {

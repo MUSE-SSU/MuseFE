@@ -10,7 +10,6 @@ function Archives() {
     return (
         <>
             <GlobalNavbar />
-            <GlobalBanner />
             <ReferenceContainer name="reference" />
             <GlobalPostButton />
             <GlobalInfoButton />

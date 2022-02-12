@@ -3,7 +3,7 @@ import { motion } from "framer";
 
 export const Banner = styled.div`
     max-width: 1440px;
-    height: 480px;
+    height: 30vh;
     background-color: var(--g-color-blue-overlay);
     display: flex;
     justify-content: space-between;
@@ -27,7 +27,6 @@ export const BannerInfoContainer = styled(motion.div)`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
     width: 100%;
     z-index: 300;
 `;
@@ -70,7 +69,7 @@ export const Label = styled(motion.h1)`
 `;
 export const Paragraph = styled(motion.h2)`
     margin-top: 24px;
-    color: white;
+    color: ${(props) => `var(--g-color-${props.color})`};
     font-family: Noto-Sans-KR-Black;
     font-weight: 900;
     font-size: 1.2em;
@@ -81,7 +80,7 @@ export const Highlight = styled(motion.span)`
 `;
 
 export const Span = styled.span`
-    color: white;
+    color: ${(props) => `var(--g-color-${props.color})`};
     font-family: R-FLEX-BLACK;
     font-weight: 900;
     font-size: 1.2em;
