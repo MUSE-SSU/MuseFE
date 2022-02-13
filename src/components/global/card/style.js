@@ -16,8 +16,8 @@ export const CardContainer = styled(motion.div)`
     align-items: center;
 `;
 export const ImageContainer = styled.div`
-    width: 300px;
-    max-height: 600px;
+    width: ${(props) => (props.isMuse === true ? "50%" : `${props.size}px`)};
+    max-height: ${(props) => (props.isMuse === true ? "" : `600px`)};
     border-radius: 16px;
     overflow: hidden;
 `;
@@ -324,11 +324,6 @@ export const UnFollowButton = styled(motion.button)`
     &:hover {
         opacity: 0.8;
     }
-`;
-
-export const OtherPostsContainer = styled.div`
-    display: flex;
-    justify-content: center;
 `;
 export const ModalInfoContainer = styled.div`
     display: flex;

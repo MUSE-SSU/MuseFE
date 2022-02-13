@@ -52,7 +52,6 @@ import {
     ModalInfoContainer,
     Content,
     Url,
-    OtherPostsContainer,
     ModalWriterInfoContainerMobile,
     FollowButton,
     IconContainer,
@@ -150,10 +149,6 @@ function DetailPost(props) {
     }, [inView, recommendLoading]);
 
     useEffect(() => {
-        getRecommendedPosts();
-    }, [getRecommendedPosts]);
-
-    useEffect(() => {
         modalRef.current.scrollIntoView({ block: "start" });
     }, [changeScroll]);
 
@@ -161,9 +156,11 @@ function DetailPost(props) {
     useEffect(() => {
         setLoading(true);
         setShowSpinner(true);
+        //하단 추천 게시물
+        getRecommendedPosts();
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
         const token = JSON.parse(localStorage.getItem("token"));
-
+        //토큰 있을때 없을때 구분 (좋아요, 북마크, 팔로우 등 정보 때문에)
         if (token !== null) {
             fetch(`${API_DOMAIN}/post/${idx}/`, {
                 method: "GET",
@@ -934,10 +931,27 @@ function DetailPostPreview(props) {
                         </PostStatusContainerRect>
                     </InfoContainer>
                 </CardContainerRect>
+            ) : props.isMuse === true ? (
+                <ImageContainer
+                    onClick={() => setShouldShow(true)}
+                    size="100"
+                    isMuse={true}
+                >
+                    <Image
+                        objectFit="none"
+                        src={`${props.image}`}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.98 }}
+                    />
+                </ImageContainer>
             ) : (
                 <CardContainer color="transparent">
-                    <ImageContainer onClick={() => setShouldShow(true)}>
+                    <ImageContainer
+                        onClick={() => setShouldShow(true)}
+                        size={300}
+                    >
                         <Image
+                            objectFit="fill"
                             src={`${props.image}`}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.98 }}
@@ -979,11 +993,6 @@ function DetailPostPreview(props) {
 }
 
 function Card(props) {
-    useEffect(() => {
-        if (props?.isLast === true) {
-            console.log(props?.isLast);
-        }
-    }, []);
     return (
         <DetailPostPreview
             idx={props.idx}
@@ -996,7 +1005,7 @@ function Card(props) {
             rect={props.rect}
             likes={props.likes}
             badge={props.badge}
-            isLast={props?.isLast}
+            isMuse={props.isMuse}
         />
     );
 }
