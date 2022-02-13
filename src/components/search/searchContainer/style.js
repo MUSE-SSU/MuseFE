@@ -47,7 +47,7 @@ export const SearchedDataNone = styled.h1`
 //TAG
 
 export const TagMainContainer = styled.div`
-    width: 80vw;
+    width: 100vw;
     max-width: 1440px;
     display: flex;
     justify-content: center;
@@ -59,8 +59,8 @@ export const TagMainContainer = styled.div`
 export const TagContainer = styled.div`
     background: url(${(props) => props.back}) no-repeat center;
     background-size: fill;
-    width: 360px;
-    height: 144px;
+    width: 24vw;
+    height: 8vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -81,5 +81,8 @@ export const OverlayContainer = styled.div`
 export const TagName = styled.h1`
     font-weight: 900;
     color: white;
-    font-size: var(--g-text-font-size-5);
+    font-size: var(--g-text-font-size-4);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;
