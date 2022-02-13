@@ -22,11 +22,11 @@ export const ContentText = styled.p`
 export const TosSection = styled.div`
     margin-top: 24px;
     word-break: break-all;
-    width: 768px;
+    width: 92vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    white-space: nowrap;
+    overflow-x: hidden;
 `;
 
 export const TitleContainer = styled.div`
@@ -48,5 +48,5 @@ export const TosDetail = styled.div`
     justify-content: flex-start;
     flex-direction: column;
     word-break: break-all;
-    width: 768px;
+    width: 100%;
 `;
