@@ -48,22 +48,40 @@ function Muse() {
                     {datas !== null && (
                         <MuseContainer>
                             <Card
-                                image={datas[current].image}
-                                title={datas[current].title}
-                                idx={datas[current].idx}
-                                liked={datas[current].liked}
-                                avatar={datas[current].writer_avatar}
-                                writer={datas[current].writer}
-                                views={datas[current].views}
-                                likes={datas[current].likes}
-                                badge={datas[current].badge}
+                                image={datas[current].post.image}
+                                title={datas[current].post.title}
+                                idx={datas[current].post.idx}
+                                liked={datas[current].post.liked}
+                                avatar={datas[current].post.writer_avatar}
+                                writer={datas[current].post.writer}
+                                views={datas[current].post.views}
+                                likes={datas[current].post.likes}
+                                badge={datas[current].post.badge}
                                 isMuse={true}
                             />
 
                             <MuseInfoContainer>
                                 <MuseNumber>WEEK{current + 1}</MuseNumber>
                                 <InfoText>
-                                    작가: {datas[current].writer}
+                                    작가: {datas[current].post.writer}
+                                </InfoText>
+                                <InfoText
+                                    onClick={() => {
+                                        const redirectInstagram = datas[
+                                            current
+                                        ].profile.insta_id.split("@")[1];
+                                        window.open(
+                                            `https://www.instagram.com/${redirectInstagram}/`
+                                        );
+                                    }}
+                                    cursor="pointer"
+                                >
+                                    인스타그램:
+                                    {datas[current].profile.insta_id}
+                                </InfoText>
+                                <InfoText>
+                                    소개:
+                                    {datas[current].profile.self_introduce}
                                 </InfoText>
                             </MuseInfoContainer>
                         </MuseContainer>

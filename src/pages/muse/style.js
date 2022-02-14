@@ -20,13 +20,14 @@ export const InfoText = styled.p`
     font-family: Helvetica, Arial, sans-serif;
     font-size: var(--g-text-font-size-5);
     font-weight: 900;
+    cursor: ${(props) => props.cursor};
 `;
 export const MuseInfoContainer = styled.div`
     display: flex;
-    width: 20%;
+    width: 30%;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     height: 100%;
     margin-left: 12px;
 `;

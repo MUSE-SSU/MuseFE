@@ -82,7 +82,6 @@ export const kakaoRegister = (authorizeCodeFromKakao) => {
 // 유저 관련
 export const getUserInfo = () => {
     const token = JSON.parse(localStorage.getItem("token"));
-    console.log(token);
     return fetch(`${API_DOMAIN}/account/`, {
         method: "GET",
         headers: {
@@ -170,8 +169,7 @@ export const deletePost = (postIdx) => {
 // 댓글관련
 export const CommentUpload = (idx, currentComments) => {
     const token = JSON.parse(localStorage.getItem("token"));
-    console.log(token);
-    fetch(`${API_DOMAIN}/comment/`, {
+    return fetch(`${API_DOMAIN}/comment/`, {
         method: "POST",
         headers: {
             Authorization: token,
@@ -197,7 +195,7 @@ export const updateComment = (comment, commentIdx) => {
 
 export const deleteComment = (commentIdx) => {
     const token = JSON.parse(localStorage.getItem("token"));
-    fetch(`${API_DOMAIN}/comment/${commentIdx}/`, {
+    return fetch(`${API_DOMAIN}/comment/${commentIdx}/`, {
         method: "DELETE",
         headers: { Authorization: token },
     });
@@ -207,7 +205,6 @@ export const deleteComment = (commentIdx) => {
 //좋아요 및 저장 관련
 export const sendIsLiked = (postIdx) => {
     const token = JSON.parse(localStorage.getItem("token"));
-    console.log(token);
     return fetch(`${API_DOMAIN}/post/${postIdx}/like/`, {
         method: "POST",
         headers: {

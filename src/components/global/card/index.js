@@ -85,6 +85,7 @@ function DetailPost(props) {
     const [otherPosts, setOtherPosts] = useState([]);
 
     // 댓글 관련
+    const [comments, setComments] = useState(null);
     const [currentComments, setCurrentComments] = useState("");
 
     // 로딩 관련
@@ -120,38 +121,6 @@ function DetailPost(props) {
     const notMobile = MediaQuery({
         query: "(min-width: 426px)",
     });
-
-    // 모달 하단 추천 게시물 fetch
-    const getRecommendedPosts = useCallback(() => {
-        setRecommendLoading(true);
-        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-        axios
-            .get(`${API_DOMAIN}/post/${idx}/recommend/?page=${page}`)
-            .then((res) => {
-                try {
-                    console.log(res.data);
-                    const fetchedData = res.data;
-                    const mergedData = otherPosts.concat(...fetchedData);
-                    setOtherPosts(mergedData);
-                } catch (e) {
-                    console.error(e);
-                }
-            });
-        setRecommendLoading(false);
-    }, [page, idx]);
-
-    // 무한스크롤 trigger
-    useEffect(() => {
-        // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
-        if (inView && !recommendLoading) {
-            setPage((state) => state + 1);
-        }
-    }, [inView, recommendLoading]);
-
-    useEffect(() => {
-        modalRef.current.scrollIntoView({ block: "start" });
-    }, [changeScroll]);
-
     // 게시물 fetch
     useEffect(() => {
         setLoading(true);
@@ -209,38 +178,68 @@ function DetailPost(props) {
         }
     }, [idx, submit]);
 
-    // 팔로우 핸들링
-    const handleFollow = () => {
+    // 모달 하단 추천 게시물 fetch
+    const getRecommendedPosts = useCallback(() => {
+        setRecommendLoading(true);
+        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
+        axios
+            .get(`${API_DOMAIN}/post/${idx}/recommend/?page=${page}`)
+            .then((res) => {
+                try {
+                    console.log(res.data);
+                    const fetchedData = res.data;
+                    const mergedData = otherPosts.concat(...fetchedData);
+                    setOtherPosts(mergedData);
+                } catch (e) {
+                    console.error(e);
+                }
+            });
+        setRecommendLoading(false);
+    }, [page, idx]);
+
+    // 댓글 fetch
+    useEffect(() => {
+        setLoading(true);
+        setShowSpinner(true);
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
         const token = JSON.parse(localStorage.getItem("token"));
+        fetch(`${API_DOMAIN}/comment/${idx}/`, {
+            method: "GET",
+            headers: {
+                Authorization: token,
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setComments(data);
+            })
+            .finally(() => {
+                setTimeout(() => {
+                    setLoading(false);
+                    setShowSpinner(false);
+                }, 500);
+            });
+    }, [idx, submit]);
 
-        if (token === null) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "로그인을 해주세요",
-                showConfirmButton: false,
-                timer: 1000,
-            });
-        } else {
-            return fetch(`${API_DOMAIN}/account/follow/`, {
-                method: "POST",
-                headers: {
-                    Authorization: `${token}`,
-                    "content-type": "application/json",
-                },
-                body: JSON.stringify({
-                    follower: data.writer,
-                }),
-            }).then(() => {
-                setIsFollowed(!isFollowed);
-            });
+    // 무한스크롤 trigger
+    useEffect(() => {
+        // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
+        if (inView && !recommendLoading) {
+            setPage((state) => state + 1);
         }
-    };
+    }, [inView, recommendLoading]);
+
+    // 렌더될때 맨 위로
+    useEffect(() => {
+        modalRef.current.scrollIntoView({ block: "start" });
+    }, [changeScroll]);
 
     //댓글 작성
     const handleSubmitComment = async () => {
         try {
+            setLoading(true);
+            setShowSpinner(true);
             if (currentComments == "") {
                 Swal.fire({
                     icon: "error",
@@ -268,11 +267,40 @@ function DetailPost(props) {
                 });
             } else {
                 await dispatch(uploadCommentPost(idx, currentComments));
-                setSubmit(!submit);
                 setCurrentComments("");
+                await setSubmit(!submit);
             }
         } catch (e) {
             console.error(e);
+        }
+    };
+
+    // 팔로우 핸들링
+    const handleFollow = () => {
+        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
+        const token = JSON.parse(localStorage.getItem("token"));
+
+        if (token === null) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "로그인을 해주세요",
+                showConfirmButton: false,
+                timer: 1000,
+            });
+        } else {
+            return fetch(`${API_DOMAIN}/account/follow/`, {
+                method: "POST",
+                headers: {
+                    Authorization: `${token}`,
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify({
+                    follower: data.writer,
+                }),
+            }).then(() => {
+                setIsFollowed(!isFollowed);
+            });
         }
     };
 
@@ -341,8 +369,10 @@ function DetailPost(props) {
     // 댓글 삭제
     const handleCommentDelete = async (commentIdx) => {
         try {
+            setLoading(true);
+            setShowSpinner(true);
             await dispatch(deleteComment(commentIdx));
-            setSubmit(!submit);
+            await setSubmit(!submit);
         } catch (e) {
             console.error(e);
         }
@@ -711,7 +741,7 @@ function DetailPost(props) {
                     </ModalInfoContainer>
 
                     <ModalCommentContainer>
-                        {data.comment.map((comment) => (
+                        {comments.map((comment) => (
                             <React.Fragment key={comment.idx}>
                                 <Box
                                     marginTop={2}
