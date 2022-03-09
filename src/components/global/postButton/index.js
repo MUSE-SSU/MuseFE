@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUploadPost } from "../../../actions/post";
 import { useMediaQuery as MediaQuery } from "react-responsive";
+import { GlobalToast } from "../../../components";
 import {
     InputText,
     InputFile,
@@ -54,22 +55,6 @@ function Input() {
         query: "(min-width: 426px) and (max-width: 2560px)",
     });
 
-    const getUserInfo = () => {
-        const token = JSON.parse(localStorage.getItem("token"));
-        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-        return fetch(`${API_DOMAIN}/account/`, {
-            method: "GET",
-            headers: {
-                "content-type": "application/json",
-                Authorization: `${token}`,
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setBadge(data.badge);
-            });
-    };
     const [badge, setBadge] = useState("");
     const [handle, setHandle] = useState();
     const [image, setImage] = useState(null);

@@ -8,17 +8,26 @@ export const MusePage = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 94vh;
+    height: 120%;
+    @media (max-width: 425px) {
+        align-items: center;
+    }
 `;
 
 export const MuseNumber = styled.h1`
     font-family: R-FLEX-BLACK;
     font-size: var(--g-text-font-size-7);
+    @media (max-width: 425px) {
+        font-size: var(--g-text-font-size-5);
+    }
     color: black;
 `;
 export const InfoText = styled.p`
     font-family: Helvetica, Arial, sans-serif;
     font-size: var(--g-text-font-size-5);
+    @media (max-width: 425px) {
+        font-size: var(--g-text-font-size-3);
+    }
     font-weight: 900;
     cursor: ${(props) => props.cursor};
 `;
@@ -30,12 +39,18 @@ export const MuseInfoContainer = styled.div`
     align-items: flex-start;
     height: 100%;
     margin-left: 12px;
+    @media (max-width: 425px) {
+        width: 54%;
+        margin: 0;
+    }
 `;
+
 export const MuseContainer = styled.div`
     display: flex;
     height: 100%;
     flex-direction: row;
     align-items: flex-start;
+    justify-content: space-between;
     justify-content: center;
     @media (max-width: 425px) {
         flex-direction: column;

@@ -97,6 +97,7 @@ export const Image = styled(motion.img)`
     justify-content: center;
     overflow: hidden;
     object-fit: fill;
+    cursor: pointer;
     position: relative;
 `;
 
@@ -329,9 +330,10 @@ export const ModalInfoContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: auto;
     padding: 0 48px 0 48px;
     align-items: flex-start;
-    width: 100%;
+    max-width: 900px;
     @media (max-width: 425px) {
         padding: 0 12px 0 12px;
     }
@@ -341,7 +343,6 @@ export const Content = styled.p`
     font-weight: 600;
     font-family: Helvetica;
     font-size: var(--g-text-font-size-4);
-    white-space: pre;
 `;
 
 export const Url = styled.a`
@@ -419,6 +420,5 @@ export const ToastContainer = styled.div`
     align-items: center;
     width: 244px;
 `;
-
-export const IconContainer = styled.div``;
 export const ToastMainContainer = styled(motion.div)``;
+export const IconContainer = styled.div``;

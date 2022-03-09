@@ -8,39 +8,26 @@ import {
     ColorContainer,
     NameContainer,
 } from "./style";
+import { GetColorWeek } from "../../../api";
 import { framer } from "framer";
 
 function WeeklyColorContainer() {
-    const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-    const [weeklyColors, setWeeklyColors] = useState([]);
-    const [weeklyColorsHexa, setWeeklyColorsHexa] = useState([]);
-    const history = useHistory();
-    useEffect(() => {
-        axios.get(`${API_DOMAIN}/post/color_of_week/`).then((res) => {
-            try {
-                console.log(res.data);
-                setWeeklyColors(res.data.color);
-                setWeeklyColorsHexa(res.data.hexa_code);
-                console.log(weeklyColors);
-            } catch (e) {
-                console.error(e);
-            }
-        });
-    }, []);
+    const colorData = GetColorWeek();
     return (
         <MainContainer>
             <NameContainer>
                 <ColorContainerName>Weekly Colour</ColorContainerName>
             </NameContainer>
             <ColorContainer>
-                {weeklyColors.map((weeklyColor, idx) => (
-                    <Link to={`/search?q=${weeklyColors[idx]}`}>
-                        <ColorCard
-                            color={`${weeklyColor}`}
-                            hexa={weeklyColorsHexa[idx]}
-                        />
-                    </Link>
-                ))}
+                {colorData !== undefined &&
+                    colorData.color.map((weeklyColor, idx) => (
+                        <Link to={`/search?q=${colorData.color[idx]}`}>
+                            <ColorCard
+                                color={`${weeklyColor}`}
+                                hexa={colorData.hexa_code[idx]}
+                            />
+                        </Link>
+                    ))}
             </ColorContainer>
         </MainContainer>
     );

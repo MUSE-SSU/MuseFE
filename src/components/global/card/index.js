@@ -591,13 +591,24 @@ function DetailPost(props) {
                             <ModalWriterInfoContainerMobile>
                                 <Box>
                                     <Flex direction="row" alignItems="center">
-                                        <ModalAvatar src={data.writer_avatar} />
+                                        <ModalAvatar
+                                            src={data.writer_avatar}
+                                            onClick={() => {
+                                                window.location.href = `/my-page/${data.writer}`;
+                                            }}
+                                        />
                                         <Flex direction="column">
                                             <Flex
                                                 direction="row"
                                                 alignItems="center"
                                             >
-                                                <Writer>{data.writer}</Writer>
+                                                <Writer
+                                                    onClick={() => {
+                                                        window.location.href = `/my-page/${data.writer}`;
+                                                    }}
+                                                >
+                                                    {data.writer}
+                                                </Writer>
                                                 {data.badge !== 0 && (
                                                     <BadgeDetail
                                                         badge={data.badge}
@@ -741,63 +752,64 @@ function DetailPost(props) {
                     </ModalInfoContainer>
 
                     <ModalCommentContainer>
-                        {comments.map((comment) => (
-                            <React.Fragment key={comment.idx}>
-                                <Box
-                                    marginTop={2}
-                                    borderStyle="sm"
-                                    rounding={4}
-                                    padding={2}
-                                >
-                                    <Flex
-                                        direction="row"
-                                        alignItems="center"
-                                        justifyContent="between"
+                        {comments !== null &&
+                            comments.map((comment) => (
+                                <React.Fragment key={comment.idx}>
+                                    <Box
+                                        marginTop={2}
+                                        borderStyle="sm"
+                                        rounding={4}
+                                        padding={2}
                                     >
-                                        <Box>
-                                            <Flex
-                                                direction="row"
-                                                alignItems="center"
-                                            >
-                                                <Avatar
-                                                    src={`${comment.writer_avatar}`}
-                                                    onClick={() => {
-                                                        window.location.href = `/my-page/${comment.writer}`;
-                                                    }}
-                                                />
-                                                <Box>
-                                                    <CommentWriter
+                                        <Flex
+                                            direction="row"
+                                            alignItems="center"
+                                            justifyContent="between"
+                                        >
+                                            <Box>
+                                                <Flex
+                                                    direction="row"
+                                                    alignItems="center"
+                                                >
+                                                    <Avatar
+                                                        src={`${comment.writer_avatar}`}
                                                         onClick={() => {
                                                             window.location.href = `/my-page/${comment.writer}`;
                                                         }}
-                                                    >
-                                                        {comment.writer}
-                                                    </CommentWriter>
+                                                    />
+                                                    <Box>
+                                                        <CommentWriter
+                                                            onClick={() => {
+                                                                window.location.href = `/my-page/${comment.writer}`;
+                                                            }}
+                                                        >
+                                                            {comment.writer}
+                                                        </CommentWriter>
 
-                                                    <Comment>
-                                                        {comment.comment}
-                                                    </Comment>
-                                                </Box>
-                                            </Flex>
-                                        </Box>
-                                        {comment.is_writer === true ? (
-                                            <Flex justifyContent="end">
-                                                <IconButton
-                                                    icon="trash-can"
-                                                    onClick={() =>
-                                                        handleCommentDelete(
-                                                            comment.idx
-                                                        )
-                                                    }
-                                                />
-                                            </Flex>
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </Flex>
-                                </Box>
-                            </React.Fragment>
-                        ))}
+                                                        <Comment>
+                                                            {comment.comment}
+                                                        </Comment>
+                                                    </Box>
+                                                </Flex>
+                                            </Box>
+                                            {comment.is_writer === true ? (
+                                                <Flex justifyContent="end">
+                                                    <IconButton
+                                                        icon="trash-can"
+                                                        onClick={() =>
+                                                            handleCommentDelete(
+                                                                comment.idx
+                                                            )
+                                                        }
+                                                    />
+                                                </Flex>
+                                            ) : (
+                                                <></>
+                                            )}
+                                        </Flex>
+                                    </Box>
+                                </React.Fragment>
+                            ))}
 
                         {token !== undefined ? (
                             <>

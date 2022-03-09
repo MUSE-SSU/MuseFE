@@ -222,3 +222,15 @@ export const sendIsSaved = (postIdx) => {
         },
     });
 };
+
+export const GetColorWeek = () => {
+    const [data, setData] = useState();
+    useEffect(() => {
+        fetch(`${API_DOMAIN}/post/color_of_week/`, {
+            method: "GET",
+        })
+            .then((res) => res.json())
+            .then((data) => setData(data));
+    }, []);
+    return data;
+};

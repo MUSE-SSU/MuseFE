@@ -8,6 +8,7 @@ import {
     MuseInfoContainer,
     ButtonContainer,
     InfoText,
+    WeekContainer,
 } from "./style";
 import { Card } from "../../components";
 import { IconButton } from "gestalt";
@@ -59,7 +60,6 @@ function Muse() {
                                 badge={datas[current].post.badge}
                                 isMuse={true}
                             />
-
                             <MuseInfoContainer>
                                 <MuseNumber>WEEK{current + 1}</MuseNumber>
                                 <InfoText>
