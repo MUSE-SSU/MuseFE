@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
+import {
+    GetRecommended,
+    getComments,
+    follow,
+    getPost,
+    getPostWithoutToken,
+} from "../../../api";
 import { useInView } from "react-intersection-observer";
 import { useDispatch } from "react-redux";
 import { useMediaQuery as MediaQuery } from "react-responsive";
@@ -85,7 +92,7 @@ function DetailPost(props) {
     const [otherPosts, setOtherPosts] = useState([]);
 
     // 댓글 관련
-    const [comments, setComments] = useState(null);
+    const [comments, setComments] = useState();
     const [currentComments, setCurrentComments] = useState("");
 
     // 로딩 관련
@@ -108,6 +115,7 @@ function DetailPost(props) {
     const [showToast, setShowToast] = useState(false);
     const TOAST_ZINDEX = new FixedZIndex(999);
     const toastZIndex = new CompositeZIndex([TOAST_ZINDEX]);
+
     // CANCEL 버튼 함수
     const handleOut = () => {
         props.handleShouldShow(false);
@@ -127,54 +135,44 @@ function DetailPost(props) {
         setShowSpinner(true);
         //하단 추천 게시물
         getRecommendedPosts();
-        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
         const token = JSON.parse(localStorage.getItem("token"));
         //토큰 있을때 없을때 구분 (좋아요, 북마크, 팔로우 등 정보 때문에)
         if (token !== null) {
-            fetch(`${API_DOMAIN}/post/${idx}/`, {
-                method: "GET",
-                headers: {
-                    Authorization: token,
-                },
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log(data);
-                    setData(data);
-                    // 변환이 필요한 값들은 따로 저장
-                    setIsLiked(data.is_login_user_liked);
-                    setIdx(data.idx);
-                    setIsFollowed(data.is_login_user_follow);
-                    setCreated(moment(data.created_at).format("YYYY-MM-DD"));
-                    setIsSaved(data.is_login_user_bookmark);
-                })
-                .finally(() => {
-                    setTimeout(() => {
-                        setLoading(false);
-                        setShowSpinner(false);
-                    }, 500);
-                });
-        }
-        if (token === null) {
-            return fetch(`${API_DOMAIN}/post/${idx}/`, {
-                method: "GET",
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    setData(data);
-                    // 변환이 필요한 값들은 따로 저장
-                    setIsLiked(data.is_login_user_liked);
-                    setIdx(data.idx);
-                    setIsFollowed(data.is_login_user_follow);
-                    setCreated(moment(data.created_at).format("YYYY-MM-DD"));
-                    setIsSaved(data.is_login_user_bookmark);
-                })
-                .finally(() => {
-                    setTimeout(() => {
-                        setLoading(false);
-                        setShowSpinner(false);
-                    }, 500);
-                });
+            setLoading(true);
+            setShowSpinner(true);
+            const loadPost = async () => {
+                if (idx !== undefined) {
+                    const response = await getPost(idx);
+                    setData(response);
+                    setIsLiked(response?.is_login_user_liked);
+                    setIsFollowed(response?.is_login_user_follow);
+                    setCreated(
+                        moment(response?.created_at).format("YYYY-MM-DD")
+                    );
+                    setIsSaved(response?.is_login_user_bookmark);
+                }
+            };
+            loadPost();
+            setTimeout(() => {
+                setLoading(false);
+                setShowSpinner(false);
+            }, 500);
+        } else {
+            setLoading(true);
+            setShowSpinner(true);
+            const loadPostWithoutToken = async () => {
+                const response = await getPostWithoutToken(idx);
+                setIsLiked(response?.is_login_user_liked);
+                setIsFollowed(response?.is_login_user_follow);
+                setCreated(moment(response?.created_at).format("YYYY-MM-DD"));
+                setIsSaved(response?.is_login_user_bookmark);
+                setData(response);
+            };
+            loadPostWithoutToken();
+            setTimeout(() => {
+                setLoading(false);
+                setShowSpinner(false);
+            }, 500);
         }
     }, [idx, submit]);
 
@@ -186,7 +184,6 @@ function DetailPost(props) {
             .get(`${API_DOMAIN}/post/${idx}/recommend/?page=${page}`)
             .then((res) => {
                 try {
-                    console.log(res.data);
                     const fetchedData = res.data;
                     const mergedData = otherPosts.concat(...fetchedData);
                     setOtherPosts(mergedData);
@@ -199,29 +196,12 @@ function DetailPost(props) {
 
     // 댓글 fetch
     useEffect(() => {
-        setLoading(true);
-        setShowSpinner(true);
-        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-        const token = JSON.parse(localStorage.getItem("token"));
-        fetch(`${API_DOMAIN}/comment/${idx}/`, {
-            method: "GET",
-            headers: {
-                Authorization: token,
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setComments(data);
-            })
-            .finally(() => {
-                setTimeout(() => {
-                    setLoading(false);
-                    setShowSpinner(false);
-                }, 500);
-            });
+        const loadComments = async () => {
+            const response = await getComments(idx);
+            setComments(response);
+        };
+        loadComments();
     }, [idx, submit]);
-
     // 무한스크롤 trigger
     useEffect(() => {
         // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
@@ -277,9 +257,7 @@ function DetailPost(props) {
 
     // 팔로우 핸들링
     const handleFollow = () => {
-        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
         const token = JSON.parse(localStorage.getItem("token"));
-
         if (token === null) {
             Swal.fire({
                 icon: "error",
@@ -289,18 +267,11 @@ function DetailPost(props) {
                 timer: 1000,
             });
         } else {
-            return fetch(`${API_DOMAIN}/account/follow/`, {
-                method: "POST",
-                headers: {
-                    Authorization: `${token}`,
-                    "content-type": "application/json",
-                },
-                body: JSON.stringify({
-                    follower: data.writer,
-                }),
-            }).then(() => {
+            const changeFollow = async () => {
+                await follow(data.writer);
                 setIsFollowed(!isFollowed);
-            });
+            };
+            changeFollow();
         }
     };
 
@@ -753,7 +724,7 @@ function DetailPost(props) {
 
                     <ModalCommentContainer>
                         {comments !== null &&
-                            comments.map((comment) => (
+                            comments?.map((comment) => (
                                 <React.Fragment key={comment.idx}>
                                     <Box
                                         marginTop={2}
@@ -892,7 +863,6 @@ function DetailPost(props) {
                                                         !changeScroll
                                                     );
                                                     setPage(1);
-                                                    console.log(idx);
                                                 }}
                                             />
                                         </ListItem>

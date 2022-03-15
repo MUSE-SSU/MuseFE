@@ -46,9 +46,7 @@ function ReferenceContainer(props) {
             )
             .then((res) => {
                 try {
-                    console.log(res.data);
                     setError(res.data?.message);
-                    console.log(error);
                     const fetchedData = res.data;
                     const mergedData = posts.concat(...fetchedData);
                     setPosts(mergedData);

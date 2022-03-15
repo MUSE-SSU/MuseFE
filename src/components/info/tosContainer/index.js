@@ -25,14 +25,6 @@ function TosContainer() {
     useEffect(() => {
         setShowSpinner(true);
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-        axios.get(`${API_DOMAIN}/notice/?type=tos`).then((res) => {
-            try {
-                setTos(res.data);
-                console.log(res.data);
-            } catch (e) {
-                console.error(e);
-            }
-        });
         axios.get(`${API_DOMAIN}/notice/?type=privacy`).then((res) => {
             try {
                 setPrivacy(res.data);

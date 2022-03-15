@@ -145,6 +145,30 @@ export const detailPost = (postIdxUrl) => {
         });
 };
 
+export const getPost = (idx) => {
+    const token = JSON.parse(localStorage.getItem("token"));
+    return fetch(`${API_DOMAIN}/post/${idx}/`, {
+        method: "GET",
+        headers: {
+            Authorization: token,
+        },
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            return data;
+        });
+};
+
+export const getPostWithoutToken = (idx) => {
+    return fetch(`${API_DOMAIN}/post/${idx}/`, {
+        method: "GET",
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            return data;
+        });
+};
+
 export const updatePost = (formData, postIdx) => {
     const token = JSON.parse(localStorage.getItem("token"));
     return fetch(`${API_DOMAIN}/posts/update/${postIdx}/`, {
@@ -201,6 +225,18 @@ export const deleteComment = (commentIdx) => {
     });
 };
 
+export const getComments = (idx) => {
+    return fetch(`${API_DOMAIN}/comment/${idx}/`, {
+        method: "GET",
+        headers: {
+            Authorization: token,
+        },
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            return data;
+        });
+};
 /*------------------------------------------------------------------------------------------------*/
 //좋아요 및 저장 관련
 export const sendIsLiked = (postIdx) => {
@@ -233,4 +269,18 @@ export const GetColorWeek = () => {
             .then((data) => setData(data));
     }, []);
     return data;
+};
+/*------------------------------------------------------------------------------------------------*/
+//팔로우 관련
+export const follow = (writer) => {
+    return fetch(`${API_DOMAIN}/account/follow/`, {
+        method: "POST",
+        headers: {
+            Authorization: `${token}`,
+            "content-type": "application/json",
+        },
+        body: JSON.stringify({
+            follower: writer,
+        }),
+    });
 };
