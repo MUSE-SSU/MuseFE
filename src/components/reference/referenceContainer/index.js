@@ -78,17 +78,6 @@ function ReferenceContainer(props) {
             setPage((state) => state + 1);
         }
     }, [inView, loading, error]);
-    useEffect(() => {
-        if (loading && error !== undefined) {
-            setLoading(false);
-        }
-    }, [loading, error]);
-    const isMobile = MediaQuery({
-        query: "(max-width: 425px)",
-    });
-    const notMobile = MediaQuery({
-        query: "(min-width: 426px)",
-    });
 
     return (
         <MainContainer>
