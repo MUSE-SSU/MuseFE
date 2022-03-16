@@ -1,22 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useInView } from "react-intersection-observer";
-import { Card, ContestPostButton } from "../../../components";
-import axios from "axios";
+import { Card } from "../../../components";
 import { GetPosts } from "../../../api";
 import { Button, Flex, Dropdown, FixedZIndex, Box, Spinner } from "gestalt";
 import "gestalt/dist/gestalt.css";
-import { useMediaQuery as MediaQuery } from "react-responsive";
 import StackGrid from "react-stack-grid";
-import {
-    CustomDropdown,
-    DropdownContainer,
-    ListItem,
-    ListAlign,
-    ToggleH1,
-    MainContainer,
-    StackGridContainer,
-} from "./style";
-import { motion } from "framer";
+import { DropdownContainer, ListItem, MainContainer } from "./style";
 
 function ReferenceContainer(props) {
     const [posts, setPosts] = useState([]);
