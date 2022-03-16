@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { Card, ContestPostButton } from "../../../components";
 import axios from "axios";
+import { GetPosts } from "../../../api";
 import { Button, Flex, Dropdown, FixedZIndex, Box, Spinner } from "gestalt";
 import "gestalt/dist/gestalt.css";
 import { useMediaQuery as MediaQuery } from "react-responsive";
@@ -27,61 +28,43 @@ function ReferenceContainer(props) {
     const [ref, inView] = useInView({ trackVisibility: true, delay: 100 });
     const [contestBool, setContestBool] = useState(true);
     const [error, setError] = useState();
-    const [lastImgLoading, setLastImgLoading] = useState(false);
 
     // 드롭다운 state
-    const [open, setOpen] = React.useState(false);
-    const [selected, setSelected] = React.useState(null);
-    const anchorRef = React.useRef(null);
+    const [open, setOpen] = useState(false);
+    const [selected, setSelected] = useState({
+        value: "인기순",
+        label: "인기순",
+    });
+    const anchorRef = useRef(null);
     const DROPDOWN_ZINDEX = new FixedZIndex(10);
 
-    const getPosts = useCallback(() => {
+    const getPosts = useCallback(async () => {
         setLoading(true);
         setShowSpinner(true);
-        setLastImgLoading(true);
-        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-        axios
-            .get(
-                `${API_DOMAIN}/post/?type=${props.name}&page=${page}&order=${options}`
-            )
-            .then((res) => {
-                try {
-                    setError(res.data?.message);
-                    const fetchedData = res.data;
-                    const mergedData = posts.concat(...fetchedData);
-                    setPosts(mergedData);
-                } catch (e) {
-                    console.error(e);
-                }
-            });
-        setLoading(false);
-        setShowSpinner(false);
+        const name = props.name;
+        GetPosts(name, page, options, posts, setPosts, setError);
+        if (error === "POST COUNT LIMIT") {
+            return;
+        }
+        setTimeout(() => {
+            setLoading(false);
+            setShowSpinner(false);
+        }, 2000);
     }, [page, options, contestBool]);
 
-    const likesOrder = ({ item }) => {
+    const orderItems = ({ item }) => {
         setSelected(item);
         setPosts([]);
         setPage(1);
-        setOptions("likes");
-        setLabel("인기순");
-        setOpen(false);
-    };
-
-    const viewsOrder = ({ item }) => {
-        setSelected(item);
-        setPosts([]);
-        setPage(1);
-        setOptions("views");
-        setLabel("조회수순");
-        setOpen(false);
-    };
-
-    const recentOrder = ({ item }) => {
-        setSelected(item);
-        setPosts([]);
-        setPage(1);
-        setOptions("recent");
-        setLabel("최신순");
+        if (item.value === "최신순") {
+            setOptions("recent");
+        }
+        if (item.value === "조회수순") {
+            setOptions("views");
+        }
+        if (item.value === "인기순") {
+            setOptions("likes");
+        }
         setOpen(false);
     };
 
@@ -130,7 +113,7 @@ function ReferenceContainer(props) {
                             onDismiss={() => setOpen(false)}
                         >
                             <Dropdown.Item
-                                onSelect={likesOrder}
+                                onSelect={orderItems}
                                 option={{
                                     value: "인기순",
                                     label: "인기순",
@@ -138,7 +121,7 @@ function ReferenceContainer(props) {
                                 selected={selected}
                             />
                             <Dropdown.Item
-                                onSelect={viewsOrder}
+                                onSelect={orderItems}
                                 option={{
                                     value: "조회수순",
                                     label: "조회수순",
@@ -146,7 +129,7 @@ function ReferenceContainer(props) {
                                 selected={selected}
                             />
                             <Dropdown.Item
-                                onSelect={recentOrder}
+                                onSelect={orderItems}
                                 option={{
                                     value: "최신순",
                                     label: "최신순",

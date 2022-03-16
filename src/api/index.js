@@ -159,6 +159,22 @@ export const getPost = (idx) => {
         });
 };
 
+export const GetPosts = (name, page, options, posts, setPosts, setError) => {
+    const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
+    axios
+        .get(`${API_DOMAIN}/post/?type=${name}&page=${page}&order=${options}`)
+        .then((res) => {
+            try {
+                setError(res.data?.message);
+                const fetchedData = res.data;
+                const mergedData = posts.concat(...fetchedData);
+                setPosts(mergedData);
+            } catch (e) {
+                console.error(e);
+            }
+        });
+};
+
 export const getPostWithoutToken = (idx) => {
     return fetch(`${API_DOMAIN}/post/${idx}/`, {
         method: "GET",
@@ -228,9 +244,6 @@ export const deleteComment = (commentIdx) => {
 export const getComments = (idx) => {
     return fetch(`${API_DOMAIN}/comment/${idx}/`, {
         method: "GET",
-        headers: {
-            Authorization: token,
-        },
     })
         .then((res) => res.json())
         .then((data) => {
