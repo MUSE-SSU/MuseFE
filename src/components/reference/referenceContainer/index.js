@@ -9,7 +9,6 @@ import { DropdownContainer, ListItem, MainContainer } from "./style";
 
 function ReferenceContainer(props) {
     const [posts, setPosts] = useState([]);
-    const [label, setLabel] = useState("인기순");
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true);
     const [showSpinner, setShowSpinner] = useState(true);
