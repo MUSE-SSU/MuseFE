@@ -297,3 +297,45 @@ export const follow = (writer) => {
         }),
     });
 };
+
+/*------------------------------------------------------------------------------------------------*/
+// 약관 관련
+export const getPrivacy = () => {
+    return fetch(`${API_DOMAIN}/notice/?type=privacy`, {
+        method: "GET",
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            return data;
+        });
+};
+
+export const getTos = () => {
+    return fetch(`${API_DOMAIN}/notice/?type=tos`, {
+        method: "GET",
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            return data;
+        });
+};
+
+export const getGuide = () => {
+    return fetch(`${API_DOMAIN}/notice/?type=guide`, {
+        method: "GET",
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            return data;
+        });
+};
+
+export const getPolicy = () => {
+    return fetch(`${API_DOMAIN}/notice/?type=policy`, {
+        method: "GET",
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            return data;
+        });
+};

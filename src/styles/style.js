@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
     :root {
-    --g-color-blue: #0057ff;
+    --g-color-blue: #261FF4;
     --g-color-blue-overlay: #FCFCFF;
     --g-color-black: #000;
     --g-color-white: #fff;

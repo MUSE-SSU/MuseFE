@@ -9,6 +9,7 @@ import {
     TosDetail,
     TitleContainer,
 } from "./style";
+import { getPrivacy, getTos, getGuide, getPolicy } from "../../../api";
 import { Spinner, IconButton } from "gestalt";
 
 function TosContainer() {
@@ -22,36 +23,32 @@ function TosContainer() {
     const [showPrivacy, setShowPrivacy] = useState(false);
     const [showPolicy, setShowPolicy] = useState(false);
     const [showGuide, setShowGuide] = useState(false);
+
     useEffect(() => {
         setShowSpinner(true);
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-        axios.get(`${API_DOMAIN}/notice/?type=privacy`).then((res) => {
-            try {
-                setPrivacy(res.data);
-                console.log(res.data);
-            } catch (e) {
-                console.error(e);
-            }
-        });
-        axios.get(`${API_DOMAIN}/notice/?type=policy`).then((res) => {
-            try {
-                setPolicy(res.data);
-                console.log(res.data);
-            } catch (e) {
-                console.error(e);
-            }
-        });
-        axios.get(`${API_DOMAIN}/notice/?type=guide`).then((res) => {
-            try {
-                setGuide(res.data);
-                console.log(res.data);
-            } catch (e) {
-                console.error(e);
-            }
-            setTimeout(() => {
-                setShowSpinner(false);
-            }, 1000);
-        });
+
+        const loadPrivacy = async () => {
+            const privacyData = await getPrivacy();
+            setPrivacy(privacyData);
+        };
+        const loadTos = async () => {
+            const tosData = await getTos();
+            setTos(tosData);
+        };
+        const loadGuide = async () => {
+            const guideData = await getGuide();
+            setGuide(guideData);
+        };
+        const loadPolicy = async () => {
+            const policyData = await getPolicy();
+            setPolicy(policyData);
+        };
+        loadTos();
+        loadPrivacy();
+        loadGuide();
+        loadPolicy();
+        setShowSpinner(false);
     }, []);
     return (
         <MainContainer>
@@ -112,7 +109,7 @@ function TosContainer() {
                             )}
                         </TitleContainer>
                         {privacy !== undefined && showPrivacy === true ? (
-                            privacy.map((idx) => (
+                            privacy?.map((idx) => (
                                 <TosDetail>
                                     <TosTitle>{idx.title}</TosTitle>
                                     <ContentText>{idx.content}</ContentText>
