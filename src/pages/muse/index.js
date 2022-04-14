@@ -1,6 +1,9 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { GlobalNavbar, GlobalBanner } from "../../components";
 import {
+    MusePage,
+    ImageData,
+    ImageListContainer,
     MainContainer,
     MuseNumber,
     MuseContainer,
@@ -21,6 +24,7 @@ function Muse() {
             try {
                 setDatas(res.data);
                 console.log(res.data);
+                console.log(res.data);
             } catch (e) {
                 console.error(e);
             }
@@ -29,10 +33,32 @@ function Muse() {
     const [datas, setDatas] = useState(null);
     const [direction, setDirection] = useState("forward");
     const [current, setCurrent] = useState(0);
+    const constraintsRef = useRef(null);
     return (
         <>
-            <GlobalNavbar />
-            <style.MusePage>
+            <MusePage>
+                <GlobalNavbar />
+                <ImageListContainer>
+                    <ImageListContainer
+                        drag="x"
+                        dragConstraints={{
+                            left: datas?.length * -100,
+                            right: datas?.length * 100,
+                        }}
+                    >
+                        {datas !== null &&
+                            datas.map((data) => (
+                                <Card
+                                    ref={constraintsRef}
+                                    image={data.post.image}
+                                    idx={data.post.idx}
+                                    rect="rect"
+                                    statusBarVisible={false}
+                                />
+                            ))}
+                    </ImageListContainer>
+                </ImageListContainer>
+                {/* <style.MusePage>
                 <ButtonContainer left="6%">
                     <IconButton
                         icon="arrow-back"
@@ -102,7 +128,8 @@ function Muse() {
                         }}
                     />
                 </ButtonContainer>
-            </style.MusePage>
+            </style.MusePage> */}
+            </MusePage>
         </>
     );
 }

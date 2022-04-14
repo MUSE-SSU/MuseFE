@@ -4,6 +4,8 @@ import { FiEye } from "react-icons/fi";
 import { motion } from "framer";
 import { Modal } from "gestalt";
 import "./style.css";
+
+export const REACTFRAGMENT = styled(motion.div)``;
 export const CardContainer = styled(motion.div)`
     width: 300px;
     max-height: 600px;
@@ -25,6 +27,7 @@ export const ImageContainer = styled.div`
 export const CardContainerRect = styled(CardContainer)`
     width: 300px;
     height: 300px;
+    z-index: 3;
     @media (max-width: 320px) {
         width: 72px;
         height: 112px;
@@ -55,7 +58,7 @@ export const CardContainerRect = styled(CardContainer)`
     }
 `;
 
-export const ImageContainerRect = styled.div`
+export const ImageContainerRect = styled(motion.div)`
     width: 300px;
     height: 300px;
     border-radius: 16px;
@@ -99,6 +102,7 @@ export const Image = styled(motion.img)`
     object-fit: fill;
     cursor: pointer;
     position: relative;
+    -webkit-user-drag: none;
 `;
 
 export const InfoContainer = styled.figcaption`

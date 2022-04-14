@@ -1,17 +1,34 @@
 import styled from "styled-components";
+import { motion } from "framer";
 import { IconButton } from "gestalt";
 export const MusePage = styled.div`
     overflow: hidden;
     width: 100vw;
     max-width: 1440px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 120%;
     @media (max-width: 425px) {
         align-items: center;
     }
+`;
+
+export const ImageListContainer = styled(motion.div)`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+    align-items: center;
+    height: 88vh;
+    background-color: transparent;
+    z-index: 999;
+`;
+
+export const ImageData = styled.img`
+    width: 500px;
+    height: 500px;
 `;
 
 export const MuseNumber = styled.h1`

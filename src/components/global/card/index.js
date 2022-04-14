@@ -22,6 +22,7 @@ import {
 } from "../../../actions/post";
 import moment from "moment";
 import {
+    REACTFRAGMENT,
     CardContainer,
     CardContainerRect,
     Image,
@@ -884,6 +885,7 @@ function DetailPostPreview(props) {
     };
     const HEADER_ZINDEX = new FixedZIndex(998);
     const modalZIndex = new CompositeZIndex([HEADER_ZINDEX]);
+
     const ModalWithHeading = ({ onDismiss }) => {
         return (
             <>
@@ -909,39 +911,46 @@ function DetailPostPreview(props) {
     };
 
     return (
-        <React.Fragment>
+        <REACTFRAGMENT>
             {props.rect === "rect" ? (
-                <CardContainerRect color="transparent">
-                    <ImageContainerRect onClick={() => setShouldShow(true)}>
+                <CardContainerRect>
+                    <ImageContainerRect>
                         <Image
+                            onTap={() => {
+                                setShouldShow(true);
+                            }}
                             src={`${props.image}`}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.98 }}
                         />
                     </ImageContainerRect>
-                    <InfoContainer>
-                        <WriterContainer>
-                            <Avatar src={props.avatar} alt="" />
-                            <PostWriter
-                                onClick={() => {
-                                    window.location.href = `/my-page/${props.writer}`;
-                                }}
-                            >
-                                {props.writer}
-                            </PostWriter>
-                            {props.badge !== 0 && (
-                                <BadgePreview badge={props.badge}>
-                                    MUSE
-                                </BadgePreview>
-                            )}
-                        </WriterContainer>
-                        <PostStatusContainerRect>
-                            <LikesIcon />
-                            <CustomSpan>{props.likes}</CustomSpan>
-                            <EyeIcon />
-                            <CustomSpan>{props.views}</CustomSpan>
-                        </PostStatusContainerRect>
-                    </InfoContainer>
+                    {props.statusBarVisible === false ? (
+                        <></>
+                    ) : (
+                        <InfoContainer>
+                            <WriterContainer>
+                                <Avatar src={props.avatar} alt="" />
+                                <PostWriter
+                                    onClick={() => {
+                                        window.location.href = `/my-page/${props.writer}`;
+                                    }}
+                                >
+                                    {props.writer}
+                                </PostWriter>
+                                {props.badge !== 0 && (
+                                    <BadgePreview badge={props.badge}>
+                                        MUSE
+                                    </BadgePreview>
+                                )}
+                            </WriterContainer>
+                            <PostStatusContainerRect>
+                                <LikesIcon />
+                                <CustomSpan>{props.likes}</CustomSpan>
+                                <EyeIcon />
+                                <CustomSpan>{props.views}</CustomSpan>
+                            </PostStatusContainerRect>
+                        </InfoContainer>
+                    )}
                 </CardContainerRect>
             ) : props.isMuse === true ? (
                 <ImageContainer
@@ -1000,13 +1009,14 @@ function DetailPostPreview(props) {
                     <ModalWithHeading onDismiss={() => setShouldShow(false)} />
                 </Layer>
             )}
-        </React.Fragment>
+        </REACTFRAGMENT>
     );
 }
 
 function Card(props) {
     return (
         <DetailPostPreview
+            ref={props.constraintsRef}
             idx={props.idx}
             title={props.title}
             image={props.image}
@@ -1018,6 +1028,7 @@ function Card(props) {
             likes={props.likes}
             badge={props.badge}
             isMuse={props.isMuse}
+            statusBarVisible={props.statusBarVisible}
         />
     );
 }
