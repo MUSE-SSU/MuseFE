@@ -206,7 +206,7 @@ function SearchContainer() {
                                 searchedPosts.map((searchedPost, idx) => (
                                     <>
                                         <Card
-                                            image={searchedPost.image}
+                                            image={searchedPost.thumbnail}
                                             title={searchedPost.title}
                                             idx={searchedPost.idx}
                                             liked={searchedPost.liked}

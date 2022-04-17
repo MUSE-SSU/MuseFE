@@ -57,7 +57,7 @@ function PreviewReference(props) {
                         <ListItem>
                             <Card
                                 rect="rect"
-                                image={post.image}
+                                image={post.thumbnail}
                                 title={post.title}
                                 idx={post.idx}
                                 liked={post.liked}

@@ -22,7 +22,7 @@ import {
 } from "../../../actions/post";
 import moment from "moment";
 import {
-    REACTFRAGMENT,
+    CardContainerRectMain,
     CardContainer,
     CardContainerRect,
     Image,
@@ -64,6 +64,7 @@ import {
     FollowButton,
     IconContainer,
     ToastContainer,
+    AnimatedTitle,
 } from "./style";
 import {
     Box,
@@ -707,17 +708,20 @@ function DetailPost(props) {
                             </Url>
                             <Box width="100%">
                                 <Flex justifyContent="center">
-                                    {data.hashtag.map((tag) => (
-                                        <Hashtag
-                                            onClick={() => {
-                                                history.push(
-                                                    `/search?q=${tag}`
-                                                );
-                                            }}
-                                        >
-                                            <HashtagName>#{tag}</HashtagName>
-                                        </Hashtag>
-                                    ))}
+                                    {data.hashtag !== undefined &&
+                                        data.hashtag.map((tag) => (
+                                            <Hashtag
+                                                onClick={() => {
+                                                    history.push(
+                                                        `/search?q=${tag}`
+                                                    );
+                                                }}
+                                            >
+                                                <HashtagName>
+                                                    #{tag}
+                                                </HashtagName>
+                                            </Hashtag>
+                                        ))}
                                 </Flex>
                             </Box>
                         </Box>
@@ -842,7 +846,7 @@ function DetailPost(props) {
                                     {otherPosts.length - 1 === idx ? (
                                         <ListItem ref={ref}>
                                             <OtherPostsImg
-                                                src={`${otherPost.image}`}
+                                                src={`${otherPost.thumbnail}`}
                                                 onClick={() => {
                                                     setIdx(otherPost.idx);
                                                     setPage(1);
@@ -856,7 +860,7 @@ function DetailPost(props) {
                                     ) : (
                                         <ListItem>
                                             <OtherPostsImg
-                                                src={`${otherPost.image}`}
+                                                src={`${otherPost.thumbnail}`}
                                                 onClick={() => {
                                                     setIdx(otherPost.idx);
                                                     setOtherPosts([]);
@@ -880,6 +884,7 @@ function DetailPost(props) {
 
 function DetailPostPreview(props) {
     const [shouldShow, setShouldShow] = React.useState(false);
+    const [showInfo, setShowInfo] = useState(false);
     const handleShouldShow = (out) => {
         setShouldShow(out);
     };
@@ -911,47 +916,59 @@ function DetailPostPreview(props) {
     };
 
     return (
-        <REACTFRAGMENT>
+        <CardContainerRectMain>
             {props.rect === "rect" ? (
-                <CardContainerRect>
-                    <ImageContainerRect>
-                        <Image
-                            onTap={() => {
-                                setShouldShow(true);
-                            }}
-                            src={`${props.image}`}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.98 }}
-                        />
-                    </ImageContainerRect>
-                    {props.statusBarVisible === false ? (
-                        <></>
-                    ) : (
-                        <InfoContainer>
-                            <WriterContainer>
-                                <Avatar src={props.avatar} alt="" />
-                                <PostWriter
-                                    onClick={() => {
-                                        window.location.href = `/my-page/${props.writer}`;
-                                    }}
-                                >
-                                    {props.writer}
-                                </PostWriter>
-                                {props.badge !== 0 && (
-                                    <BadgePreview badge={props.badge}>
-                                        MUSE
-                                    </BadgePreview>
-                                )}
-                            </WriterContainer>
-                            <PostStatusContainerRect>
-                                <LikesIcon />
-                                <CustomSpan>{props.likes}</CustomSpan>
-                                <EyeIcon />
-                                <CustomSpan>{props.views}</CustomSpan>
-                            </PostStatusContainerRect>
-                        </InfoContainer>
+                <>
+                    <CardContainerRect
+                        onTap={() => {
+                            setShouldShow(true);
+                        }}
+                    >
+                        <ImageContainerRect>
+                            <Image
+                                onHoverStart={() => {
+                                    setShowInfo(true);
+                                }}
+                                onHoverEnd={() => {
+                                    setShowInfo(false);
+                                }}
+                                src={`${props.image}`}
+                            />
+                        </ImageContainerRect>
+                        {props.statusBarVisible === false ? (
+                            <></>
+                        ) : (
+                            <InfoContainer>
+                                <WriterContainer>
+                                    <Avatar src={props.avatar} alt="" />
+                                    <PostWriter
+                                        onClick={() => {
+                                            window.location.href = `/my-page/${props.writer}`;
+                                        }}
+                                    >
+                                        {props.writer}
+                                    </PostWriter>
+                                    {props.badge !== 0 && (
+                                        <BadgePreview badge={props.badge}>
+                                            MUSE
+                                        </BadgePreview>
+                                    )}
+                                </WriterContainer>
+                                <PostStatusContainerRect>
+                                    <LikesIcon />
+                                    <CustomSpan>{props.likes}</CustomSpan>
+                                    <EyeIcon />
+                                    <CustomSpan>{props.views}</CustomSpan>
+                                </PostStatusContainerRect>
+                            </InfoContainer>
+                        )}
+                    </CardContainerRect>
+                    {props.currentMusePage && showInfo === true && (
+                        <AnimatedTitle initial={{ y: -60 }} animate={{ y: 0 }}>
+                            week {props.week}
+                        </AnimatedTitle>
                     )}
-                </CardContainerRect>
+                </>
             ) : props.isMuse === true ? (
                 <ImageContainer
                     onClick={() => setShouldShow(true)}
@@ -1009,13 +1026,14 @@ function DetailPostPreview(props) {
                     <ModalWithHeading onDismiss={() => setShouldShow(false)} />
                 </Layer>
             )}
-        </REACTFRAGMENT>
+        </CardContainerRectMain>
     );
 }
 
 function Card(props) {
     return (
         <DetailPostPreview
+            currentMusePage={props.currentMusePage}
             ref={props.constraintsRef}
             idx={props.idx}
             title={props.title}
@@ -1028,6 +1046,7 @@ function Card(props) {
             likes={props.likes}
             badge={props.badge}
             isMuse={props.isMuse}
+            week={props.week}
             statusBarVisible={props.statusBarVisible}
         />
     );

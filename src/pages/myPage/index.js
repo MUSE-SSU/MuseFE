@@ -362,7 +362,7 @@ function MyPage() {
                                     >
                                         {ownerPosts.map((post) => (
                                             <Card
-                                                image={post.image}
+                                                image={post.thumbnail}
                                                 title={post.title}
                                                 idx={post.idx}
                                                 liked={post.liked}
@@ -395,7 +395,7 @@ function MyPage() {
                                 >
                                     {ownerPosts.map((post) => (
                                         <Card
-                                            image={post.image}
+                                            image={post.thumbnail}
                                             title={post.title}
                                             idx={post.idx}
                                             liked={post.liked}

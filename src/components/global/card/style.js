@@ -4,8 +4,11 @@ import { FiEye } from "react-icons/fi";
 import { motion } from "framer";
 import { Modal } from "gestalt";
 import "./style.css";
-
-export const REACTFRAGMENT = styled(motion.div)``;
+export const CardContainerRectMain = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
 export const CardContainer = styled(motion.div)`
     width: 300px;
     max-height: 600px;
@@ -91,6 +94,11 @@ export const ImageContainerRect = styled(motion.div)`
         width: 316px;
         height: 356px;
     }
+`;
+
+export const AnimatedTitle = styled(motion.h1)`
+    font-family: "R-FLEX-BLACK";
+    font-size: 18px;
 `;
 
 export const Image = styled(motion.img)`

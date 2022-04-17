@@ -12,6 +12,7 @@ import {
     ButtonContainer,
     InfoText,
     WeekContainer,
+    ImageListContainerAlign,
 } from "./style";
 import { Card } from "../../components";
 import { IconButton } from "gestalt";
@@ -31,32 +32,32 @@ function Muse() {
         });
     }, []);
     const [datas, setDatas] = useState(null);
-    const [direction, setDirection] = useState("forward");
-    const [current, setCurrent] = useState(0);
+    const [show, setShow] = useState(false);
     const constraintsRef = useRef(null);
     return (
         <>
             <MusePage>
                 <GlobalNavbar />
-                <ImageListContainer>
-                    <ImageListContainer
-                        drag="x"
-                        dragConstraints={{
-                            left: datas?.length * -100,
-                            right: datas?.length * 100,
-                        }}
-                    >
-                        {datas !== null &&
-                            datas.map((data) => (
-                                <Card
-                                    ref={constraintsRef}
-                                    image={data.post.image}
-                                    idx={data.post.idx}
-                                    rect="rect"
-                                    statusBarVisible={false}
-                                />
-                            ))}
-                    </ImageListContainer>
+
+                <ImageListContainer
+                    drag="x"
+                    dragConstraints={{
+                        left: datas?.length * -100,
+                        right: datas?.length * 100,
+                    }}
+                >
+                    {datas !== null &&
+                        datas.map((data) => (
+                            <Card
+                                currentMusePage
+                                ref={constraintsRef}
+                                image={data.post.thumbnail}
+                                idx={data.post.idx}
+                                week={data.post.week}
+                                rect="rect"
+                                statusBarVisible={false}
+                            />
+                        ))}
                 </ImageListContainer>
                 {/* <style.MusePage>
                 <ButtonContainer left="6%">
