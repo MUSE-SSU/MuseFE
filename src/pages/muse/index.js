@@ -56,6 +56,13 @@ function Muse() {
                                 week={data.post.week}
                                 rect="rect"
                                 statusBarVisible={false}
+                                title={data.post.title}
+                                liked={data.post.liked}
+                                avatar={data.post.writer_avatar}
+                                writer={data.post.writer}
+                                views={data.post.views}
+                                likes={data.post.likes}
+                                badge={data.post.badge}
                             />
                         ))}
                 </ImageListContainer>

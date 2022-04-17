@@ -155,10 +155,11 @@ function DetailPost(props) {
                 }
             };
             loadPost();
+
             setTimeout(() => {
                 setLoading(false);
                 setShowSpinner(false);
-            }, 500);
+            }, 1000);
         } else {
             setLoading(true);
             setShowSpinner(true);
@@ -936,7 +937,29 @@ function DetailPostPreview(props) {
                             />
                         </ImageContainerRect>
                         {props.statusBarVisible === false ? (
-                            <></>
+                            <InfoContainer>
+                                <WriterContainer>
+                                    <Avatar src={props.avatar} alt="" />
+                                    <PostWriter
+                                        onClick={() => {
+                                            window.location.href = `/my-page/${props.writer}`;
+                                        }}
+                                    >
+                                        {props.writer}
+                                    </PostWriter>
+                                    {props.badge !== 0 && (
+                                        <BadgePreview badge={props.badge}>
+                                            MUSE
+                                        </BadgePreview>
+                                    )}
+                                </WriterContainer>
+                                <PostStatusContainerRect>
+                                    <LikesIcon />
+                                    <CustomSpan>{props.likes}</CustomSpan>
+                                    <EyeIcon />
+                                    <CustomSpan>{props.views}</CustomSpan>
+                                </PostStatusContainerRect>
+                            </InfoContainer>
                         ) : (
                             <InfoContainer>
                                 <WriterContainer>

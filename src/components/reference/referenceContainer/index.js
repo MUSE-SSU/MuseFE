@@ -12,7 +12,7 @@ function ReferenceContainer(props) {
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true);
     const [showSpinner, setShowSpinner] = useState(true);
-    const [options, setOptions] = useState("likes");
+    const [options, setOptions] = useState("recent");
     const [ref, inView] = useInView({ trackVisibility: true, delay: 100 });
     const [contestBool, setContestBool] = useState(true);
     const [error, setError] = useState();
@@ -20,8 +20,8 @@ function ReferenceContainer(props) {
     // 드롭다운 state
     const [open, setOpen] = useState(false);
     const [selected, setSelected] = useState({
-        value: "인기순",
-        label: "인기순",
+        value: "최신순",
+        label: "최신순",
     });
     const anchorRef = useRef(null);
     const DROPDOWN_ZINDEX = new FixedZIndex(10);
