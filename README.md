@@ -50,7 +50,7 @@
 
 #### 검색페이지
 
-> ![](https://velog.velcdn.com/images/kt5680608/post/55821f77-86f9-4737-a67f-dd6e150ea0ff/image.gif)
+> ![](https://velog.velcdn.com/images/kt5680608/post/69af3d66-28ee-4fef-9459-c85eac61e7e0/image.gif)
 
 #### 상세페이지
 
