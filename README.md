@@ -52,7 +52,7 @@
 
 #### 검색페이지
 
-> ![](https://velog.velcdn.com/images/kt5680608/post/2287b9fb-8a41-4029-b4d5-d13667417355/image.gif)
+> ![](https://velog.velcdn.com/images/kt5680608/post/55821f77-86f9-4737-a67f-dd6e150ea0ff/image.gif)
 
 #### 상세페이지
 
