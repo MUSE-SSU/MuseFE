@@ -21,16 +21,14 @@
 #### 배포환경
 
 > -   aws EC2
-
--   NGINX
+> -   NGINX
 
 #### 라이브러리
 
 > -   redux
-
--   framer-motion
--   gestalt
--   styled-components!
+> -   framer-motion
+> -   gestalt
+> -   styled-components!
 
 ### 기능 소개
 
