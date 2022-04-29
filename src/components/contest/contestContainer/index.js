@@ -209,7 +209,7 @@ function ContestContainer(props) {
                         {posts.length - 1 === idx ? (
                             <ListItem ref={ref}>
                                 <Card
-                                    image={post.thumbnail}
+                                    image={post.thumb_img}
                                     title={post.title}
                                     idx={post.idx}
                                     liked={post.liked}
@@ -223,7 +223,7 @@ function ContestContainer(props) {
                         ) : (
                             <ListItem>
                                 <Card
-                                    image={post.thumbnail}
+                                    image={post.thumb_img}
                                     title={post.title}
                                     idx={post.idx}
                                     liked={post.liked}

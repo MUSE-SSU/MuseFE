@@ -129,7 +129,7 @@ function ReferenceContainer(props) {
                         {posts.length - 1 === idx ? (
                             <ListItem ref={ref}>
                                 <Card
-                                    image={post.thumbnail}
+                                    image={post.thumb_img}
                                     title={post.title}
                                     idx={post.idx}
                                     liked={post.liked}
@@ -143,7 +143,7 @@ function ReferenceContainer(props) {
                         ) : (
                             <ListItem>
                                 <Card
-                                    image={post.thumbnail}
+                                    image={post.thumb_img}
                                     title={post.title}
                                     idx={post.idx}
                                     liked={post.liked}

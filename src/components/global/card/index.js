@@ -847,7 +847,7 @@ function DetailPost(props) {
                                     {otherPosts.length - 1 === idx ? (
                                         <ListItem ref={ref}>
                                             <OtherPostsImg
-                                                src={`${otherPost.thumbnail}`}
+                                                src={`${otherPost.thumb_img}`}
                                                 onClick={() => {
                                                     setIdx(otherPost.idx);
                                                     setPage(1);
@@ -861,7 +861,7 @@ function DetailPost(props) {
                                     ) : (
                                         <ListItem>
                                             <OtherPostsImg
-                                                src={`${otherPost.thumbnail}`}
+                                                src={`${otherPost.thumb_img}`}
                                                 onClick={() => {
                                                     setIdx(otherPost.idx);
                                                     setOtherPosts([]);

@@ -51,7 +51,7 @@ function Muse() {
                             <Card
                                 currentMusePage
                                 ref={constraintsRef}
-                                image={data.post.thumbnail}
+                                image={data.post.thumb_img}
                                 idx={data.post.idx}
                                 week={data.post.week}
                                 rect="rect"
