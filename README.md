@@ -1,9 +1,7 @@
 <div className = "readme">
-<center>
-    <img width = "33%" src = "https://velog.velcdn.com/images/kt5680608/post/709d4791-3590-4086-bb2d-77f60c371dcf/image.jpg"/>
-<img width = "33%" src = "https://velog.velcdn.com/images/kt5680608/post/04edc7eb-dd3b-49aa-ac11-5f2bbd61b61a/image.jpg">
-<img width = "33%" src = "https://velog.velcdn.com/images/kt5680608/post/3e0b2ec5-c2a1-4939-8d6d-4c6e74ec98b7/image.jpg">
-</center>
+<img width = "30%" src = "https://velog.velcdn.com/images/kt5680608/post/709d4791-3590-4086-bb2d-77f60c371dcf/image.jpg"/>
+<img width = "30%" src = "https://velog.velcdn.com/images/kt5680608/post/04edc7eb-dd3b-49aa-ac11-5f2bbd61b61a/image.jpg">
+<img width = "30%" src = "https://velog.velcdn.com/images/kt5680608/post/3e0b2ec5-c2a1-4939-8d6d-4c6e74ec98b7/image.jpg">
 </div>
 
 <hr>
