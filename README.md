@@ -1,4 +1,4 @@
-<img src = "https://velog.velcdn.com/images/kt5680608/post/6468bc31-ccbe-41c0-a7c6-c8662fdf5011/image.png"/>
+<img src = "https://velog.velcdn.com/images/kt5680608/post/709d4791-3590-4086-bb2d-77f60c371dcf/image.jpg"/>
 
 <hr>
 
@@ -28,7 +28,7 @@
 > -   redux
 > -   framer-motion
 > -   gestalt
-> -   styled-components!
+> -   styled-components
 
 ### 기능 소개
 
