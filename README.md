@@ -1,4 +1,4 @@
-<img src = "https://velog.velcdn.com/images/kt5680608/post/709d4791-3590-4086-bb2d-77f60c371dcf/image.jpg"/>
+<img width = "300" src = "https://velog.velcdn.com/images/kt5680608/post/709d4791-3590-4086-bb2d-77f60c371dcf/image.jpg"/>
 
 <hr>
 
