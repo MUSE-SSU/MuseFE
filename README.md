@@ -1,4 +1,9 @@
-<img width = "300" src = "https://velog.velcdn.com/images/kt5680608/post/709d4791-3590-4086-bb2d-77f60c371dcf/image.jpg"/>
+<div className = "readme">
+<center>
+    <img width = "300" src = "https://velog.velcdn.com/images/kt5680608/post/709d4791-3590-4086-bb2d-77f60c371dcf/image.jpg"/>
+<img width = "300" src = "https://velog.velcdn.com/images/kt5680608/post/04edc7eb-dd3b-49aa-ac11-5f2bbd61b61a/image.jpg">
+</center>
+</div>
 
 <hr>
 
