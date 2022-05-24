@@ -20,6 +20,7 @@ export const NavContainerDesktop = styled.div`
     max-width: 1440px;
     height: 6vh;
     background-color: #fff;
+    padding: 0 12px 0 12px;
 `;
 export const NavContainerTablet = styled.div`
     display: flex;

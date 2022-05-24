@@ -4,15 +4,9 @@ import {
     MusePage,
     ImageData,
     ImageListContainer,
-    MainContainer,
-    MuseNumber,
-    MuseContainer,
-    ImageContainer,
-    MuseInfoContainer,
-    ButtonContainer,
-    InfoText,
-    WeekContainer,
+    InfoContainer,
     ImageListContainerAlign,
+    Paragraph,
 } from "./style";
 import { Card } from "../../components";
 import { IconButton } from "gestalt";
@@ -32,26 +26,25 @@ function Muse() {
         });
     }, []);
     const [datas, setDatas] = useState(null);
-    const [show, setShow] = useState(false);
     const constraintsRef = useRef(null);
+    console.log(datas?.length);
     return (
         <>
-            <MusePage>
+            <MusePage ref={constraintsRef}>
                 <GlobalNavbar />
-
-                <ImageListContainer
-                    drag="x"
-                    dragConstraints={{
-                        left: datas?.length * -100,
-                        right: datas?.length * 100,
-                    }}
-                >
+                <InfoContainer>
+                    Here's our MUSE
+                    <Paragraph>당신의 뮤즈를 찾아보세요!</Paragraph>
+                </InfoContainer>
+                <ImageListContainer drag="x" dragConstraints={constraintsRef}>
                     {datas !== null &&
                         datas.map((data) => (
                             <Card
                                 currentMusePage
+                                isDrag
                                 ref={constraintsRef}
-                                image={data.post.thumb_img}
+                                thumb={data.post.thumb_img}
+                                image={data.post.image}
                                 idx={data.post.idx}
                                 week={data.post.week}
                                 rect="rect"
@@ -66,77 +59,6 @@ function Muse() {
                             />
                         ))}
                 </ImageListContainer>
-                {/* <style.MusePage>
-                <ButtonContainer left="6%">
-                    <IconButton
-                        icon="arrow-back"
-                        onClick={() => {
-                            if (datas !== null && current === 0) {
-                                setCurrent(datas.length - 1);
-                            } else {
-                                setCurrent(current - 1);
-                            }
-                        }}
-                    />
-                </ButtonContainer>
-                <MainContainer>
-                    {datas !== null && (
-                        <MuseContainer>
-                            <Card
-                                image={datas[current].post.image}
-                                title={datas[current].post.title}
-                                idx={datas[current].post.idx}
-                                liked={datas[current].post.liked}
-                                avatar={datas[current].post.writer_avatar}
-                                writer={datas[current].post.writer}
-                                views={datas[current].post.views}
-                                likes={datas[current].post.likes}
-                                badge={datas[current].post.badge}
-                                isMuse={true}
-                            />
-                            <MuseInfoContainer>
-                                <MuseNumber>WEEK{current + 1}</MuseNumber>
-                                <InfoText>
-                                    작가: {datas[current].post.writer}
-                                </InfoText>
-                                <InfoText
-                                    onClick={() => {
-                                        const redirectInstagram = datas[
-                                            current
-                                        ].profile.insta_id.split("@")[1];
-                                        window.open(
-                                            `https://www.instagram.com/${redirectInstagram}/`
-                                        );
-                                    }}
-                                    cursor="pointer"
-                                >
-                                    인스타그램:
-                                    {datas[current].profile.insta_id}
-                                </InfoText>
-                                <InfoText>
-                                    소개:
-                                    {datas[current].profile.self_introduce}
-                                </InfoText>
-                            </MuseInfoContainer>
-                        </MuseContainer>
-                    )}
-                </MainContainer>
-                <ButtonContainer right="6%">
-                    <IconButton
-                        icon="arrow-forward"
-                        onClick={() => {
-                            if (
-                                datas !== null &&
-                                current === datas.length - 1
-                            ) {
-                                setCurrent(0);
-                            } else {
-                                setCurrent(current + 1);
-                            }
-                        }}
-                    />
-                </ButtonContainer>
-            </style.MusePage> */}
             </MusePage>
         </>
     );

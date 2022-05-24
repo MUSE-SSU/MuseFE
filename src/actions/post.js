@@ -18,14 +18,6 @@ export const getDetailPost = (postIdxUrl) => async (dispatch) => {
     }
 };
 
-export const uploadCommentPost = (idx, currentComments) => async () => {
-    try {
-        await api.CommentUpload(idx, currentComments);
-    } catch (e) {
-        console.error(e);
-    }
-};
-
 export const updatePost = (postIdx, formData) => async () => {
     try {
         await api.updatePost(postIdx, formData);

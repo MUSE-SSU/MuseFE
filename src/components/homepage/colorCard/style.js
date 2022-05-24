@@ -61,10 +61,9 @@ export const ColorHexa = styled.h1`
 
 export const MainContainer = styled(motion.div)`
     cursor: pointer;
-    width: 18vw;
-    height: calc(18vw * 1.2);
-    max-width: 260px;
-    max-height: 312px;
+    height: calc(15vw * 1.1);
+    max-width: 270px;
+    width: 20vw;
     overflow: hidden;
     border: 3px solid black;
     display: flex;
@@ -83,6 +82,10 @@ export const MainContainer = styled(motion.div)`
     //모바일
     @media (max-width: 479px) {
         border: 2px solid black;
+    }
+    @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
+        height: calc(20vw * 1.2);
+        width: 19vw;
     }
 `;
 

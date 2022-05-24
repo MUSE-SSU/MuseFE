@@ -22,6 +22,7 @@ function GlobalToast(props) {
     const history = useHistory();
     const TOAST_ZINDEX = new FixedZIndex(999);
     const toastZIndex = new CompositeZIndex([TOAST_ZINDEX]);
+
     const dispatch = useDispatch();
     const isFirst = useSelector((state) => state.authReducer.isFirst);
     const getUserNickname = useSelector((state) => state.userInfo.nickname);
@@ -41,7 +42,7 @@ function GlobalToast(props) {
     return (
         <>
             {isFirst === true && show === true && (
-                <Layer>
+                <Layer zIndex={toastZIndex}>
                     <Box
                         dangerouslySetInlineStyle={{
                             __style: {
@@ -54,30 +55,41 @@ function GlobalToast(props) {
                         paddingX={1}
                         position="fixed"
                     >
-                        <Toast
-                            text={
-                                <Container>
-                                    <Text inline weight="bold">
-                                        프로필을 완성시켜 보세요!
-                                    </Text>
-                                    <IconContainer>
-                                        <IconButton
-                                            size="sm"
-                                            icon="arrow-up-right"
-                                            onClick={handleRoute}
-                                        />
-                                    </IconContainer>
-                                </Container>
-                            }
-                            button={
-                                <IconButton
-                                    size="sm"
-                                    icon="cancel"
-                                    iconColor="white"
-                                    onClick={handleClose}
-                                />
-                            }
-                        />
+                        <ToastMainContainer
+                            initial={{
+                                y: 300,
+                                opacity: 0,
+                            }}
+                            animate={{
+                                y: 0,
+                                opacity: 1,
+                            }}
+                        >
+                            <Toast
+                                text={
+                                    <Container>
+                                        <Text inline weight="bold">
+                                            프로필을 완성시켜 보세요!
+                                        </Text>
+                                        <IconContainer>
+                                            <IconButton
+                                                size="sm"
+                                                icon="arrow-up-right"
+                                                onClick={handleRoute}
+                                            />
+                                        </IconContainer>
+                                    </Container>
+                                }
+                                button={
+                                    <IconButton
+                                        size="sm"
+                                        icon="cancel"
+                                        iconColor="white"
+                                        onClick={handleClose}
+                                    />
+                                }
+                            />
+                        </ToastMainContainer>
                     </Box>
                 </Layer>
             )}

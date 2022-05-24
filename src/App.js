@@ -19,7 +19,7 @@ import {
 } from "./pages";
 function App() {
     return (
-        <div className="App">
+        <div>
             <Router>
                 <Route exact path="/" component={Home} />
                 <Route path="/auth" component={Auth} />

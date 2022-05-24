@@ -12,7 +12,7 @@ import { SvgBlob } from "react-svg-blob";
 function ColorCard(props) {
     return (
         <MainContainer
-            color={props.hexa}
+            color={props?.hexa}
             whileHover={{
                 scale: 1.04,
             }}

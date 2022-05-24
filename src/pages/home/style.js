@@ -17,4 +17,6 @@ export const HomeContainer = styled.div`
 export const HomeInfoContainer = styled.div`
     background-color: white;
     width: 100%;
+    min-height: 180vh;
+    overflow: hidden;
 `;

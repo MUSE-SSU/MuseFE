@@ -3,18 +3,18 @@ import { Dropdown } from "react-bootstrap";
 import { motion } from "framer";
 
 export const MainContainer = styled.div`
-    padding: 48px;
+    padding: 12px;
     @media (max-width: 479px) {
         padding: 12px;
     }
     @media (max-width: 767px) and (min-width: 480px) {
-        padding: 18px;
+        padding: 12px;
     }
     @media (max-width: 1023px) and (min-width: 768px) {
-        padding: 24px;
+        padding: 12px;
     }
     @media (max-width: 2561px) and (min-width: 1024px) {
-        padding: 48px;
+        padding: 12px 36px 12px 36px;
     }
 `;
 export const DropDownContainer = styled.div`

@@ -41,8 +41,6 @@ function SearchContainer() {
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
         await axios
             .get(`${API_DOMAIN}/search/?q=${processedValue}`)
-
-            //http://ec2-3-36-100-177.ap-northeast-2.compute.amazonaws.com/api/search/q?=gdgd
             .then((res) => {
                 try {
                     console.log(res.data);
@@ -65,7 +63,7 @@ function SearchContainer() {
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
         await axios
             .get(`${API_DOMAIN}/search/?q=${q}`)
-            //http://ec2-3-36-100-177.ap-northeast-2.compute.amazonaws.com/api/search/q?=gdgd
+
             .then((res) => {
                 try {
                     console.log(res.data);
@@ -98,27 +96,6 @@ function SearchContainer() {
             })
             .then(setLoading(false));
     };
-
-    // const getSearchedDataWithTag = async (tag) => {
-    //     setLoading(true);
-    //     setShow(true);
-    //     const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-    //     await axios
-    //         .get(`${API_DOMAIN}/search/?q=${tag}`)
-    //         //http://ec2-3-36-100-177.ap-northeast-2.compute.amazonaws.com/api/search/q?=gdgd
-    //         .then((res) => {
-    //             try {
-    //                 console.log(res.data);
-    //                 setSearchedPosts(res.data.post);
-    //                 setSearchedUsers(res.data.user);
-    //                 setIsUserUsed(true);
-    //             } catch (e) {
-    //                 console.log(e);
-    //             }
-    //         });
-    //     setIsSearched(true);
-    //     setLoading(false);
-    // };
     const onKeyDownTagManagement = ({ event: { keyCode } }) => {
         if (keyCode === 13 /* Enter */) {
             getSearchedDataWithValue();
@@ -146,6 +123,7 @@ function SearchContainer() {
                 {topTagData.length !== 0 &&
                     topTagData.map((tag) => (
                         <TagContainer
+                            whileHover={{ scale: 1.02 }}
                             back={tag.image}
                             onClick={() => {
                                 history.push(`/search?q=${tag.tag}`);
@@ -203,10 +181,11 @@ function SearchContainer() {
                             style={{ width: "100%" }}
                         >
                             {searchedPosts !== null ? (
-                                searchedPosts.map((searchedPost, idx) => (
+                                searchedPosts.map((searchedPost) => (
                                     <>
                                         <Card
-                                            image={searchedPost.thumb_img}
+                                            thumb={searchedPost.thumb_img}
+                                            image={searchedPost.image}
                                             title={searchedPost.title}
                                             idx={searchedPost.idx}
                                             liked={searchedPost.liked}

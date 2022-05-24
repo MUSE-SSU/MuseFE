@@ -11,7 +11,6 @@ export const CardContainerRectMain = styled.div`
 `;
 export const CardContainer = styled(motion.div)`
     width: 300px;
-    max-height: 600px;
 
     background-color: ${(props) => props.color};
     cursor: pointer;
@@ -22,14 +21,15 @@ export const CardContainer = styled(motion.div)`
 `;
 export const ImageContainer = styled.div`
     width: ${(props) => (props.isMuse === true ? "50%" : `${props.size}px`)};
-    max-height: ${(props) => (props.isMuse === true ? "" : `600px`)};
+    max-height: 600px;
     border-radius: 16px;
     overflow: hidden;
+    cursor: grab;
 `;
 
 export const CardContainerRect = styled(CardContainer)`
-    width: 300px;
-    height: 300px;
+    width: 324px;
+    height: 360px;
     z-index: 3;
     @media (max-width: 320px) {
         width: 72px;
@@ -56,14 +56,15 @@ export const CardContainerRect = styled(CardContainer)`
         height: 268px;
     }
     @media (min-width: 1440px) {
-        width: 316px;
-        height: 356px;
+        width: 324px;
+        height: 360px;
     }
 `;
 
 export const ImageContainerRect = styled(motion.div)`
-    width: 300px;
-    height: 300px;
+    width: 316px;
+    height: 360px;
+    max-height: 360px;
     border-radius: 16px;
     overflow: hidden;
     @media (max-width: 320px) {
@@ -91,14 +92,16 @@ export const ImageContainerRect = styled(motion.div)`
         height: 268px;
     }
     @media (min-width: 1440px) {
-        width: 316px;
-        height: 356px;
+        width: 324px;
+        height: 360px;
     }
 `;
 
 export const AnimatedTitle = styled(motion.h1)`
     font-family: "R-FLEX-BLACK";
-    font-size: 18px;
+    font-size: var(--g-text-font-size-5);
+    position: absolute;
+    bottom: 5%;
 `;
 
 export const Image = styled(motion.img)`
@@ -107,8 +110,8 @@ export const Image = styled(motion.img)`
     vertical-align: top;
     justify-content: center;
     overflow: hidden;
-    object-fit: fill;
-    cursor: pointer;
+    object-fit: cover;
+    cursor: ${(props) => (props.isDrag ? "grab" : "pointer")};
     position: relative;
     -webkit-user-drag: none;
 `;
@@ -221,7 +224,9 @@ export const ModalWriterInfoContainerMobile = styled(ModalWriterInfoContainer)`
     padding: 12px 0 12px 0;
 `;
 
-export const ModalMainContainer = styled.div``;
+export const ModalMainContainer = styled.div`
+    height: 100vh;
+`;
 export const ModalCommentContainer = styled.div`
     padding: 0 48px 0 48px;
     @media (max-width: 425px) {
@@ -426,6 +431,7 @@ export const FollowText = styled.p`
     font-weight: 700;
     margin-right: ${(props) => `${props.isMargin}px`};
 `;
+
 export const ToastContainer = styled.div`
     display: flex;
     justify-content: flex-start;

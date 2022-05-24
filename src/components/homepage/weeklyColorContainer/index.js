@@ -19,15 +19,14 @@ function WeeklyColorContainer() {
                 <ColorContainerName>Weekly Colour</ColorContainerName>
             </NameContainer>
             <ColorContainer>
-                {colorData !== undefined &&
-                    colorData.color.map((weeklyColor, idx) => (
-                        <Link to={`/search?q=${colorData.color[idx]}`}>
-                            <ColorCard
-                                color={`${weeklyColor}`}
-                                hexa={colorData.hexa_code[idx]}
-                            />
-                        </Link>
-                    ))}
+                {colorData?.color.map((weeklyColor, idx) => (
+                    <Link to={`/search?q=${colorData.color[idx]}`}>
+                        <ColorCard
+                            color={`${weeklyColor}`}
+                            hexa={colorData.hexa_code[idx]}
+                        />
+                    </Link>
+                ))}
             </ColorContainer>
         </MainContainer>
     );

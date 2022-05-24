@@ -4,7 +4,7 @@ import { motion } from "framer";
 export const Banner = styled.div`
     max-width: 1440px;
     height: 36vh;
-    background-color: var(--g-color-blue-overlay);
+    background-color: white;
     display: flex;
     justify-content: space-between;
     overflow: hidden;

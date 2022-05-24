@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { motion } from "framer";
 
 export const MainContainer = styled.div`
     display: flex;
@@ -56,16 +57,16 @@ export const TagMainContainer = styled.div`
 
 //background-color: ${(props) => `var(--g-color-badge${props.badge})`};
 
-export const TagContainer = styled.div`
+export const TagContainer = styled(motion.div)`
     background: url(${(props) => props.back}) no-repeat center;
     background-size: fill;
-    width: 24vw;
+    width: 22vw;
     height: 8vh;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    border-radius: 24px;
+    border-radius: 48px;
     margin: 0 6px 0 6px;
 `;
 
@@ -74,7 +75,7 @@ export const OverlayContainer = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
-    border-radius: 24px;
+    border-radius: 48px;
     justify-content: center;
     align-items: center;
 `;

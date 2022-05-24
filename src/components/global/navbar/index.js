@@ -5,12 +5,11 @@ import { userInfo } from "../../../actions/userInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery as MediaQuery } from "react-responsive";
 import { LoginModal } from "../../../components";
-import { Button, Flex, Dropdown, FixedZIndex, Box, IconButton } from "gestalt";
+import { Flex, Dropdown, FixedZIndex, Box, IconButton } from "gestalt";
 import "gestalt/dist/gestalt.css";
 import {
     Container,
     NavContainerDesktop,
-    NavContainerTablet,
     NavContainerMobile,
     NavContainerLeft,
     NavContainerRight,
@@ -63,7 +62,6 @@ function Navbar() {
 
     // 드롭다운 state
     const [open, setOpen] = useState(false);
-    const [selected, setSelected] = useState(null);
 
     const anchorRefDesktopRight = useRef(null);
     const DROPDOWN_ZINDEX = new FixedZIndex(10);
@@ -83,7 +81,7 @@ function Navbar() {
                     <NavContainerDesktop>
                         <NavContainerLeft>
                             <NavLink
-                                to="/Muse"
+                                to="/muse"
                                 activeStyle={{
                                     color: "var(--g-color-blue",
                                 }}
@@ -107,7 +105,7 @@ function Navbar() {
                                 </NavItem>
                             </NavLink>
                             <NavLink
-                                to="/Contest"
+                                to="/contest"
                                 activeStyle={{ color: "var(--g-color-blue" }}
                             >
                                 <NavItem
@@ -123,7 +121,15 @@ function Navbar() {
                         </Link>
                         <NavContainerRight>
                             {isLogged == false || isLogged == null ? (
-                                <LoginModal />
+                                <>
+                                    <Link to="/search">
+                                        <IconButton
+                                            icon="search"
+                                            iconColor="black"
+                                        />
+                                    </Link>
+                                    <LoginModal />
+                                </>
                             ) : (
                                 <Flex
                                     justifyContent="center"
@@ -148,7 +154,7 @@ function Navbar() {
                                             setOpen((prevVal) => !prevVal)
                                         }
                                         whileHover={{
-                                            scale: 1.2,
+                                            scale: 1.1,
                                         }}
                                     />
                                     {open && (
@@ -228,7 +234,15 @@ function Navbar() {
                         </Link>
                         <NavContainerRight>
                             {isLogged == false || isLogged == null ? (
-                                <LoginModal />
+                                <>
+                                    <Link to="/search">
+                                        <IconButton
+                                            icon="search"
+                                            iconColor="black"
+                                        />
+                                    </Link>
+                                    <LoginModal />
+                                </>
                             ) : (
                                 <Flex
                                     justifyContent="center"
@@ -331,7 +345,15 @@ function Navbar() {
                         </Link>
                         <NavContainerRight>
                             {isLogged == false || isLogged == null ? (
-                                <LoginModal />
+                                <>
+                                    <Link to="/search">
+                                        <IconButton
+                                            icon="search"
+                                            iconColor="black"
+                                        />
+                                    </Link>
+                                    <LoginModal />
+                                </>
                             ) : (
                                 <Flex
                                     justifyContent="center"

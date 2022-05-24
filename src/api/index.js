@@ -205,9 +205,25 @@ export const deletePost = (postIdx) => {
         },
     });
 };
+
+// 추천 게시물 불러오기
+export const getRecommendedPosts = (idx, page) => {
+    return fetch(`${API_DOMAIN}/post/${idx}/recommend/?page=${page}`, {
+        method: "GET",
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            try {
+                console.log(data);
+                return data;
+            } catch (e) {
+                console.error(e);
+            }
+        });
+};
 /*------------------------------------------------------------------------------------------------*/
 // 댓글관련
-export const CommentUpload = (idx, currentComments) => {
+export const commentUpload = (idx, currentComments) => {
     const token = JSON.parse(localStorage.getItem("token"));
     return fetch(`${API_DOMAIN}/comment/`, {
         method: "POST",

@@ -3,7 +3,8 @@ import { motion } from "framer";
 
 export const MainContainer = styled.div`
     max-width: 1440px;
-    padding: 48px;
+    padding: 24px;
+
     @media (max-width: 479px) {
         padding: 12px;
     }
@@ -14,7 +15,7 @@ export const MainContainer = styled.div`
         padding: 24px;
     }
     @media (max-width: 2561px) and (min-width: 1024px) {
-        padding: 48px;
+        padding: 24px;
     }
     display: flex;
     justify-content: center;
@@ -42,4 +43,6 @@ export const ColorContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
+    max-height: 312px;
+    min-height: 312px;
 `;

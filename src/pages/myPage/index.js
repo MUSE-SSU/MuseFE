@@ -40,7 +40,8 @@ import { Spinner, Box, Flex, Icon } from "gestalt";
 
 function MyPage() {
     const getUserNickname = useSelector((state) => state.userInfo.nickname);
-
+    const token = JSON.parse(localStorage.getItem("token"));
+    console.log(token);
     const dispatch = useDispatch();
     const [nickname, setNickname] = useState("");
     const [isOwner, setIsOwner] = useState();
@@ -51,11 +52,8 @@ function MyPage() {
     const [followerCount, setFollowerCount] = useState();
     const [followerLists, setFollowerLists] = useState([]);
     const [ownerPosts, setOwnerPosts] = useState([]);
-    const [introduce, setIntroduce] = useState("");
-    const [cover, setCover] = useState();
     const [displayOwnerPosts, setDisplayOwnerPosts] = useState(true);
     const [submit, setSubmit] = useState(false);
-    const [badge, setBadge] = useState(0);
 
     // 로딩 스피너 관련
     const [loading, setLoading] = useState();
@@ -79,12 +77,9 @@ function MyPage() {
             }),
         }).then(() => {
             setIsLoginUserFollow(!isLoginUserFollow);
-            if (isLoginUserFollow == false) {
-                setFollowerCount(followerCount + 1);
-            }
-            if (isLoginUserFollow == true) {
-                setFollowerCount(followerCount - 1);
-            }
+            isLoginUserFollow === false
+                ? setFollowerCount(followerCount + 1)
+                : setFollowerCount(followerCount - 1);
             setSubmit(!submit);
             setApiCall(!apiCall);
         });
@@ -102,22 +97,17 @@ function MyPage() {
         setLoading(true);
         setShowSpinner(true);
         const url = window.location.pathname;
-        const urlParts = url.replace(/\/\s*$/, "").split("/");
-        urlParts.shift();
-        if (urlParts === null || undefined) {
-            urlParts = getUserNickname;
-        }
+        const urlParts = url.replace(/\/\s*$/, "").split("/")[2];
         const token = JSON.parse(localStorage.getItem("token"));
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-        return fetch(`${API_DOMAIN}/account/${urlParts[1]}/my_page/`, {
+        return fetch(`${API_DOMAIN}/account/${urlParts}/my_page/`, {
             method: "GET",
             headers: {
-                Authorization: `${token}`,
+                Authorization: token !== null ? token : null,
             },
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 setIsOwner(data.is_owner);
                 setIsLoginUserFollow(data.is_login_user_follow);
                 setOwnerInfo(data.owner_info);
@@ -139,13 +129,12 @@ function MyPage() {
         const url = window.location.pathname;
         const urlParts = url.replace(/\/\s*$/, "").split("/");
         urlParts.shift();
-        console.log(urlParts);
         const token = JSON.parse(localStorage.getItem("token"));
         const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
         return fetch(`${API_DOMAIN}/account/${urlParts[1]}/owner_post/`, {
             method: "GET",
             headers: {
-                Authorization: `${token}`,
+                Authorization: token !== null ? token : null,
             },
         })
             .then((res) => res.json())
@@ -172,7 +161,7 @@ function MyPage() {
             {
                 method: "GET",
                 headers: {
-                    Authorization: `${token}`,
+                    Authorization: token !== null ? token : null,
                 },
             }
         )
@@ -362,7 +351,8 @@ function MyPage() {
                                     >
                                         {ownerPosts.map((post) => (
                                             <Card
-                                                image={post.thumb_img}
+                                                thumb={post.thumb_img}
+                                                image={post.image}
                                                 title={post.title}
                                                 idx={post.idx}
                                                 liked={post.liked}
@@ -395,7 +385,8 @@ function MyPage() {
                                 >
                                     {ownerPosts.map((post) => (
                                         <Card
-                                            image={post.thumb_img}
+                                            thumb={post.thumb_img}
+                                            image={post.image}
                                             title={post.title}
                                             idx={post.idx}
                                             liked={post.liked}
