@@ -25,6 +25,7 @@ function ReferenceContainer(props) {
     const anchorRef = useRef(null);
     const DROPDOWN_ZINDEX = new FixedZIndex(10);
 
+    // 게시물 불러오기
     const getPosts = useCallback(async () => {
         setLoading(true);
         setShowSpinner(true);
@@ -39,17 +40,16 @@ function ReferenceContainer(props) {
         }, 2000);
     }, [page, options]);
 
+    // 정렬 선택
     const orderItems = ({ item }) => {
         setSelected(item);
         setPosts([]);
         setPage(1);
         if (item.value === "최신순") {
             setOptions("recent");
-        }
-        if (item.value === "조회수순") {
+        } else if (item.value === "조회수순") {
             setOptions("views");
-        }
-        if (item.value === "인기순") {
+        } else if (item.value === "인기순") {
             setOptions("likes");
         }
         setOpen(false);
@@ -71,7 +71,6 @@ function ReferenceContainer(props) {
             <DropdownContainer>
                 <Flex justifyContent="center">
                     <Button
-                        accessibilityControls="action-variant-dropdown-example"
                         accessibilityExpanded={open}
                         accessibilityHaspopup
                         iconEnd="arrow-down"
@@ -85,7 +84,6 @@ function ReferenceContainer(props) {
                         <Dropdown
                             zIndex={DROPDOWN_ZINDEX}
                             anchor={anchorRef.current}
-                            id="action-variant-dropdown-example"
                             onDismiss={() => setOpen(false)}
                         >
                             <Dropdown.Item

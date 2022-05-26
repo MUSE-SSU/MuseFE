@@ -28,7 +28,6 @@ function ToggleButton(props) {
                     borderRadius: 50,
                     padding: 10,
                     cursor: "pointer",
-                    // Flexbox
                     display: "flex",
                     justifyContent: props.isOn ? "flex-end" : "flex-start",
                     alignItems: "center",
@@ -44,7 +43,6 @@ function ToggleButton(props) {
                         backgroundColor: "white",
                         borderRadius: 50,
                     }}
-                    // Animation
                     layout
                     transition={{
                         type: "spring",
@@ -99,31 +97,21 @@ function ContestContainer(props) {
     }, [page, options, contestType]);
 
     //정렬선택
-    const likesOrder = ({ item }) => {
+    const orderItems = ({ item }) => {
         setSelected(item);
-        console.log(posts);
+        console.log(item.value);
+        if (item.value === "인기순") {
+            setOptions("likes");
+            setLabel(item.value);
+        } else if (item.value === "조회수순") {
+            setOptions("views");
+            setLabel(item.value);
+        } else if (item.value === "최신순") {
+            setOptions("recents");
+            setLabel("최신순");
+        }
         setPosts([]);
         setPage(1);
-        setOptions("likes");
-        setLabel("인기순");
-        setOpen(false);
-    };
-
-    const viewsOrder = ({ item }) => {
-        setSelected(item);
-        setPosts([]);
-        setPage(1);
-        setOptions("views");
-        setLabel("조회수순");
-        setOpen(false);
-    };
-
-    const recentOrder = ({ item }) => {
-        setSelected(item);
-        setPosts([]);
-        setPage(1);
-        setOptions("recent");
-        setLabel("최신순");
         setOpen(false);
     };
 
@@ -154,7 +142,6 @@ function ContestContainer(props) {
                 />
                 <Flex justifyContent="center">
                     <Button
-                        accessibilityControls="action-variant-dropdown-example"
                         accessibilityExpanded={open}
                         accessibilityHaspopup
                         iconEnd="arrow-down"
@@ -168,16 +155,15 @@ function ContestContainer(props) {
                         <Dropdown
                             zIndex={DROPDOWN_ZINDEX}
                             anchor={anchorRef.current}
-                            id="action-variant-dropdown-example"
                             onDismiss={() => setOpen(false)}
                         >
                             <Dropdown.Item
-                                onSelect={likesOrder}
+                                onSelect={orderItems}
                                 option={{ value: "인기순", label: "인기순" }}
                                 selected={selected}
                             />
                             <Dropdown.Item
-                                onSelect={viewsOrder}
+                                onSelect={orderItems}
                                 option={{
                                     value: "조회수순",
                                     label: "조회수순",
@@ -185,7 +171,7 @@ function ContestContainer(props) {
                                 selected={selected}
                             />
                             <Dropdown.Item
-                                onSelect={recentOrder}
+                                onSelect={orderItems}
                                 option={{ value: "최신순", label: "최신순" }}
                                 selected={selected}
                             />
