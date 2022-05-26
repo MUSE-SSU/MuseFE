@@ -14,7 +14,6 @@ function ReferenceContainer(props) {
     const [showSpinner, setShowSpinner] = useState(true);
     const [options, setOptions] = useState("recent");
     const [ref, inView] = useInView({ trackVisibility: true, delay: 100 });
-    const [contestBool, setContestBool] = useState(true);
     const [error, setError] = useState();
 
     // 드롭다운 state
@@ -29,8 +28,8 @@ function ReferenceContainer(props) {
     const getPosts = useCallback(async () => {
         setLoading(true);
         setShowSpinner(true);
-        const name = props.name;
-        GetPosts(name, page, options, posts, setPosts, setError);
+        const type = props.type;
+        GetPosts(type, page, options, posts, setPosts, setError);
         if (error === "POST COUNT LIMIT") {
             return;
         }
@@ -38,7 +37,7 @@ function ReferenceContainer(props) {
             setLoading(false);
             setShowSpinner(false);
         }, 2000);
-    }, [page, options, contestBool]);
+    }, [page, options]);
 
     const orderItems = ({ item }) => {
         setSelected(item);

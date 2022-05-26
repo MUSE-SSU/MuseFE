@@ -10,6 +10,7 @@ import {
     ToggleContainer,
     DropdownContainer,
 } from "./style";
+import { GetPosts } from "../../../api";
 import { motion } from "framer";
 import { Button, Flex, Dropdown, FixedZIndex } from "gestalt";
 import "gestalt/dist/gestalt.css";
@@ -75,36 +76,32 @@ function ContestContainer(props) {
     const anchorRef = React.useRef(null);
     const DROPDOWN_ZINDEX = new FixedZIndex(10);
 
+    const [error, setError] = useState();
+
     //무한스크롤
     const [ref, inView] = useInView({ trackVisibility: true, delay: 100 });
 
     //무한스크롤 getPosts
-    const getPosts = useCallback(() => {
+
+    const getPosts = useCallback(async () => {
         setLoading(true);
-        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-        let contestT = "cur-contest";
+        let type = "cur-contest";
         if (contestType === false) {
-            contestT = "past-contest";
+            type = "past-contest";
         }
-        axios
-            .get(
-                `${API_DOMAIN}/post/?type=${contestT}&page=${page}&order=${options}`
-            )
-            .then((res) => {
-                try {
-                    const fetchedData = res.data;
-                    const mergedData = posts.concat(...fetchedData);
-                    setPosts(mergedData);
-                } catch (e) {
-                    console.error(e);
-                }
-            });
-        setLoading(false);
+        GetPosts(type, page, options, posts, setPosts, setError);
+        if (error === "POST COUNT LIMIT") {
+            return;
+        }
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
     }, [page, options, contestType]);
 
     //정렬선택
     const likesOrder = ({ item }) => {
         setSelected(item);
+        console.log(posts);
         setPosts([]);
         setPage(1);
         setOptions("likes");

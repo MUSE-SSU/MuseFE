@@ -10,7 +10,7 @@ function Contest() {
         <div>
             <GlobalNavbar />
             <GlobalBanner name="contest" />
-            <ContestContainer name="cur-contest" />
+            <ContestContainer type="cur-contest" />
             <GlobalInfoButton name="cur-contest" />
         </div>
     );

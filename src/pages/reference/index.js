@@ -10,7 +10,7 @@ function Archives() {
     return (
         <>
             <GlobalNavbar />
-            <ReferenceContainer name="reference" />
+            <ReferenceContainer type="reference" />
             <GlobalPostButton />
             <GlobalInfoButton />
         </>

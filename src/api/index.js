@@ -159,10 +159,10 @@ export const getPost = (idx) => {
         });
 };
 
-export const GetPosts = (name, page, options, posts, setPosts, setError) => {
+export const GetPosts = (type, page, options, posts, setPosts, setError) => {
     const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
     axios
-        .get(`${API_DOMAIN}/post/?type=${name}&page=${page}&order=${options}`)
+        .get(`${API_DOMAIN}/post/?type=${type}&page=${page}&order=${options}`)
         .then((res) => {
             try {
                 setError(res.data?.message);
