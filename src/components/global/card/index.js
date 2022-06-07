@@ -136,25 +136,39 @@ function DetailPost(props) {
     });
 
     // 게시물 불러오기
-    const loadPost = async () => {
+    const loadPost = useCallback(async () => {
+        const isComponentMounted = true;
         const response = await getPost(idx);
-        setData(response);
-        setIsLiked(response?.is_login_user_liked);
-        setIsFollowed(response?.is_login_user_follow);
-        setCreated(moment(response?.created_at).format("YYYY-MM-DD"));
-        setIsSaved(response?.is_login_user_bookmark);
-    };
+        if (isComponentMounted) {
+            setData(response);
+            setIsLiked(response?.is_login_user_liked);
+            setIsFollowed(response?.is_login_user_follow);
+            setCreated(moment(response?.created_at).format("YYYY-MM-DD"));
+            setIsSaved(response?.is_login_user_bookmark);
+        }
+        setTimeout(() => {
+            setLoading(false);
+        }, [1000]);
+    }, [idx, submit]);
 
     // 추천게시물 불러오기
     const loadRecommendedPosts = async () => {
         const response = await getRecommendedPosts(idx, page);
-        const mergedData = otherPosts.concat(...response);
-        setOtherPosts(mergedData);
+        if (response.message === undefined) {
+            const mergedData = otherPosts.concat(...response);
+            setOtherPosts(mergedData);
+        }
     };
     const loadPostWithoutToken = async () => {
+        const isComponentMounted = true;
         const response = await getPostWithoutToken(idx);
-        setCreated(moment(response?.created_at).format("YYYY-MM-DD"));
-        setData(response);
+        if (isComponentMounted) {
+            setCreated(moment(response?.created_at).format("YYYY-MM-DD"));
+            setData(response);
+        }
+        setTimeout(() => {
+            setLoading(false);
+        }, [1000]);
     };
     // 댓글 불러오기
     const loadComments = async () => {
@@ -196,7 +210,7 @@ function DetailPost(props) {
             } else {
                 await commentUpload(idx, currentComments);
                 setCurrentComments("");
-                await setSubmit(!submit);
+                setSubmit(!submit);
             }
         } catch (e) {
             console.error(e);
@@ -205,7 +219,6 @@ function DetailPost(props) {
 
     // 팔로우 핸들링
     const handleFollow = () => {
-        const token = JSON.parse(localStorage.getItem("token"));
         if (token === null) {
             Swal.fire({
                 icon: "error",
@@ -304,27 +317,19 @@ function DetailPost(props) {
             setShowToast(false);
         }, 3000);
     };
-
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem("token"));
         loadRecommendedPosts();
+        loadComments();
         //토큰 있을때 없을때 구분 (좋아요, 북마크, 팔로우 등 정보 때문에)
         if (token !== null) {
             loadPost();
         } else {
             loadPostWithoutToken();
         }
-        //하단 추천 게시물
-        setTimeout(() => {
-            setLoading(false);
-        }, 1200);
     }, [idx, submit]);
 
     // 댓글 fetch
-    useEffect(() => {
-        loadComments();
-    }, [idx, submit]);
-    // 무한스크롤 trigger
 
     // 렌더될때 맨 위로
     useEffect(() => {

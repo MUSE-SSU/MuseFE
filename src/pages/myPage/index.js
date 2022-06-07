@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import {
+    getMyPageSavedPosts,
+    getMyPageOwnerPosts,
+    getMyPageOwnerInfo,
+} from "../../api";
 import { updateUser, profileImageUpload } from "../../actions/updateUser";
 import {
     GlobalNavbar,
@@ -40,10 +45,8 @@ import { Spinner, Box, Flex, Icon } from "gestalt";
 
 function MyPage() {
     const getUserNickname = useSelector((state) => state.userInfo.nickname);
-    const token = JSON.parse(localStorage.getItem("token"));
-    console.log(token);
-    const dispatch = useDispatch();
-    const [nickname, setNickname] = useState("");
+    const url = window.location.pathname;
+    const urlParts = url.replace(/\/\s*$/, "").split("/")[2];
     const [isOwner, setIsOwner] = useState();
     const [isLoginUserFollow, setIsLoginUserFollow] = useState();
     const [ownerInfo, setOwnerInfo] = useState([]);
@@ -52,12 +55,13 @@ function MyPage() {
     const [followerCount, setFollowerCount] = useState();
     const [followerLists, setFollowerLists] = useState([]);
     const [ownerPosts, setOwnerPosts] = useState([]);
+    const [savedPosts, setSavedPosts] = useState([]);
     const [displayOwnerPosts, setDisplayOwnerPosts] = useState(true);
     const [submit, setSubmit] = useState(false);
 
     // 로딩 스피너 관련
-    const [loading, setLoading] = useState();
-    const [showSpinner, setShowSpinner] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [showSpinner, setShowSpinner] = useState(true);
 
     //재렌더링 방지
     const [apiCall, setApiCall] = useState(false);
@@ -94,90 +98,30 @@ function MyPage() {
 
     //마이페이지 주인 정보 불러오기
     const getOwnerInfo = () => {
-        setLoading(true);
-        setShowSpinner(true);
-        const url = window.location.pathname;
-        const urlParts = url.replace(/\/\s*$/, "").split("/")[2];
-        const token = JSON.parse(localStorage.getItem("token"));
-        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-        return fetch(`${API_DOMAIN}/account/${urlParts}/my_page/`, {
-            method: "GET",
-            headers: {
-                Authorization: token !== null ? token : null,
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setIsOwner(data.is_owner);
-                setIsLoginUserFollow(data.is_login_user_follow);
-                setOwnerInfo(data.owner_info);
-                setFollowingCount(data.following_count);
-                setFollowingLists(data.following_list);
-                setFollowerCount(data.follower_count);
-                setFollowerLists(data.follower_list);
-            })
-            .finally(() => {
-                setLoading(false);
-                setShowSpinner(false);
-                console.log(isOwner);
-            });
+        getMyPageOwnerInfo(
+            urlParts,
+            setIsOwner,
+            setIsLoginUserFollow,
+            setOwnerInfo,
+            setFollowingCount,
+            setFollowerCount,
+            setFollowingLists,
+            setFollowerLists
+        );
+    };
+    const getOwnerPosts = async () => {
+        const data = await getMyPageOwnerPosts(urlParts);
+        console.log(data);
+        setOwnerPosts(data);
+    };
+    const getSavedPosts = async () => {
+        const data = await getMyPageSavedPosts(getUserNickname);
+        setSavedPosts(data);
     };
 
-    const getOwnerPosts = () => {
-        setLoading(true);
-        setShowSpinner(true);
-        const url = window.location.pathname;
-        const urlParts = url.replace(/\/\s*$/, "").split("/");
-        urlParts.shift();
-        const token = JSON.parse(localStorage.getItem("token"));
-        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-        return fetch(`${API_DOMAIN}/account/${urlParts[1]}/owner_post/`, {
-            method: "GET",
-            headers: {
-                Authorization: token !== null ? token : null,
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setOwnerPosts(data);
-            })
-            .finally(() => {
-                setLoading(false);
-                setShowSpinner(false);
-            });
-    };
-
-    const getSavedPosts = () => {
-        setLoading(true);
-        setShowSpinner(false);
-        const url = window.location.pathname;
-        const urlParts = url.replace(/\/\s*$/, "").split("/");
-        urlParts.shift();
-        const token = JSON.parse(localStorage.getItem("token"));
-        const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-        return fetch(
-            `${API_DOMAIN}/account/${urlParts[1]}/owner_bookmark_post/`,
-            {
-                method: "GET",
-                headers: {
-                    Authorization: token !== null ? token : null,
-                },
-            }
-        )
-            .then((res) => res.json())
-            .then((data) => {
-                setOwnerPosts(data);
-            })
-            .finally(() => {
-                setLoading(false);
-                setShowSpinner(false);
-            });
-    };
     // 정렬
     const likesOrder = () => {
         setDisplayOwnerPosts(false);
-        setOwnerPosts([]);
         getSavedPosts();
     };
 
@@ -189,14 +133,16 @@ function MyPage() {
 
     useEffect(() => {
         getOwnerPosts();
-    }, []);
-    useEffect(() => {
         getOwnerInfo();
+        setTimeout(() => {
+            setLoading(false);
+            setShowSpinner(false);
+        }, 1000);
     }, [apiCall, followingCount, followerCount]);
 
     return (
         <div>
-            {loading === true ? (
+            {loading ? (
                 <Box height="100vh" width="100%">
                     <Flex
                         width="100%"
@@ -224,7 +170,7 @@ function MyPage() {
                                         </Badge>
                                     )}
                                 </OwnerNicknameContainer>
-                                {isOwner == true && (
+                                {isOwner && (
                                     <NicknameUpdateButton
                                         avatar={ownerInfo.avatar}
                                         nickname={ownerInfo.nickname}
@@ -232,7 +178,7 @@ function MyPage() {
                                         instagram={ownerInfo.insta_id}
                                     />
                                 )}
-                                {isOwner === false ? (
+                                {!isOwner ? (
                                     isLoginUserFollow == false ? (
                                         <FollowButton
                                             whileTap={{
@@ -309,7 +255,7 @@ function MyPage() {
                     <PostContainer>
                         <MyPostContainer>
                             <OrderButtonContainer>
-                                {isOwner == true ? (
+                                {isOwner ? (
                                     <>
                                         <DisplayOrderButton
                                             onClick={ownerOrder}
@@ -329,8 +275,8 @@ function MyPage() {
                                 )}
                             </OrderButtonContainer>
 
-                            {displayOwnerPosts === true ? (
-                                loading === true ? (
+                            {displayOwnerPosts ? (
+                                loading ? (
                                     <Box height="100vh" width="100%">
                                         <Flex
                                             width="100%"
@@ -349,22 +295,22 @@ function MyPage() {
                                         monitorImagesLoaded={true}
                                         style={{ width: "100%" }}
                                     >
-                                        {ownerPosts.map((post) => (
+                                        {ownerPosts?.map((post) => (
                                             <Card
-                                                thumb={post.thumb_img}
-                                                image={post.image}
-                                                title={post.title}
-                                                idx={post.idx}
-                                                liked={post.liked}
-                                                avatar={post.writer_avatar}
-                                                writer={post.writer}
-                                                views={post.views}
-                                                likes={post.likes}
+                                                thumb={post?.thumb_img}
+                                                image={post?.image}
+                                                title={post?.title}
+                                                idx={post?.idx}
+                                                liked={post?.liked}
+                                                avatar={post?.writer_avatar}
+                                                writer={post?.writer}
+                                                views={post?.views}
+                                                likes={post?.likes}
                                             />
                                         ))}
                                     </StackGrid>
                                 )
-                            ) : loading === true ? (
+                            ) : loading ? (
                                 <Box height="100vh" width="100%">
                                     <Flex
                                         width="100%"
@@ -383,7 +329,7 @@ function MyPage() {
                                     monitorImagesLoaded={true}
                                     style={{ width: "100%" }}
                                 >
-                                    {ownerPosts.map((post) => (
+                                    {savedPosts?.map((post) => (
                                         <Card
                                             thumb={post.thumb_img}
                                             image={post.image}

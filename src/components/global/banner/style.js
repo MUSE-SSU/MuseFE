@@ -31,16 +31,6 @@ export const BannerInfoContainer = styled(motion.div)`
     z-index: 300;
 `;
 
-export const BannerImg = styled(motion.img)`
-    position: absolute;
-    top: 50%;
-
-    margin-top: -978px;
-`;
-export const BannerImgContainer = styled(motion.div)`
-    position: absolute;
-`;
-
 export const LargeBanner = styled.div`
     height: 480px;
     width: 100vw;
@@ -60,6 +50,16 @@ export const LargeBanner = styled.div`
     @media (max-width: 425px) {
         font-size: 12px;
     }
+`;
+
+export const BannerImg = styled(motion.img)`
+    position: absolute;
+    top: 50%;
+
+    margin-top: -978px;
+`;
+export const BannerImgContainer = styled(motion.div)`
+    position: absolute;
 `;
 export const Label = styled(motion.h1)`
     text-align: center;

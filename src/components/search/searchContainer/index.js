@@ -66,7 +66,6 @@ function SearchContainer() {
 
             .then((res) => {
                 try {
-                    console.log(res.data);
                     setSearchedPosts(res.data.post);
                     setSearchedUsers(res.data.user);
                     setIsUserUsed(true);
@@ -86,9 +85,6 @@ function SearchContainer() {
             .get(`${API_DOMAIN}/post/top_tag/`)
             .then((res) => {
                 try {
-                    console.log(res.data);
-                    console.log(res.data);
-                    console.log(res.data);
                     setTopTagData(res.data);
                 } catch (e) {
                     console.log(e);

@@ -12,7 +12,7 @@ import {
 } from "./style";
 import { GetPosts } from "../../../api";
 import { motion } from "framer";
-import { Button, Flex, Dropdown, FixedZIndex } from "gestalt";
+import { Button, Flex, Dropdown, FixedZIndex, Box, Spinner } from "gestalt";
 import "gestalt/dist/gestalt.css";
 
 // 현재 || 이전 콘테스트 선택 토글
@@ -93,13 +93,12 @@ function ContestContainer(props) {
         }
         setTimeout(() => {
             setLoading(false);
-        }, 2000);
+        }, 300);
     }, [page, options, contestType]);
 
     //정렬선택
     const orderItems = ({ item }) => {
         setSelected(item);
-        console.log(item.value);
         if (item.value === "인기순") {
             setOptions("likes");
             setLabel(item.value);
@@ -128,7 +127,7 @@ function ContestContainer(props) {
 
     useEffect(() => {
         // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
-        if (inView && !loading) {
+        if (inView && !loading && error === undefined) {
             setPage((state) => state + 1);
         }
     }, [inView, loading]);
@@ -223,6 +222,18 @@ function ContestContainer(props) {
                     </React.Fragment>
                 ))}
             </StackGrid>
+            {loading === true && (
+                <Box height="3vh" width="100%">
+                    <Flex
+                        width="100%"
+                        height="100%"
+                        alignItems="center"
+                        justifyContent="center"
+                    >
+                        <Spinner show={loading} />
+                    </Flex>
+                </Box>
+            )}
         </MainContainer>
     );
 }

@@ -6,7 +6,6 @@ import moment from "moment";
 import { Box, Flex, Spinner } from "gestalt";
 
 const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-const KAKAO_KEY = process.env.REACT_APP_KAKAO_JS_KEY;
 const token = JSON.parse(localStorage.getItem("token"));
 /*------------------------------------------------------------------------------------------------*/
 // 로그인 및 회원가입
@@ -24,7 +23,7 @@ export const kakaoLogin = (authorizeCodeFromKakao) => {
         .then((res) => res.json())
         .then((data) => {
             try {
-                if (data.result === false) {
+                if (!data.result) {
                     return Swal.fire({
                         icon: "error",
                         title: "Oops...",
@@ -54,7 +53,7 @@ export const kakaoRegister = (authorizeCodeFromKakao) => {
         .then((res) => res.json())
         .then((data) => {
             try {
-                if (data.result === false) {
+                if (!data.result) {
                     return Swal.fire({
                         icon: "error",
                         title: "Oops...",
@@ -62,7 +61,7 @@ export const kakaoRegister = (authorizeCodeFromKakao) => {
                         showConfirmButton: false,
                         timer: 1500,
                     });
-                } else if (data.result === true) {
+                } else if (data.result) {
                     Swal.fire({
                         icon: "success",
                         title: "Success!",
@@ -81,7 +80,6 @@ export const kakaoRegister = (authorizeCodeFromKakao) => {
 /*------------------------------------------------------------------------------------------------*/
 // 유저 관련
 export const getUserInfo = () => {
-    const token = JSON.parse(localStorage.getItem("token"));
     return fetch(`${API_DOMAIN}/account/`, {
         method: "GET",
         headers: {
@@ -91,13 +89,11 @@ export const getUserInfo = () => {
     })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data);
             return data;
         });
 };
 
 export const updateUser = (formData) => {
-    const token = JSON.parse(localStorage.getItem("token"));
     return fetch(`${API_DOMAIN}/account/update/`, {
         method: "POST",
         headers: {
@@ -115,7 +111,6 @@ export const updateUser = (formData) => {
 /*------------------------------------------------------------------------------------------------*/
 // 포스트 관련
 export const uploadPost = (data) => {
-    const token = JSON.parse(localStorage.getItem("token"));
     return fetch(`${API_DOMAIN}/post/`, {
         method: "POST",
         headers: {
@@ -132,21 +127,21 @@ export const detailPost = (postIdxUrl) => {
             .then((data) => {
                 return data;
             });
+    } else {
+        fetch(`${API_DOMAIN}/posts/display/detail/${postIdxUrl}/`, {
+            method: "GET",
+            headers: {
+                Authorization: token,
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                return data;
+            });
     }
-    fetch(`${API_DOMAIN}/posts/display/detail/${postIdxUrl}/`, {
-        method: "GET",
-        headers: {
-            Authorization: token,
-        },
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            return data;
-        });
 };
 
 export const getPost = (idx) => {
-    const token = JSON.parse(localStorage.getItem("token"));
     return fetch(`${API_DOMAIN}/post/${idx}/`, {
         method: "GET",
         headers: {
@@ -160,7 +155,6 @@ export const getPost = (idx) => {
 };
 
 export const GetPosts = (type, page, options, posts, setPosts, setError) => {
-    const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
     axios
         .get(`${API_DOMAIN}/post/?type=${type}&page=${page}&order=${options}`)
         .then((res) => {
@@ -214,7 +208,6 @@ export const getRecommendedPosts = (idx, page) => {
         .then((res) => res.json())
         .then((data) => {
             try {
-                console.log(data);
                 return data;
             } catch (e) {
                 console.error(e);
@@ -224,7 +217,6 @@ export const getRecommendedPosts = (idx, page) => {
 /*------------------------------------------------------------------------------------------------*/
 // 댓글관련
 export const commentUpload = (idx, currentComments) => {
-    const token = JSON.parse(localStorage.getItem("token"));
     return fetch(`${API_DOMAIN}/comment/`, {
         method: "POST",
         headers: {
@@ -239,7 +231,6 @@ export const commentUpload = (idx, currentComments) => {
 };
 
 export const updateComment = (comment, commentIdx) => {
-    const token = JSON.parse(localStorage.getItem("token"));
     return fetch(`${API_DOMAIN}/comment/${commentIdx}/`, {
         method: "PATCH",
         header: {
@@ -353,5 +344,60 @@ export const getPolicy = () => {
         .then((res) => res.json())
         .then((data) => {
             return data;
+        });
+};
+
+export const getMyPageSavedPosts = (userNickname) => {
+    return fetch(`${API_DOMAIN}/account/${userNickname}/owner_bookmark_post/`, {
+        method: "GET",
+        headers: {
+            Authorization: token !== null ? token : null,
+        },
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            return data;
+        });
+};
+
+export const getMyPageOwnerPosts = (userNickname) => {
+    return fetch(`${API_DOMAIN}/account/${userNickname}/owner_post/`, {
+        method: "GET",
+        headers: {
+            Authorization: token !== null ? token : null,
+        },
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            return data;
+        });
+};
+
+export const getMyPageOwnerInfo = (
+    urlParts,
+    setIsOwner,
+    setIsLoginUserFollow,
+    setOwnerInfo,
+    setFollowingCount,
+    setFollowerCount,
+    setFollowingLists,
+    setFollowerLists
+) => {
+    return fetch(`${API_DOMAIN}/account/${urlParts}/my_page/`, {
+        method: "GET",
+        headers: {
+            Authorization: token !== null ? token : null,
+        },
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            setIsOwner(data.is_owner);
+            setIsLoginUserFollow(data.is_login_user_follow);
+            setOwnerInfo(data.owner_info);
+            setFollowingCount(data.following_count);
+            setFollowingLists(data.following_list);
+            setFollowerCount(data.follower_count);
+            setFollowerLists(data.follower_list);
+            console.log("완료");
         });
 };

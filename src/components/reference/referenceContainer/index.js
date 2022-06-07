@@ -15,7 +15,6 @@ function ReferenceContainer(props) {
     const [options, setOptions] = useState("recent");
     const [ref, inView] = useInView({ trackVisibility: true, delay: 100 });
     const [error, setError] = useState();
-
     // 드롭다운 state
     const [open, setOpen] = useState(false);
     const [selected, setSelected] = useState({
@@ -34,10 +33,8 @@ function ReferenceContainer(props) {
         if (error === "POST COUNT LIMIT") {
             return;
         }
-        setTimeout(() => {
-            setLoading(false);
-            setShowSpinner(false);
-        }, 2000);
+        setLoading(false);
+        setShowSpinner(false);
     }, [page, options]);
 
     // 정렬 선택

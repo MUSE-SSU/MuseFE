@@ -27,9 +27,7 @@ function GlobalToast(props) {
     const isFirst = useSelector((state) => state.authReducer.isFirst);
     const getUserNickname = useSelector((state) => state.userInfo.nickname);
     const [show, setShow] = useState(true);
-    useEffect(() => {
-        console.log(props.type);
-    });
+
     const handleRoute = () => {
         history.push(`/my-page/${getUserNickname}`);
         dispatch({ type: actionType.CHECK_IS_FIRST });
