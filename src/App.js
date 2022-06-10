@@ -19,24 +19,22 @@ import {
 } from "./pages";
 function App() {
     return (
-        <div>
-            <Router>
-                <Route exact path="/" component={Home} />
-                <Route path="/auth" component={Auth} />
-                <Route path="/redirect-login" component={Success} />
-                <Route path="/register" component={Register} />
-                <Route path="/redirect-register" component={RegisterSuccess} />
-                <Route path="/muse" component={Muse} />
-                <Route path="/reference" component={Archives} />
-                <Route path="/userUpdate" component={UserUpdate} />
-                <Route path="/my-page/:nickname" component={MyPage} />
-                <Route path="/replace" component={Replace} />
-                <Route path="/contest" component={Contest} />
-                <Route path="/search" component={Search} />
-                <Route path="/info" component={Info} />
-                <Route path="/redirect-logout" component={Logout} />
-            </Router>
-        </div>
+        <Router>
+            <Route exact path="/" component={Home} />
+            <Route path="/auth" component={Auth} />
+            <Route path="/redirect-login" component={Success} />
+            <Route path="/register" component={Register} />
+            <Route path="/redirect-register" component={RegisterSuccess} />
+            <Route path="/muse" component={Muse} />
+            <Route path="/reference" component={Archives} />
+            <Route path="/userUpdate" component={UserUpdate} />
+            <Route path="/my-page/:nickname" component={MyPage} />
+            <Route path="/replace" component={Replace} />
+            <Route path="/contest" component={Contest} />
+            <Route path="/search" component={Search} />
+            <Route path="/info" component={Info} />
+            <Route path="/redirect-logout" component={Logout} />
+        </Router>
     );
 }
 

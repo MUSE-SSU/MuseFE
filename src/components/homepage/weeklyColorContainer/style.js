@@ -3,20 +3,8 @@ import { motion } from "framer";
 
 export const MainContainer = styled.div`
     max-width: 1440px;
-    padding: 24px;
+    padding: 12px;
 
-    @media (max-width: 479px) {
-        padding: 12px;
-    }
-    @media (max-width: 767px) and (min-width: 480px) {
-        padding: 18px;
-    }
-    @media (max-width: 1023px) and (min-width: 768px) {
-        padding: 24px;
-    }
-    @media (max-width: 2561px) and (min-width: 1024px) {
-        padding: 24px;
-    }
     display: flex;
     justify-content: center;
     overflow: hidden;
@@ -41,8 +29,9 @@ export const ColorContainerName = styled.h1`
 export const ColorContainer = styled.div`
     margin-top: 12px;
     width: 100%;
-    display: flex;
+    display: ${(props) => (props.display === "grid" ? "grid" : "flex")};
     justify-content: space-between;
-    max-height: 312px;
-    min-height: 312px;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
 `;

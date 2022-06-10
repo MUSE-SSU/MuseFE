@@ -11,12 +11,13 @@ import {
     GlobalInfoButton,
     GlobalToast,
 } from "../../components";
-import { userInfo } from "../../actions/userInfo";
-import { useDispatch, useSelector } from "react-redux";
+import { useMediaQuery as MediaQuery } from "react-responsive";
 import { HomeContainer, HomeInfoContainer } from "./style";
-import Swal from "sweetalert2";
 
 function Home() {
+    const isDesktop = MediaQuery({
+        query: "(min-width: 1024px) and (max-width: 2560px)",
+    });
     return (
         <HomeContainer>
             <HomeInfoContainer>
@@ -24,7 +25,7 @@ function Home() {
                 <GlobalBanner name="main" />
                 <GlobalPostButton />
                 <GlobalInfoButton />
-                <WeeklyColorContainer />
+                <WeeklyColorContainer isDesktop={isDesktop} />
                 <PreviewContainer name="reference" />
                 <PreviewContainer name="contest" />
                 <GlobalToast />

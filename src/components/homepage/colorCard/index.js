@@ -7,7 +7,6 @@ import {
     InfoContainer,
     ColorHexa,
 } from "./style";
-import { SvgBlob } from "react-svg-blob";
 
 function ColorCard(props) {
     return (

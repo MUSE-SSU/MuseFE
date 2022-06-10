@@ -11,13 +11,14 @@ import {
 import { GetColorWeek } from "../../../api";
 import { framer } from "framer";
 
-function WeeklyColorContainer() {
+function WeeklyColorContainer(props) {
     const colorData = GetColorWeek();
     return (
         <MainContainer>
             <NameContainer>
                 <ColorContainerName>Weekly Colour</ColorContainerName>
             </NameContainer>
+
             <ColorContainer>
                 {colorData?.color.map((weeklyColor, idx) => (
                     <Link to={`/search?q=${colorData.color[idx]}`}>

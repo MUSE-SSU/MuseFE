@@ -32,7 +32,9 @@ function PreviewReference(props) {
     };
 
     useEffect(() => {
-        getPosts();
+        if (!posts.length) {
+            getPosts();
+        }
     }, []);
 
     return (

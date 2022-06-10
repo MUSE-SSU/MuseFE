@@ -61,11 +61,11 @@ export const ColorHexa = styled.h1`
 
 export const MainContainer = styled(motion.div)`
     cursor: pointer;
-    height: calc(15vw * 1.1);
-    max-width: 270px;
-    width: 20vw;
+    max-height: 360px;
+    max-width: 100%;
+    width: 18vw;
     overflow: hidden;
-    border: 3px solid black;
+    border: 2px solid black;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -81,11 +81,10 @@ export const MainContainer = styled(motion.div)`
     }
     //모바일
     @media (max-width: 479px) {
-        border: 2px solid black;
+        border: 1px solid black;
     }
     @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
-        height: calc(20vw * 1.2);
-        width: 19vw;
+        width: 18vw;
     }
 `;
 
@@ -120,10 +119,6 @@ export const InfoContainer = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    @media (max-width: 320px) {
-        margin-left: 4px;
-        justify-content: flex-start;
-    }
     @media (max-width: 375px) and (min-width: 321px) {
         margin-left: 4px;
         justify-content: center;
